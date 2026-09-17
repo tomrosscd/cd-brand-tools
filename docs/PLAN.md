@@ -57,25 +57,25 @@ Rules that keep the tools honest:
 
 ### Phase 1A: application shell and brand guide
 
-- [ ] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
-- [ ] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
-- [ ] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
-- [ ] Stacks library: preview and download each original
-- [ ] Typography guidance: Roobert, Denton x Condensed, and the Google alternatives. No font downloads until phase 2
+- [x] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
+- [x] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
+- [x] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
+- [x] Stacks library: preview and download each original
+- [x] Typography guidance: Roobert, Denton x Condensed, and the Google alternatives. No font downloads until phase 2
 
 Verify: responsive layout at 1440 and 390, keyboard navigation, copy feedback, downloaded file checksums match the manifest.
 
 ### Phase 1B: stack creator
 
-- [ ] Choose one of 36 stacks. Randomise changes only the stack
-- [ ] One approved colour for the whole stack
-- [ ] Move and scale, including past the frame edge so the export crops. Numeric inputs and nudge buttons as the keyboard alternative to dragging
-- [ ] Frame presets and custom size (see presets below)
-- [ ] Background: any approved colour, or transparent
-- [ ] Optional logo overlay: logo, straight logo or icon, in its official colour variants, at a position preset and size
-- [ ] Undo and reset
-- [ ] Export SVG, PNG and JPEG. JPEG requires a background and says so
-- [ ] Shareable link
+- [x] Choose one of 36 stacks. Randomise changes only the stack
+- [x] One approved colour for the whole stack
+- [x] Move and scale, including past the frame edge so the export crops. Numeric inputs and nudge buttons as the keyboard alternative to dragging
+- [x] Frame presets and custom size (see presets below)
+- [x] Background: any approved colour, or transparent
+- [x] Optional logo overlay: logo, straight logo or icon, in its official colour variants, at a position preset and size
+- [x] Undo and reset
+- [x] Export SVG, PNG and JPEG. JPEG requires a background and says so
+- [x] Shareable link
 
 Verify: exported pixel dimensions, edge cropping, transparency, SVG/PNG/JPEG visual agreement, all 36 stacks render, no SVG ID collisions, export limit error handling.
 
@@ -83,15 +83,15 @@ Verify: exported pixel dimensions, edge cropping, transparency, SVG/PNG/JPEG vis
 
 Recreates the Noise & Gradient idea (`noiseandgradient.com`) inside the brand: soft mesh gradients with film grain, built only from Convert colours. Our own implementation, not a copy of that site's code.
 
-- [ ] Choose two to five brand colours, in order. Add, remove and reorder
-- [ ] Chaos: how far the colour fields warp and swirl, 0 to 1
-- [ ] Grain: film grain strength, 0 to 1
-- [ ] Seed: "Generate another" and the space bar produce a new arrangement. The seed is shown and editable, so a result can be reproduced
-- [ ] Curated palettes as starting points, for example Dark Green with Forest and Light Green, or Dark Green with a small Orange accent
-- [ ] Frame presets shared with the stack creator. Export PNG and JPEG at full preset size (the original site caps free exports at 1000px)
-- [ ] Shareable link: `?colours=dark-green,forest-green,light-green&chaos=0.4&grain=0.15&seed=…`
+- [x] Choose two to five brand colours, in order. Add, remove and reorder
+- [x] Chaos: how far the colour fields warp and swirl, 0 to 1
+- [x] Grain: film grain strength, 0 to 1
+- [x] Seed: "Generate another" and the space bar produce a new arrangement. The seed is shown and editable, so a result can be reproduced
+- [x] Curated palettes as starting points, for example Dark Green with Forest and Light Green, or Dark Green with a small Orange accent
+- [x] Frame presets shared with the stack creator. Export PNG and JPEG at full preset size (the original site caps free exports at 1000px)
+- [x] Shareable link: `?colours=dark-green,forest-green,light-green&chaos=0.4&grain=0.15&seed=…`
 
-Technique: a WebGL fragment shader. Each colour is a soft field centred on a seeded random point. Domain-warped noise, scaled by chaos, bends the coordinates before blending. Grain is hashed per-pixel noise. The same shader renders the preview and, on an offscreen canvas, the export, so results match. A Canvas 2D fallback renders the same maths more slowly where WebGL is unavailable.
+Technique: a WebGL fragment shader. Each colour is a soft field centred on a seeded random point. Domain-warped noise, scaled by chaos, bends the coordinates before blending. Grain is hashed per-pixel noise. The same shader renders the preview and, on an offscreen canvas, the export, so results match. A Canvas 2D fallback where WebGL is unavailable is not built yet; the page shows an error instead.
 
 Verify: identical seed gives identical output, preview matches export, export dimensions, grain visible at export size, no colours outside the selected palette before grain.
 
