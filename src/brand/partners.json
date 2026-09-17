@@ -1,0 +1,243 @@
+{
+  "source": "CD_Partner_Logos.zip, supplied 17 September 2026. Sender names removed from file names.",
+  "partners": [
+    {
+      "id": "adyen",
+      "name": "Adyen",
+      "files": [
+        {
+          "file": "adyen-logo-green.png",
+          "note": "Green"
+        }
+      ]
+    },
+    {
+      "id": "algolia",
+      "name": "Algolia",
+      "files": [
+        {
+          "file": "algolia-logo-white.svg",
+          "note": "White",
+          "originalOn": "dark"
+        }
+      ]
+    },
+    {
+      "id": "athos-commerce",
+      "name": "Athos Commerce",
+      "files": [
+        {
+          "file": "athos-commerce-original.png",
+          "note": "Full colour"
+        }
+      ]
+    },
+    {
+      "id": "avalara",
+      "name": "Avalara",
+      "files": [
+        {
+          "file": "avalara-logo-rgb.jpg",
+          "note": "Full colour on white"
+        }
+      ]
+    },
+    {
+      "id": "brauz",
+      "name": "Brauz",
+      "files": [
+        {
+          "file": "brauz-logo.png",
+          "note": "Black"
+        }
+      ]
+    },
+    {
+      "id": "clearer",
+      "name": "clearer.io",
+      "files": [
+        {
+          "file": "clearer-logo-stacked-white.png",
+          "note": "White, stacked"
+        }
+      ]
+    },
+    {
+      "id": "cloudinary",
+      "name": "Cloudinary",
+      "files": [
+        {
+          "file": "cloudinary-logo.png",
+          "note": "White on blue"
+        }
+      ]
+    },
+    {
+      "id": "commercetools",
+      "name": "commercetools",
+      "files": [
+        {
+          "file": "commercetools.svg",
+          "note": "Navy",
+          "originalOn": "light"
+        }
+      ]
+    },
+    {
+      "id": "contentsquare",
+      "name": "Contentsquare",
+      "files": [
+        {
+          "file": "contentsquare-wordmark-coral.png",
+          "note": "Coral wordmark"
+        }
+      ]
+    },
+    {
+      "id": "elevar",
+      "name": "Elevar",
+      "files": [
+        {
+          "file": "elevar-embedded-raster.svg",
+          "note": "Colour"
+        },
+        {
+          "file": "audiense-elevar-lockup.png",
+          "note": "Audiense and Elevar lockup"
+        }
+      ]
+    },
+    {
+      "id": "foursixty",
+      "name": "Foursixty",
+      "files": [
+        {
+          "file": "foursixty-logo.png",
+          "note": "Black"
+        }
+      ]
+    },
+    {
+      "id": "global-e",
+      "name": "Global-e",
+      "files": [
+        {
+          "file": "global-e-logo-white.svg",
+          "note": "White",
+          "originalOn": "dark"
+        }
+      ]
+    },
+    {
+      "id": "humii",
+      "name": "humii",
+      "files": [
+        {
+          "file": "humii.svg",
+          "note": "Lilac",
+          "originalOn": "dark"
+        }
+      ]
+    },
+    {
+      "id": "klaviyo",
+      "name": "Klaviyo",
+      "files": [
+        {
+          "file": "klaviyo.svg",
+          "note": "Black",
+          "originalOn": "light"
+        }
+      ]
+    },
+    {
+      "id": "krakend",
+      "name": "KrakenD",
+      "files": [
+        {
+          "file": "krakend-logo-black.png",
+          "note": "Black"
+        }
+      ]
+    },
+    {
+      "id": "litecard",
+      "name": "Litecard",
+      "files": [
+        {
+          "file": "litecard-logo-black-orange.png",
+          "note": "Black and orange"
+        }
+      ]
+    },
+    {
+      "id": "online-retailer",
+      "name": "Online Retailer",
+      "files": [
+        {
+          "file": "online-retailer-embedded-raster.svg",
+          "note": "Black"
+        }
+      ]
+    },
+    {
+      "id": "pattern",
+      "name": "Pattern",
+      "files": [
+        {
+          "file": "pattern.svg",
+          "note": "Full colour",
+          "originalOn": "light"
+        }
+      ]
+    },
+    {
+      "id": "searchspring",
+      "name": "Searchspring",
+      "files": [
+        {
+          "file": "searchspring-logo-white.svg",
+          "note": "White",
+          "originalOn": "dark"
+        },
+        {
+          "file": "searchspring-logo-colour-embedded-raster.svg",
+          "note": "Colour"
+        }
+      ]
+    },
+    {
+      "id": "tolstoy",
+      "name": "Tolstoy",
+      "files": [
+        {
+          "file": "tolstoy.svg",
+          "note": "Black",
+          "originalOn": "light"
+        }
+      ]
+    },
+    {
+      "id": "triple-whale",
+      "name": "Triple Whale",
+      "files": [
+        {
+          "file": "triple-whale.svg",
+          "note": "Full colour",
+          "originalOn": "light"
+        }
+      ]
+    },
+    {
+      "id": "yotpo",
+      "name": "Yotpo",
+      "files": [
+        {
+          "file": "yotpo-logo-white.svg",
+          "note": "White",
+          "originalOn": "dark"
+        }
+      ]
+    }
+  ]
+}

@@ -31,6 +31,7 @@ const items: readonly SidebarEntry[] = [
       link('gradient-generator', 'Gradient generator', '/create/gradient/'),
     ],
   },
+  { ...link('partners', 'Partners', '/partners/'), icon: <Icon name="team" /> },
 ]
 
 const routes: Record<string, string> = {
@@ -40,6 +41,7 @@ const routes: Record<string, string> = {
   '/stacks': 'stacks',
   '/create/stack': 'stack-creator',
   '/create/gradient': 'gradient-generator',
+  '/partners': 'partners',
 }
 
 export function AppShell({ children }: { children: ReactNode }) {

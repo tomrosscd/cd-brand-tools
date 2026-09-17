@@ -12,6 +12,13 @@ Phase 1 is built. `main` deploys to GitHub Pages at https://tomrosscd.github.io/
 - **Gradient generator** (`/create/gradient/`): WebGL shader, OKLab blending, chaos, grain, seeds, 2 to 5 colours. Default is "Dark glow" (Dark Green leading, Light Green glow, chaos 10, grain 18), matched to Tom's reference images. The first colour gets about three times the pull of the others, and the falloff is soft.
 - **Hosting:** `.github/workflows/pages.yml` builds with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools` and deploys `out/`. `.github/workflows/ci.yml` runs `format:check` and `pnpm check`. Plain links and files use `withBase()` from `src/lib/base-path.ts`; `next/link` and the router add the base path themselves. Tool pages read their state with `useSearchParams` inside `Suspense`, because a static export has no server.
 
+### Partners (branch `feature/partners`)
+
+- `/partners/`, last item in the menu. Sources: `CD_Partner_Logos.zip` (17 September 2026) in `assets/source/CD_Partner_Logos`, **renamed to remove the senders' personal names** (the repo and site are public). The duplicate GlobalE file was dropped. Metadata in `src/brand/partners.json`; `scripts/build-partners.mjs` (part of `pnpm assets`) checks the JSON matches the folder, reads sizes, and marks an SVG as vector only if it has no embedded `<image>`.
+- 22 partners: 10 with vector logos (Algolia, commercetools, Global-e, humii, Klaviyo, Pattern, Searchspring, Tolstoy, Triple Whale, Yotpo). They can be shown in original colours or any brand colour including White and Black, with an optional background (automatic contrast or chosen), and copied as SVG or downloaded as SVG or 2000px PNG, all cropped to the measured artwork. `src/lib/partner-svg.ts` recolours every visible paint but leaves masks, clip paths and definitions alone.
+- The other 12 are on a "Vector logos to request" list, with what we have. Elevar, Online Retailer and the colour Searchspring file are SVGs that only wrap a PNG.
+- Verified: 31 tests (jsdom: every vector logo becomes exactly one visible colour; masks stay white; crop and background). In the dev server: 10 cards, 12 to-do rows, no broken images or errors; Triple Whale copy crops from 320×180 to 272×36; White on Dark Green copy and 2000×263 PNG download correct.
+
 ### Copy to Figma (branch `feature/copy-to-figma`)
 
 - Logos and Stacks cards have a Copy button. SVG assets copy as clean SVG text (`geometryToSvg` in `src/lib/svg-markup.ts`: supplied geometry and colour, no Illustrator prolog, ids, classes or style blocks), which Figma pastes as editable vectors. PNG logos copy as PNG images. Clipboard writes use `ClipboardItem` with a promise so Safari keeps the click permission (`src/lib/clipboard.ts`).
