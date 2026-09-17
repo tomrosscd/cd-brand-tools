@@ -57,25 +57,25 @@ Rules that keep the tools honest:
 
 ### Phase 1A: application shell and brand guide
 
-- [ ] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
-- [ ] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
-- [ ] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
-- [ ] Stacks library: preview and download each original
-- [ ] Typography guidance: Roobert, Denton x Condensed, and the Google alternatives. No font downloads until phase 2
+- [x] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
+- [x] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
+- [x] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
+- [x] Stacks library: preview and download each original
+- [x] Typography guidance: Roobert, Denton x Condensed, and the Google alternatives. No font downloads until phase 2
 
 Verify: responsive layout at 1440 and 390, keyboard navigation, copy feedback, downloaded file checksums match the manifest.
 
 ### Phase 1B: stack creator
 
-- [ ] Choose one of 36 stacks. Randomise changes only the stack
-- [ ] One approved colour for the whole stack
-- [ ] Move and scale, including past the frame edge so the export crops. Numeric inputs and nudge buttons as the keyboard alternative to dragging
-- [ ] Frame presets and custom size (see presets below)
-- [ ] Background: any approved colour, or transparent
-- [ ] Optional logo overlay: logo, straight logo or icon, in its official colour variants, at a position preset and size
-- [ ] Undo and reset
-- [ ] Export SVG, PNG and JPEG. JPEG requires a background and says so
-- [ ] Shareable link
+- [x] Choose one of 36 stacks. Randomise changes only the stack
+- [x] One approved colour for the whole stack
+- [x] Move and scale, including past the frame edge so the export crops. Numeric inputs and nudge buttons as the keyboard alternative to dragging
+- [x] Frame presets and custom size (see presets below)
+- [x] Background: any approved colour, or transparent
+- [x] Optional logo overlay: logo, straight logo or icon, in its official colour variants, at a position preset and size
+- [x] Undo and reset
+- [x] Export SVG, PNG and JPEG. JPEG requires a background and says so
+- [x] Shareable link
 
 Verify: exported pixel dimensions, edge cropping, transparency, SVG/PNG/JPEG visual agreement, all 36 stacks render, no SVG ID collisions, export limit error handling.
 
@@ -83,22 +83,22 @@ Verify: exported pixel dimensions, edge cropping, transparency, SVG/PNG/JPEG vis
 
 Recreates the Noise & Gradient idea (`noiseandgradient.com`) inside the brand: soft mesh gradients with film grain, built only from Convert colours. Our own implementation, not a copy of that site's code.
 
-- [ ] Choose two to five brand colours, in order. Add, remove and reorder
-- [ ] Chaos: how far the colour fields warp and swirl, 0 to 1
-- [ ] Grain: film grain strength, 0 to 1
-- [ ] Seed: "Generate another" and the space bar produce a new arrangement. The seed is shown and editable, so a result can be reproduced
-- [ ] Curated palettes as starting points, for example Dark Green with Forest and Light Green, or Dark Green with a small Orange accent
-- [ ] Frame presets shared with the stack creator. Export PNG and JPEG at full preset size (the original site caps free exports at 1000px)
-- [ ] Shareable link: `?colours=dark-green,forest-green,light-green&chaos=0.4&grain=0.15&seed=…`
+- [x] Choose two to five brand colours, in order. Add, remove and reorder
+- [x] Chaos: how far the colour fields warp and swirl, 0 to 1
+- [x] Grain: film grain strength, 0 to 1
+- [x] Seed: "Generate another" and the space bar produce a new arrangement. The seed is shown and editable, so a result can be reproduced
+- [x] Curated palettes as starting points, for example Dark Green with Forest and Light Green, or Dark Green with a small Orange accent
+- [x] Frame presets shared with the stack creator. Export PNG and JPEG at full preset size (the original site caps free exports at 1000px)
+- [x] Shareable link: `?colours=dark-green,forest-green,light-green&chaos=0.4&grain=0.15&seed=…`
 
-Technique: a WebGL fragment shader. Each colour is a soft field centred on a seeded random point. Domain-warped noise, scaled by chaos, bends the coordinates before blending. Grain is hashed per-pixel noise. The same shader renders the preview and, on an offscreen canvas, the export, so results match. A Canvas 2D fallback renders the same maths more slowly where WebGL is unavailable.
+Technique: a WebGL fragment shader. Each colour is a soft field centred on a seeded random point. Domain-warped noise, scaled by chaos, bends the coordinates before blending. Grain is hashed per-pixel noise. The same shader renders the preview and, on an offscreen canvas, the export, so results match. A Canvas 2D fallback where WebGL is unavailable is not built yet; the page shows an error instead.
 
 Verify: identical seed gives identical output, preview matches export, export dimensions, grain visible at export size, no colours outside the selected palette before grain.
 
 ### Phase 1D: tools together
 
-- [ ] Gradient as a stack creator background. Needs a scope decision (see decisions)
-- [ ] Deploy a private preview (Vercel) behind the platform's own protection until phase 2 access exists
+- [x] Gradient as a stack creator background, built ahead of a formal decision and easy to remove. SVG exports embed the gradient as a PNG
+- [x] Host on GitHub Pages as a static export, public, by Tom's decision on 17 September 2026. Phase 2 sign-in and gated downloads cannot run on Pages and will need a server host (for example Vercel)
 
 ### Phase 2: access and saved work
 
@@ -128,15 +128,15 @@ Export limit: 8192 px per side and 40 megapixels in total, to be confirmed by te
 
 ## Open decisions
 
-1. **Repository visibility.** `cd-brand-tools` is currently public. The stack artwork and logos are already public in `cd-product-ui`, so phase 1 is not blocked, but fonts and anything gated in phase 2 must not be committed while public. Recommend making it private before phase 2.
+1. **Repository visibility.** Resolved 17 September: public, hosted on GitHub Pages. `cd-brand-tools` is public. The stack artwork and logos are already public in `cd-product-ui`, so phase 1 is not blocked, but fonts and anything gated in phase 2 must not be committed while public. Recommend making it private before phase 2.
 2. **Rotation and flipping** in the stack creator. The desktop wallpaper references show stacks at varied angles, which the source geometry already carries. Recommend leaving rotation out of phase 1.
 3. **Logo overlay scope.** Proposed: one overlay, from Logo, Straight or Icon, in official colour variants only.
-4. **Gradient backgrounds in the stack creator.** Recommend yes, as phase 1D, reusing the gradient state.
+4. **Gradient backgrounds in the stack creator.** Built on 17 September. Confirm it stays in scope.
 5. **Gradient colour limits.** Whether accents (Yellow, Orange) may lead a gradient or only appear alongside a green.
 6. **Print values.** CMYK and Pantone were read from a page-resolution image. Confirm against the original brand book before showing them as approved.
 7. **Black icon colour.** `Convert_Icon_Black.svg` and its clear-space version use `#231f20`, not the brand Black `#171717`. Leave the downloads untouched, confirm with the brand owner.
 8. **Illustrator source.** Whether `Convert_Brand Logos_All (for export use).ai` is offered as a download. Currently kept in sources only.
-9. **Hosting.** Vercel is assumed for phase 1D.
+9. **Hosting.** GitHub Pages for phase 1. Phase 2 needs a host with a server.
 
 ## Git and releases
 
