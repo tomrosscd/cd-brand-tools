@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-AU">
+    // Browser extensions such as Tag Assistant add attributes to <html> before React loads.
+    <html lang="en-AU" suppressHydrationWarning>
       <body>
         <ToastProvider>
           <AppShell>{children}</AppShell>
