@@ -146,3 +146,25 @@
 .cardText span {
   color: var(--cui-text-secondary);
 }
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-8);
+  align-items: center;
+  color: var(--cui-text-secondary);
+  font-size: var(--cui-type-caption);
+  line-height: var(--cui-type-caption-leading);
+}
+
+.subheading {
+  margin: var(--cui-space-8) 0 0;
+  font-size: var(--cui-type-body);
+  line-height: var(--cui-type-body-leading);
+  font-weight: var(--cui-font-semibold);
+}
+
+/* Partner logos sit on neutral checkerboards, never Convert green. */
+.checkerboardBlack {
+  background: repeating-conic-gradient(#262626 0% 25%, #111111 0% 50%) 50% / 16px 16px;
+}

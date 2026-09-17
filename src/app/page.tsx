@@ -44,7 +44,7 @@ const sections = [
   },
   {
     heading: 'Partners',
-    description: 'Partner logos in their own colours, white, black or a brand colour, ready for Figma.',
+    description: 'Every partner logo in its own colours, white or black, plus a to-do list of logos to request.',
     href: '/partners/',
     action: 'Browse partners',
   },

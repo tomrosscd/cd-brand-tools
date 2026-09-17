@@ -3,8 +3,39 @@ import type { Partner } from './partner-types'
 
 export const partners: readonly Partner[] = [
   {
+    "id": "accessibe",
+    "name": "accessiBe",
+    "categories": [
+      "Accessibility"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "addressfinder",
+    "name": "Addressfinder",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "adobe-commerce-magento",
+    "name": "Adobe Commerce (Magento)",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "adyen",
     "name": "Adyen",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "website": "https://www.adyen.com/en_AU/",
+    "listing": "listed",
     "files": [
       {
         "file": "adyen-logo-green.png",
@@ -12,6 +43,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Green",
+        "image": {
+          "href": "/brand/partners/adyen-logo-green.png",
+          "format": "png",
+          "width": 1000,
+          "height": 323,
+          "bytes": 4696
+        },
         "originalOn": "light",
         "width": 1000,
         "height": 323,
@@ -22,8 +60,34 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "airwallex",
+    "name": "Airwallex",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "akeneo",
+    "name": "Akeneo",
+    "categories": [
+      "Product Data & PIM"
+    ],
+    "website": "https://www.akeneo.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "algolia",
     "name": "Algolia",
+    "categories": [
+      "Merchandising",
+      "Search",
+      "Personalisation"
+    ],
+    "website": "https://www.algolia.com",
+    "listing": "listed",
     "files": [
       {
         "file": "algolia-logo-white.svg",
@@ -31,6 +95,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "White",
+        "image": null,
         "originalOn": "dark",
         "width": 251,
         "height": 58,
@@ -41,8 +106,35 @@ export const partners: readonly Partner[] = [
     "vector": "algolia-logo-white.svg"
   },
   {
+    "id": "allyant",
+    "name": "Allyant",
+    "categories": [
+      "Accessibility"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "andzen",
+    "name": "Andzen",
+    "categories": [
+      "Email & SMS"
+    ],
+    "website": "https://andzen.co/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "athos-commerce",
     "name": "Athos Commerce",
+    "categories": [
+      "Search",
+      "Merchandising"
+    ],
+    "website": "https://athoscommerce.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "athos-commerce-original.png",
@@ -50,6 +142,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Full colour",
+        "image": {
+          "href": "/brand/partners/athos-commerce-original.png",
+          "format": "png",
+          "width": 556,
+          "height": 118,
+          "bytes": 9450
+        },
         "originalOn": "light",
         "width": 556,
         "height": 118,
@@ -60,8 +159,23 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "attentive",
+    "name": "Attentive",
+    "categories": [
+      "Email & SMS"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "avalara",
     "name": "Avalara",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "website": "https://www.avalara.com",
+    "listing": "listed",
     "files": [
       {
         "file": "avalara-logo-rgb.jpg",
@@ -69,6 +183,13 @@ export const partners: readonly Partner[] = [
         "format": "jpg",
         "vector": false,
         "note": "Full colour on white",
+        "image": {
+          "href": "/brand/partners/avalara-logo-rgb.jpg",
+          "format": "jpg",
+          "width": 986,
+          "height": 612,
+          "bytes": 83614
+        },
         "originalOn": "light",
         "width": 986,
         "height": 612,
@@ -79,8 +200,34 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "bigcommerce",
+    "name": "BigCommerce",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "bloomreach",
+    "name": "Bloomreach",
+    "categories": [
+      "Search",
+      "Merchandising",
+      "Personalisation",
+      "Email & SMS"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "brauz",
     "name": "Brauz",
+    "categories": [
+      "Retail & Omnichannel"
+    ],
+    "website": "https://brauz.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "brauz-logo.png",
@@ -88,6 +235,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Black",
+        "image": {
+          "href": "/brand/partners/brauz-logo.png",
+          "format": "png",
+          "width": 528,
+          "height": 185,
+          "bytes": 15338
+        },
         "originalOn": "light",
         "width": 528,
         "height": 185,
@@ -98,8 +252,63 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "braze",
+    "name": "Braze",
+    "categories": [
+      "Email & SMS"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "calibre9",
+    "name": "Calibre9",
+    "categories": [
+      "SEO"
+    ],
+    "website": "https://calibrenine.com.au",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "celigo",
+    "name": "Celigo",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "website": "https://www.celigo.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "channelengine",
+    "name": "ChannelEngine",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "checkout-components",
+    "name": "Checkout Components",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "clearer",
     "name": "clearer.io",
+    "categories": [
+      "Search"
+    ],
+    "website": "https://clearer.io",
+    "listing": "listed",
     "files": [
       {
         "file": "clearer-logo-stacked-white.png",
@@ -107,6 +316,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "White, stacked",
+        "image": {
+          "href": "/brand/partners/clearer-logo-stacked-white.png",
+          "format": "png",
+          "width": 1433,
+          "height": 2068,
+          "bytes": 72203
+        },
         "originalOn": "light",
         "width": 1433,
         "height": 2068,
@@ -117,8 +333,21 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "clearsale",
+    "name": "ClearSale",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "cloudinary",
     "name": "Cloudinary",
+    "categories": [
+      "Content Management"
+    ],
+    "website": "https://cloudinary.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "cloudinary-logo.png",
@@ -126,6 +355,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "White on blue",
+        "image": {
+          "href": "/brand/partners/cloudinary-logo.png",
+          "format": "png",
+          "width": 1014,
+          "height": 360,
+          "bytes": 4959
+        },
         "originalOn": "light",
         "width": 1014,
         "height": 360,
@@ -136,8 +372,21 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "comestri",
+    "name": "Comestri",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "commercetools",
     "name": "commercetools",
+    "categories": [
+      "Ecommerce Platforms"
+    ],
+    "website": "https://www.commercetools.com",
+    "listing": "listed",
     "files": [
       {
         "file": "commercetools.svg",
@@ -145,6 +394,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Navy",
+        "image": null,
         "originalOn": "light",
         "width": 296,
         "height": 81,
@@ -155,8 +405,35 @@ export const partners: readonly Partner[] = [
     "vector": "commercetools.svg"
   },
   {
+    "id": "constructor",
+    "name": "Constructor",
+    "categories": [
+      "Search"
+    ],
+    "website": "https://constructor.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "contentful",
+    "name": "Contentful",
+    "categories": [
+      "Content Management"
+    ],
+    "website": "https://www.contentful.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "contentsquare",
     "name": "Contentsquare",
+    "categories": [
+      "Analytics"
+    ],
+    "website": "https://contentsquare.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "contentsquare-wordmark-coral.png",
@@ -164,6 +441,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Coral wordmark",
+        "image": {
+          "href": "/brand/partners/contentsquare-wordmark-coral.png",
+          "format": "png",
+          "width": 1182,
+          "height": 342,
+          "bytes": 19380
+        },
         "originalOn": "light",
         "width": 1182,
         "height": 342,
@@ -174,8 +458,44 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "contentstack",
+    "name": "Contentstack",
+    "categories": [
+      "Content Management"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "dotdigital",
+    "name": "Dotdigital",
+    "categories": [
+      "Email & SMS"
+    ],
+    "website": "https://dotdigital.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "elephant-room",
+    "name": "Elephant Room",
+    "categories": [
+      "Gifting"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "elevar",
     "name": "Elevar",
+    "categories": [
+      "CDP"
+    ],
+    "website": "https://www.audiense.com/products/audiense-online/",
+    "listing": "listed",
     "files": [
       {
         "file": "elevar-embedded-raster.svg",
@@ -183,6 +503,13 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": false,
         "note": "Colour",
+        "image": {
+          "href": "/brand/partners/elevar-embedded-raster.png",
+          "format": "png",
+          "width": 640,
+          "height": 254,
+          "bytes": 19218
+        },
         "originalOn": "light",
         "width": 320,
         "height": 180,
@@ -195,6 +522,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Audiense and Elevar lockup",
+        "image": {
+          "href": "/brand/partners/audiense-elevar-lockup.png",
+          "format": "png",
+          "width": 764,
+          "height": 79,
+          "bytes": 10399
+        },
         "originalOn": "light",
         "width": 764,
         "height": 79,
@@ -205,8 +539,24 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "fluent-commerce",
+    "name": "Fluent Commerce",
+    "categories": [
+      "Retail & Omnichannel",
+      "B2B & Marketplace"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "foursixty",
     "name": "Foursixty",
+    "categories": [
+      "Reviews & UGC"
+    ],
+    "website": "https://foursixty.com",
+    "listing": "listed",
     "files": [
       {
         "file": "foursixty-logo.png",
@@ -214,6 +564,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Black",
+        "image": {
+          "href": "/brand/partners/foursixty-logo.png",
+          "format": "png",
+          "width": 2572,
+          "height": 228,
+          "bytes": 82702
+        },
         "originalOn": "light",
         "width": 2572,
         "height": 228,
@@ -224,8 +581,32 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "giftnote",
+    "name": "GiftNote",
+    "categories": [
+      "Gifting"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "givex",
+    "name": "Givex",
+    "categories": [
+      "Gifting"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "global-e",
     "name": "Global-e",
+    "categories": [
+      "Global Commerce"
+    ],
+    "listing": "listed",
     "files": [
       {
         "file": "global-e-logo-white.svg",
@@ -233,6 +614,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "White",
+        "image": null,
         "originalOn": "dark",
         "width": 154,
         "height": 34,
@@ -243,8 +625,21 @@ export const partners: readonly Partner[] = [
     "vector": "global-e-logo-white.svg"
   },
   {
+    "id": "gorgias",
+    "name": "Gorgias",
+    "categories": [
+      "Customer Service"
+    ],
+    "website": "https://www.gorgias.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "humii",
     "name": "humii",
+    "categories": [],
+    "listing": "listed",
     "files": [
       {
         "file": "humii.svg",
@@ -252,6 +647,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Lilac",
+        "image": null,
         "originalOn": "dark",
         "width": 320,
         "height": 180,
@@ -262,8 +658,23 @@ export const partners: readonly Partner[] = [
     "vector": "humii.svg"
   },
   {
+    "id": "klarna",
+    "name": "Klarna",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "klaviyo",
     "name": "Klaviyo",
+    "categories": [
+      "CRM",
+      "Customer Service",
+      "Email & SMS"
+    ],
+    "website": "https://www.klaviyo.com/au/",
+    "listing": "listed",
     "files": [
       {
         "file": "klaviyo.svg",
@@ -271,6 +682,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Black",
+        "image": null,
         "originalOn": "light",
         "width": 581,
         "height": 172,
@@ -283,6 +695,11 @@ export const partners: readonly Partner[] = [
   {
     "id": "krakend",
     "name": "KrakenD",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "website": "https://www.krakend.io",
+    "listing": "listed",
     "files": [
       {
         "file": "krakend-logo-black.png",
@@ -290,6 +707,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Black",
+        "image": {
+          "href": "/brand/partners/krakend-logo-black.png",
+          "format": "png",
+          "width": 8192,
+          "height": 1582,
+          "bytes": 271266
+        },
         "originalOn": "light",
         "width": 8192,
         "height": 1582,
@@ -300,8 +724,24 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "lexer",
+    "name": "Lexer",
+    "categories": [
+      "CDP"
+    ],
+    "website": "https://www.lexer.io/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "litecard",
     "name": "Litecard",
+    "categories": [
+      "Mobile App"
+    ],
+    "website": "https://litecard.com",
+    "listing": "listed",
     "files": [
       {
         "file": "litecard-logo-black-orange.png",
@@ -309,6 +749,13 @@ export const partners: readonly Partner[] = [
         "format": "png",
         "vector": false,
         "note": "Black and orange",
+        "image": {
+          "href": "/brand/partners/litecard-logo-black-orange.png",
+          "format": "png",
+          "width": 2500,
+          "height": 833,
+          "bytes": 58588
+        },
         "originalOn": "light",
         "width": 2500,
         "height": 833,
@@ -319,8 +766,142 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "loop",
+    "name": "Loop",
+    "categories": [
+      "Returns"
+    ],
+    "website": "https://www.loopreturns.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "loop-subscriptions",
+    "name": "Loop Subscriptions",
+    "categories": [
+      "Retention & Subscriptions"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "loqate",
+    "name": "Loqate",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "loyaltylion",
+    "name": "LoyaltyLion",
+    "categories": [
+      "Loyalty & Rewards"
+    ],
+    "website": "https://loyaltylion.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "make-retail",
+    "name": "Make Retail",
+    "categories": [
+      "Retail & Omnichannel"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "marketplacer",
+    "name": "Marketplacer",
+    "categories": [
+      "B2B & Marketplace"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "mirra",
+    "name": "Mirra",
+    "categories": [
+      "Retail & Omnichannel"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "mparticle",
+    "name": "mParticle",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "netsuite",
+    "name": "NetSuite",
+    "categories": [
+      "ERP"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "nosto",
+    "name": "Nosto",
+    "categories": [
+      "Personalisation",
+      "Search",
+      "Merchandising"
+    ],
+    "website": "https://nosto.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "okendo",
+    "name": "Okendo",
+    "categories": [
+      "Reviews & UGC"
+    ],
+    "website": "https://okendo.io",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "omneo",
+    "name": "Omneo",
+    "categories": [
+      "CDP"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "online-retailer",
     "name": "Online Retailer",
+    "categories": [],
+    "listing": "listed",
     "files": [
       {
         "file": "online-retailer-embedded-raster.svg",
@@ -328,6 +909,13 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": false,
         "note": "Black",
+        "image": {
+          "href": "/brand/partners/online-retailer-embedded-raster.png",
+          "format": "png",
+          "width": 399,
+          "height": 174,
+          "bytes": 17233
+        },
         "originalOn": "light",
         "width": 167,
         "height": 72,
@@ -338,8 +926,45 @@ export const partners: readonly Partner[] = [
     "vector": null
   },
   {
+    "id": "optimising",
+    "name": "Optimising",
+    "categories": [
+      "SEO"
+    ],
+    "website": "https://www.optimising.com.au",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "optty",
+    "name": "Optty",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "patchworks",
+    "name": "Patchworks",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "website": "https://www.patchworks.io",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "pattern",
     "name": "Pattern",
+    "categories": [
+      "Conversion Optimisation",
+      "Performance Marketing",
+      "Analytics"
+    ],
+    "website": "https://au.pattern.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "pattern.svg",
@@ -347,6 +972,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Full colour",
+        "image": null,
         "originalOn": "light",
         "width": 191,
         "height": 38,
@@ -357,8 +983,148 @@ export const partners: readonly Partner[] = [
     "vector": "pattern.svg"
   },
   {
+    "id": "payoneer",
+    "name": "Payoneer",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "paysquad",
+    "name": "Paysquad",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "website": "https://paysquad.co",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "plytix",
+    "name": "Plytix",
+    "categories": [
+      "Product Data & PIM"
+    ],
+    "website": "https://www.plytix.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "prismic",
+    "name": "Prismic",
+    "categories": [
+      "Content Management"
+    ],
+    "website": "https://prismic.io/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "reactiv",
+    "name": "Reactiv",
+    "categories": [
+      "Mobile App"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "rebuy",
+    "name": "Rebuy",
+    "categories": [
+      "Merchandising"
+    ],
+    "website": "https://www.rebuyengine.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "recharge",
+    "name": "Recharge",
+    "categories": [
+      "Retention & Subscriptions"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "refundid",
+    "name": "Refundid",
+    "categories": [
+      "Returns"
+    ],
+    "website": "https://refundid.com/im-a-business",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "reload-media",
+    "name": "Reload Media",
+    "categories": [
+      "Performance Marketing"
+    ],
+    "website": "https://www.reloadmedia.com.au/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "returngo",
+    "name": "ReturnGo",
+    "categories": [
+      "Returns"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "rise-ai",
+    "name": "Rise.ai",
+    "categories": [
+      "Gifting"
+    ],
+    "website": "https://rise.ai",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "rivo",
+    "name": "Rivo",
+    "categories": [
+      "Loyalty & Rewards"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "sanity",
+    "name": "Sanity",
+    "categories": [
+      "Content Management"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "searchspring",
     "name": "Searchspring",
+    "aka": "Now part of Athos Commerce",
+    "categories": [
+      "Search"
+    ],
+    "listing": "listed",
     "files": [
       {
         "file": "searchspring-logo-white.svg",
@@ -366,6 +1132,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "White",
+        "image": null,
         "originalOn": "dark",
         "width": 304,
         "height": 62,
@@ -378,6 +1145,13 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": false,
         "note": "Colour",
+        "image": {
+          "href": "/brand/partners/searchspring-logo-colour-embedded-raster.png",
+          "format": "png",
+          "width": 640,
+          "height": 208,
+          "bytes": 4750
+        },
         "originalOn": "light",
         "width": 320,
         "height": 180,
@@ -388,8 +1162,177 @@ export const partners: readonly Partner[] = [
     "vector": "searchspring-logo-white.svg"
   },
   {
+    "id": "shippit",
+    "name": "Shippit",
+    "categories": [
+      "Shipping & Fulfilment"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "shipstation",
+    "name": "ShipStation",
+    "categories": [
+      "Shipping & Fulfilment"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "shopify-plus",
+    "name": "Shopify Plus",
+    "categories": [
+      "Ecommerce Platforms"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "shoplift",
+    "name": "Shoplift",
+    "categories": [
+      "Conversion Optimisation"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "starshipit",
+    "name": "Starshipit",
+    "categories": [
+      "Shipping & Fulfilment"
+    ],
+    "website": "https://starshipit.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "stockinstore",
+    "name": "Stockinstore",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "stripe",
+    "name": "Stripe",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "studiohawk",
+    "name": "Studiohawk",
+    "categories": [
+      "SEO"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "submarine",
+    "name": "Submarine",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "swap",
+    "name": "Swap",
+    "categories": [
+      "Returns",
+      "Global Commerce"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "swish",
+    "name": "Swish",
+    "categories": [
+      "Personalisation"
+    ],
+    "website": "https://swish.app/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "swym",
+    "name": "Swym",
+    "categories": [
+      "Personalisation"
+    ],
+    "website": "https://www.getswym.com",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "talon-one",
+    "name": "Talon.One",
+    "categories": [
+      "Loyalty & Rewards"
+    ],
+    "website": "https://talon.one/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "tapcart",
+    "name": "Tapcart",
+    "categories": [
+      "Mobile App"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "techweave",
+    "name": "Techweave",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "the-wishlist-company",
+    "name": "The Wishlist Company",
+    "categories": [
+      "Personalisation"
+    ],
+    "website": "https://www.thewishlist.io",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "tolstoy",
     "name": "Tolstoy",
+    "categories": [
+      "Merchandising"
+    ],
+    "website": "https://www.gotolstoy.com",
+    "listing": "listed",
     "files": [
       {
         "file": "tolstoy.svg",
@@ -397,6 +1340,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Black",
+        "image": null,
         "originalOn": "light",
         "width": 248,
         "height": 49,
@@ -409,6 +1353,11 @@ export const partners: readonly Partner[] = [
   {
     "id": "triple-whale",
     "name": "Triple Whale",
+    "categories": [
+      "Analytics"
+    ],
+    "website": "https://www.triplewhale.com/",
+    "listing": "listed",
     "files": [
       {
         "file": "triple-whale.svg",
@@ -416,6 +1365,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "Full colour",
+        "image": null,
         "originalOn": "light",
         "width": 320,
         "height": 180,
@@ -426,8 +1376,44 @@ export const partners: readonly Partner[] = [
     "vector": "triple-whale.svg"
   },
   {
+    "id": "trustana",
+    "name": "Trustana",
+    "categories": [
+      "B2B & Marketplace"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "categories": [
+      "Infrastructure & Integration"
+    ],
+    "website": "https://vercel.com/",
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
+    "id": "worldpay",
+    "name": "Worldpay",
+    "categories": [
+      "Payments & Checkout"
+    ],
+    "listing": "listed",
+    "files": [],
+    "vector": null
+  },
+  {
     "id": "yotpo",
     "name": "Yotpo",
+    "categories": [
+      "Reviews & UGC"
+    ],
+    "website": "https://yotpo.com",
+    "listing": "listed",
     "files": [
       {
         "file": "yotpo-logo-white.svg",
@@ -435,6 +1421,7 @@ export const partners: readonly Partner[] = [
         "format": "svg",
         "vector": true,
         "note": "White",
+        "image": null,
         "originalOn": "dark",
         "width": 238,
         "height": 65,
@@ -443,5 +1430,13 @@ export const partners: readonly Partner[] = [
       }
     ],
     "vector": "yotpo-logo-white.svg"
+  },
+  {
+    "id": "zip",
+    "name": "Zip",
+    "categories": [],
+    "listing": "unlisted",
+    "files": [],
+    "vector": null
   }
 ]

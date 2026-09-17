@@ -9,7 +9,7 @@ export default function PartnersPage() {
     <Stack gap={32}>
       <PageHeader
         heading="Partners"
-        description="Partner logos for decks, case studies and co-marketing. Vector logos can be switched to white, black or a brand colour, copied into Figma or downloaded."
+        description="Every Convert partner. Vector logos can be shown in their own colours, white or black, copied into Figma or downloaded. Where we only have an image, you can still download it, and the partner is on the to-do list."
       />
       <PartnerLibrary />
     </Stack>

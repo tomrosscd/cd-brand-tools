@@ -2,8 +2,28 @@
   "source": "CD_Partner_Logos.zip, supplied 17 September 2026. Sender names removed from file names.",
   "partners": [
     {
+      "id": "accessibe",
+      "name": "accessiBe",
+      "categories": ["Accessibility"],
+      "files": []
+    },
+    {
+      "id": "addressfinder",
+      "name": "Addressfinder",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "adobe-commerce-magento",
+      "name": "Adobe Commerce (Magento)",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
       "id": "adyen",
       "name": "Adyen",
+      "categories": ["Payments & Checkout"],
+      "website": "https://www.adyen.com/en_AU/",
       "files": [
         {
           "file": "adyen-logo-green.png",
@@ -12,8 +32,23 @@
       ]
     },
     {
+      "id": "airwallex",
+      "name": "Airwallex",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "akeneo",
+      "name": "Akeneo",
+      "categories": ["Product Data & PIM"],
+      "website": "https://www.akeneo.com",
+      "files": []
+    },
+    {
       "id": "algolia",
       "name": "Algolia",
+      "categories": ["Merchandising", "Search", "Personalisation"],
+      "website": "https://www.algolia.com",
       "files": [
         {
           "file": "algolia-logo-white.svg",
@@ -23,8 +58,23 @@
       ]
     },
     {
+      "id": "allyant",
+      "name": "Allyant",
+      "categories": ["Accessibility"],
+      "files": []
+    },
+    {
+      "id": "andzen",
+      "name": "Andzen",
+      "categories": ["Email & SMS"],
+      "website": "https://andzen.co/",
+      "files": []
+    },
+    {
       "id": "athos-commerce",
       "name": "Athos Commerce",
+      "categories": ["Search", "Merchandising"],
+      "website": "https://athoscommerce.com/",
       "files": [
         {
           "file": "athos-commerce-original.png",
@@ -33,8 +83,16 @@
       ]
     },
     {
+      "id": "attentive",
+      "name": "Attentive",
+      "categories": ["Email & SMS"],
+      "files": []
+    },
+    {
       "id": "avalara",
       "name": "Avalara",
+      "categories": ["Payments & Checkout"],
+      "website": "https://www.avalara.com",
       "files": [
         {
           "file": "avalara-logo-rgb.jpg",
@@ -43,8 +101,22 @@
       ]
     },
     {
+      "id": "bigcommerce",
+      "name": "BigCommerce",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "bloomreach",
+      "name": "Bloomreach",
+      "categories": ["Search", "Merchandising", "Personalisation", "Email & SMS"],
+      "files": []
+    },
+    {
       "id": "brauz",
       "name": "Brauz",
+      "categories": ["Retail & Omnichannel"],
+      "website": "https://brauz.com/",
       "files": [
         {
           "file": "brauz-logo.png",
@@ -53,8 +125,42 @@
       ]
     },
     {
+      "id": "braze",
+      "name": "Braze",
+      "categories": ["Email & SMS"],
+      "files": []
+    },
+    {
+      "id": "calibre9",
+      "name": "Calibre9",
+      "categories": ["SEO"],
+      "website": "https://calibrenine.com.au",
+      "files": []
+    },
+    {
+      "id": "celigo",
+      "name": "Celigo",
+      "categories": ["Infrastructure & Integration"],
+      "website": "https://www.celigo.com",
+      "files": []
+    },
+    {
+      "id": "channelengine",
+      "name": "ChannelEngine",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "checkout-components",
+      "name": "Checkout Components",
+      "categories": ["Payments & Checkout"],
+      "files": []
+    },
+    {
       "id": "clearer",
       "name": "clearer.io",
+      "categories": ["Search"],
+      "website": "https://clearer.io",
       "files": [
         {
           "file": "clearer-logo-stacked-white.png",
@@ -63,8 +169,16 @@
       ]
     },
     {
+      "id": "clearsale",
+      "name": "ClearSale",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
       "id": "cloudinary",
       "name": "Cloudinary",
+      "categories": ["Content Management"],
+      "website": "https://cloudinary.com/",
       "files": [
         {
           "file": "cloudinary-logo.png",
@@ -73,8 +187,16 @@
       ]
     },
     {
+      "id": "comestri",
+      "name": "Comestri",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
       "id": "commercetools",
       "name": "commercetools",
+      "categories": ["Ecommerce Platforms"],
+      "website": "https://www.commercetools.com",
       "files": [
         {
           "file": "commercetools.svg",
@@ -84,8 +206,24 @@
       ]
     },
     {
+      "id": "constructor",
+      "name": "Constructor",
+      "categories": ["Search"],
+      "website": "https://constructor.com/",
+      "files": []
+    },
+    {
+      "id": "contentful",
+      "name": "Contentful",
+      "categories": ["Content Management"],
+      "website": "https://www.contentful.com",
+      "files": []
+    },
+    {
       "id": "contentsquare",
       "name": "Contentsquare",
+      "categories": ["Analytics"],
+      "website": "https://contentsquare.com/",
       "files": [
         {
           "file": "contentsquare-wordmark-coral.png",
@@ -94,8 +232,29 @@
       ]
     },
     {
+      "id": "contentstack",
+      "name": "Contentstack",
+      "categories": ["Content Management"],
+      "files": []
+    },
+    {
+      "id": "dotdigital",
+      "name": "Dotdigital",
+      "categories": ["Email & SMS"],
+      "website": "https://dotdigital.com/",
+      "files": []
+    },
+    {
+      "id": "elephant-room",
+      "name": "Elephant Room",
+      "categories": ["Gifting"],
+      "files": []
+    },
+    {
       "id": "elevar",
       "name": "Elevar",
+      "categories": ["CDP"],
+      "website": "https://www.audiense.com/products/audiense-online/",
       "files": [
         {
           "file": "elevar-embedded-raster.svg",
@@ -108,8 +267,16 @@
       ]
     },
     {
+      "id": "fluent-commerce",
+      "name": "Fluent Commerce",
+      "categories": ["Retail & Omnichannel", "B2B & Marketplace"],
+      "files": []
+    },
+    {
       "id": "foursixty",
       "name": "Foursixty",
+      "categories": ["Reviews & UGC"],
+      "website": "https://foursixty.com",
       "files": [
         {
           "file": "foursixty-logo.png",
@@ -118,8 +285,21 @@
       ]
     },
     {
+      "id": "giftnote",
+      "name": "GiftNote",
+      "categories": ["Gifting"],
+      "files": []
+    },
+    {
+      "id": "givex",
+      "name": "Givex",
+      "categories": ["Gifting"],
+      "files": []
+    },
+    {
       "id": "global-e",
       "name": "Global-e",
+      "categories": ["Global Commerce"],
       "files": [
         {
           "file": "global-e-logo-white.svg",
@@ -127,6 +307,13 @@
           "originalOn": "dark"
         }
       ]
+    },
+    {
+      "id": "gorgias",
+      "name": "Gorgias",
+      "categories": ["Customer Service"],
+      "website": "https://www.gorgias.com/",
+      "files": []
     },
     {
       "id": "humii",
@@ -140,8 +327,16 @@
       ]
     },
     {
+      "id": "klarna",
+      "name": "Klarna",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
       "id": "klaviyo",
       "name": "Klaviyo",
+      "categories": ["CRM", "Customer Service", "Email & SMS"],
+      "website": "https://www.klaviyo.com/au/",
       "files": [
         {
           "file": "klaviyo.svg",
@@ -153,6 +348,8 @@
     {
       "id": "krakend",
       "name": "KrakenD",
+      "categories": ["Infrastructure & Integration"],
+      "website": "https://www.krakend.io",
       "files": [
         {
           "file": "krakend-logo-black.png",
@@ -161,14 +358,105 @@
       ]
     },
     {
+      "id": "lexer",
+      "name": "Lexer",
+      "categories": ["CDP"],
+      "website": "https://www.lexer.io/",
+      "files": []
+    },
+    {
       "id": "litecard",
       "name": "Litecard",
+      "categories": ["Mobile App"],
+      "website": "https://litecard.com",
       "files": [
         {
           "file": "litecard-logo-black-orange.png",
           "note": "Black and orange"
         }
       ]
+    },
+    {
+      "id": "loop",
+      "name": "Loop",
+      "categories": ["Returns"],
+      "website": "https://www.loopreturns.com/",
+      "files": []
+    },
+    {
+      "id": "loop-subscriptions",
+      "name": "Loop Subscriptions",
+      "categories": ["Retention & Subscriptions"],
+      "files": []
+    },
+    {
+      "id": "loqate",
+      "name": "Loqate",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "loyaltylion",
+      "name": "LoyaltyLion",
+      "categories": ["Loyalty & Rewards"],
+      "website": "https://loyaltylion.com",
+      "files": []
+    },
+    {
+      "id": "make-retail",
+      "name": "Make Retail",
+      "categories": ["Retail & Omnichannel"],
+      "files": []
+    },
+    {
+      "id": "marketplacer",
+      "name": "Marketplacer",
+      "categories": ["B2B & Marketplace"],
+      "files": []
+    },
+    {
+      "id": "mirra",
+      "name": "Mirra",
+      "categories": ["Retail & Omnichannel"],
+      "files": []
+    },
+    {
+      "id": "mparticle",
+      "name": "mParticle",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "netlify",
+      "name": "Netlify",
+      "categories": ["Infrastructure & Integration"],
+      "files": []
+    },
+    {
+      "id": "netsuite",
+      "name": "NetSuite",
+      "categories": ["ERP"],
+      "files": []
+    },
+    {
+      "id": "nosto",
+      "name": "Nosto",
+      "categories": ["Personalisation", "Search", "Merchandising"],
+      "website": "https://nosto.com",
+      "files": []
+    },
+    {
+      "id": "okendo",
+      "name": "Okendo",
+      "categories": ["Reviews & UGC"],
+      "website": "https://okendo.io",
+      "files": []
+    },
+    {
+      "id": "omneo",
+      "name": "Omneo",
+      "categories": ["CDP"],
+      "files": []
     },
     {
       "id": "online-retailer",
@@ -181,8 +469,30 @@
       ]
     },
     {
+      "id": "optimising",
+      "name": "Optimising",
+      "categories": ["SEO"],
+      "website": "https://www.optimising.com.au",
+      "files": []
+    },
+    {
+      "id": "optty",
+      "name": "Optty",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "patchworks",
+      "name": "Patchworks",
+      "categories": ["Infrastructure & Integration"],
+      "website": "https://www.patchworks.io",
+      "files": []
+    },
+    {
       "id": "pattern",
       "name": "Pattern",
+      "categories": ["Conversion Optimisation", "Performance Marketing", "Analytics"],
+      "website": "https://au.pattern.com/",
       "files": [
         {
           "file": "pattern.svg",
@@ -192,8 +502,95 @@
       ]
     },
     {
+      "id": "payoneer",
+      "name": "Payoneer",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "paysquad",
+      "name": "Paysquad",
+      "categories": ["Payments & Checkout"],
+      "website": "https://paysquad.co",
+      "files": []
+    },
+    {
+      "id": "plytix",
+      "name": "Plytix",
+      "categories": ["Product Data & PIM"],
+      "website": "https://www.plytix.com/",
+      "files": []
+    },
+    {
+      "id": "prismic",
+      "name": "Prismic",
+      "categories": ["Content Management"],
+      "website": "https://prismic.io/",
+      "files": []
+    },
+    {
+      "id": "reactiv",
+      "name": "Reactiv",
+      "categories": ["Mobile App"],
+      "files": []
+    },
+    {
+      "id": "rebuy",
+      "name": "Rebuy",
+      "categories": ["Merchandising"],
+      "website": "https://www.rebuyengine.com",
+      "files": []
+    },
+    {
+      "id": "recharge",
+      "name": "Recharge",
+      "categories": ["Retention & Subscriptions"],
+      "files": []
+    },
+    {
+      "id": "refundid",
+      "name": "Refundid",
+      "categories": ["Returns"],
+      "website": "https://refundid.com/im-a-business",
+      "files": []
+    },
+    {
+      "id": "reload-media",
+      "name": "Reload Media",
+      "categories": ["Performance Marketing"],
+      "website": "https://www.reloadmedia.com.au/",
+      "files": []
+    },
+    {
+      "id": "returngo",
+      "name": "ReturnGo",
+      "categories": ["Returns"],
+      "files": []
+    },
+    {
+      "id": "rise-ai",
+      "name": "Rise.ai",
+      "categories": ["Gifting"],
+      "website": "https://rise.ai",
+      "files": []
+    },
+    {
+      "id": "rivo",
+      "name": "Rivo",
+      "categories": ["Loyalty & Rewards"],
+      "files": []
+    },
+    {
+      "id": "sanity",
+      "name": "Sanity",
+      "categories": ["Content Management"],
+      "files": []
+    },
+    {
       "id": "searchspring",
       "name": "Searchspring",
+      "aka": "Now part of Athos Commerce",
+      "categories": ["Search"],
       "files": [
         {
           "file": "searchspring-logo-white.svg",
@@ -207,8 +604,112 @@
       ]
     },
     {
+      "id": "shippit",
+      "name": "Shippit",
+      "categories": ["Shipping & Fulfilment"],
+      "files": []
+    },
+    {
+      "id": "shipstation",
+      "name": "ShipStation",
+      "categories": ["Shipping & Fulfilment"],
+      "files": []
+    },
+    {
+      "id": "shopify-plus",
+      "name": "Shopify Plus",
+      "categories": ["Ecommerce Platforms"],
+      "files": []
+    },
+    {
+      "id": "shoplift",
+      "name": "Shoplift",
+      "categories": ["Conversion Optimisation"],
+      "files": []
+    },
+    {
+      "id": "starshipit",
+      "name": "Starshipit",
+      "categories": ["Shipping & Fulfilment"],
+      "website": "https://starshipit.com/",
+      "files": []
+    },
+    {
+      "id": "stockinstore",
+      "name": "Stockinstore",
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "categories": ["Payments & Checkout"],
+      "files": []
+    },
+    {
+      "id": "studiohawk",
+      "name": "Studiohawk",
+      "categories": ["SEO"],
+      "files": []
+    },
+    {
+      "id": "submarine",
+      "name": "Submarine",
+      "categories": ["Infrastructure & Integration"],
+      "files": []
+    },
+    {
+      "id": "swap",
+      "name": "Swap",
+      "categories": ["Returns", "Global Commerce"],
+      "files": []
+    },
+    {
+      "id": "swish",
+      "name": "Swish",
+      "categories": ["Personalisation"],
+      "website": "https://swish.app/",
+      "files": []
+    },
+    {
+      "id": "swym",
+      "name": "Swym",
+      "categories": ["Personalisation"],
+      "website": "https://www.getswym.com",
+      "files": []
+    },
+    {
+      "id": "talon-one",
+      "name": "Talon.One",
+      "categories": ["Loyalty & Rewards"],
+      "website": "https://talon.one/",
+      "files": []
+    },
+    {
+      "id": "tapcart",
+      "name": "Tapcart",
+      "categories": ["Mobile App"],
+      "files": []
+    },
+    {
+      "id": "techweave",
+      "name": "Techweave",
+      "categories": ["Infrastructure & Integration"],
+      "listing": "unlisted",
+      "files": []
+    },
+    {
+      "id": "the-wishlist-company",
+      "name": "The Wishlist Company",
+      "categories": ["Personalisation"],
+      "website": "https://www.thewishlist.io",
+      "files": []
+    },
+    {
       "id": "tolstoy",
       "name": "Tolstoy",
+      "categories": ["Merchandising"],
+      "website": "https://www.gotolstoy.com",
       "files": [
         {
           "file": "tolstoy.svg",
@@ -220,6 +721,8 @@
     {
       "id": "triple-whale",
       "name": "Triple Whale",
+      "categories": ["Analytics"],
+      "website": "https://www.triplewhale.com/",
       "files": [
         {
           "file": "triple-whale.svg",
@@ -229,8 +732,29 @@
       ]
     },
     {
+      "id": "trustana",
+      "name": "Trustana",
+      "categories": ["B2B & Marketplace"],
+      "files": []
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "categories": ["Infrastructure & Integration"],
+      "website": "https://vercel.com/",
+      "files": []
+    },
+    {
+      "id": "worldpay",
+      "name": "Worldpay",
+      "categories": ["Payments & Checkout"],
+      "files": []
+    },
+    {
       "id": "yotpo",
       "name": "Yotpo",
+      "categories": ["Reviews & UGC"],
+      "website": "https://yotpo.com",
       "files": [
         {
           "file": "yotpo-logo-white.svg",
@@ -238,6 +762,13 @@
           "originalOn": "dark"
         }
       ]
+    },
+    {
+      "id": "zip",
+      "name": "Zip",
+      "listing": "unlisted",
+      "files": []
     }
-  ]
+  ],
+  "list": "Partner list from CD Content Migration v3 (Partners sheet), 17 September 2026. Removed, redirected and merged partners are left out."
 }

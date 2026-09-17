@@ -12,6 +12,13 @@ Phase 1 is built. `main` deploys to GitHub Pages at https://tomrosscd.github.io/
 - **Gradient generator** (`/create/gradient/`): WebGL shader, OKLab blending, chaos, grain, seeds, 2 to 5 colours. Default is "Dark glow" (Dark Green leading, Light Green glow, chaos 10, grain 18), matched to Tom's reference images. The first colour gets about three times the pull of the others, and the falloff is soft.
 - **Hosting:** `.github/workflows/pages.yml` builds with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools` and deploys `out/`. `.github/workflows/ci.yml` runs `format:check` and `pnpm check`. Plain links and files use `withBase()` from `src/lib/base-path.ts`; `next/link` and the router add the base path themselves. Tool pages read their state with `useSearchParams` inside `Suspense`, because a static export has no server.
 
+### Full partner list (branch `feature/partner-list`)
+
+- `src/brand/partners.json` now holds all 99 partners from the CD Content Migration v3 Partners sheet (17 September 2026), with categories, website and whether each is unlisted on the website. Left out: Remove and Redirect rows, afterpay ("Remove - CM"), and anvil and Boost, which the sheet merges into Checkout Components and clearer.io. Searchspring is kept with "Now part of Athos Commerce". Blurbs, mutual clients and Drive links from the sheet are deliberately **not** included, because the site is public.
+- The Partners page has two parts. **Ready to use**: the 10 vector partners with every control. **To do**: 12 partners with an image only (Copy and SVG shown disabled, the PNG or JPG download enabled; SVGs that only wrap a PNG are extracted by `scripts/build-partners.mjs` and offered as that PNG), then 77 with no logo, with website links.
+- **Partner logos never use Convert colours.** Logo colour is Original brand colours, White (#ffffff) or Black (#000000); backgrounds are automatic, white or black.
+- Verified in the dev server: 10 cards, 12 and 77 rows, disabled and enabled buttons as described, Adyen and Elevar image downloads, Klaviyo in white on black copy, search filtering all three sections, only neutral colour options, no errors or broken images; 31 tests pass.
+
 ### Partners (branch `feature/partners`)
 
 - `/partners/`, last item in the menu. Sources: `CD_Partner_Logos.zip` (17 September 2026) in `assets/source/CD_Partner_Logos`, **renamed to remove the senders' personal names** (the repo and site are public). The duplicate GlobalE file was dropped. Metadata in `src/brand/partners.json`; `scripts/build-partners.mjs` (part of `pnpm assets`) checks the JSON matches the folder, reads sizes, and marks an SVG as vector only if it has no embedded `<image>`.

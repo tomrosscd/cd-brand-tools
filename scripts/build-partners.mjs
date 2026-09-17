@@ -3,7 +3,7 @@
 // Fails if partners.json and the source folder disagree.
 import { createHash } from 'node:crypto'
 import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import { basename, extname, join } from 'node:path'
 
 const check = process.argv.includes('--check')
 const sourceDir = 'assets/source/CD_Partner_Logos'
@@ -34,6 +34,7 @@ function pixelSize(bytes, format) {
   throw new Error('Could not read JPEG size')
 }
 
+const extracted = []
 const partners = data.partners
   .map((partner) => {
     const files = partner.files.map((entry) => {
@@ -42,6 +43,11 @@ const partners = data.partners
       const format = ext === 'jpeg' ? 'jpg' : ext
       const svg = format === 'svg' ? bytes.toString('utf8') : ''
       const vector = format === 'svg' && !/<image\b/i.test(svg)
+      // An SVG that only wraps a raster: publish the embedded image so it can be downloaded as what it really is.
+      const embedded = format === 'svg' && !vector ? svg.match(/href="data:image\/(png|jpeg);base64,([^"]+)"/) : null
+      if (format === 'svg' && !vector && !embedded)
+        throw new Error(`${entry.file}: embeds an image that is not a base64 PNG or JPEG`)
+      const embeddedBytes = embedded ? Buffer.from(embedded[2], 'base64') : null
       const size =
         format === 'svg'
           ? (() => {
@@ -49,19 +55,41 @@ const partners = data.partners
               return { width, height }
             })()
           : pixelSize(bytes, format)
+      const imageFormat = embedded ? (embedded[1] === 'png' ? 'png' : 'jpg') : format
+      const image = vector
+        ? null
+        : {
+            href: embedded
+              ? `/brand/partners/${basename(entry.file, '.svg')}.${imageFormat}`
+              : `/brand/partners/${entry.file}`,
+            format: imageFormat,
+            ...pixelSize(embeddedBytes ?? bytes, imageFormat),
+            bytes: (embeddedBytes ?? bytes).length,
+          }
+      if (embedded) extracted.push([`${basename(entry.file, '.svg')}.${imageFormat}`, embeddedBytes])
       return {
         file: entry.file,
         href: `/brand/partners/${entry.file}`,
         format,
         vector,
         note: entry.note,
+        image,
         originalOn: entry.originalOn ?? 'light',
         ...size,
         bytes: bytes.length,
         sha256: createHash('sha256').update(bytes).digest('hex'),
       }
     })
-    return { id: partner.id, name: partner.name, files, vector: files.find((f) => f.vector)?.file ?? null }
+    return {
+      id: partner.id,
+      name: partner.name,
+      ...(partner.aka ? { aka: partner.aka } : {}),
+      categories: partner.categories ?? [],
+      ...(partner.website ? { website: partner.website } : {}),
+      listing: partner.listing ?? 'listed',
+      files,
+      vector: files.find((f) => f.vector)?.file ?? null,
+    }
   })
   .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }))
 
@@ -83,5 +111,9 @@ if (check) {
 rmSync(publicDir, { recursive: true, force: true })
 mkdirSync(publicDir, { recursive: true })
 for (const file of onDisk) cpSync(join(sourceDir, file), join(publicDir, file))
+for (const [name, bytes] of extracted) writeFileSync(join(publicDir, name), bytes)
 const vectorCount = partners.filter((p) => p.vector).length
-console.log(`Published ${onDisk.size} partner files: ${vectorCount} of ${partners.length} partners have vector logos`)
+const imageOnly = partners.filter((p) => !p.vector && p.files.length > 0).length
+console.log(
+  `Published ${onDisk.size} partner files: ${partners.length} partners, ${vectorCount} with vector logos, ${imageOnly} with images only, ${partners.length - vectorCount - imageOnly} with no logo`,
+)
