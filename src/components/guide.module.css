@@ -98,3 +98,20 @@
 .checkerboard {
   background: repeating-conic-gradient(var(--cui-colour-line) 0% 25%, var(--cui-surface-card) 0% 50%) 50% / 16px 16px;
 }
+
+/* Cards keep a steady width however many results there are. */
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.75rem, 1fr));
+  gap: var(--cui-space-16);
+}
+
+.checkerboardDark {
+  background: repeating-conic-gradient(#344a3e 0% 25%, var(--cui-colour-forest) 0% 50%) 50% / 16px 16px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-space-8);
+}
