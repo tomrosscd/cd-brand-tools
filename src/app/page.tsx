@@ -44,7 +44,7 @@ const sections = [
   },
   {
     heading: 'Partners',
-    description: 'Every partner's logo in its own colours, white or black, plus a to-do list of logos to request.',
+    description: 'Every partner logo in its own colours, white or black, plus a to-do list of logos to request.',
     href: '/partners/',
     action: 'Browse partners',
   },
