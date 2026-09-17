@@ -34,7 +34,7 @@ export function FrameSizeField({
   return (
     <div style={{ display: 'grid', gap: 'var(--cui-space-12)' }}>
       <Select
-        label="Size"
+        label="Canvas size"
         value={custom ? 'custom' : (preset?.id ?? 'custom')}
         options={[
           ...framePresets.map((p) => ({ value: p.id, label: `${p.label}, ${p.width} × ${p.height}` })),

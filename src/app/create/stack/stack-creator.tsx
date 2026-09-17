@@ -218,6 +218,13 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
         </div>
 
         <div className={styles.panel}>
+          <section className={styles.section} aria-labelledby="stack-canvas">
+            <h2 id="stack-canvas" className={styles.heading}>
+              Canvas
+            </h2>
+            <FrameSizeField value={state} onValueChange={(size) => commit(size)} />
+          </section>
+
           <section className={styles.section} aria-labelledby="stack-artwork">
             <h2 id="stack-artwork" className={styles.heading}>
               Stack
@@ -248,7 +255,7 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
               onValueChange={(stackColour) => commit({ stackColour })}
             />
             <RangeField
-              label="Size"
+              label="Stack size"
               value={state.scale}
               min={scale.min}
               max={scale.max}
@@ -412,7 +419,6 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
             <h2 id="stack-export" className={styles.heading}>
               Export
             </h2>
-            <FrameSizeField value={state} onValueChange={(size) => commit(size)} />
             <SegmentedControl
               label="Format"
               value={format}

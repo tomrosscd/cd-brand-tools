@@ -80,7 +80,7 @@ void main() {
     if (i >= u_count) break;
     vec2 centre = vec2(u_point[i].x * aspect, u_point[i].y);
     vec2 delta = warped - centre;
-    float influence = u_weight[i] / pow(dot(delta, delta) + 0.015, 1.7);
+    float influence = u_weight[i] / pow(dot(delta, delta) + 0.02, 1.25);
     lab += u_lab[i] * influence;
     total += influence;
   }
@@ -100,7 +100,7 @@ function compile(gl: WebGLRenderingContext, type: number, source: string): WebGL
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
     const log = gl.getShaderInfoLog(shader)
     gl.deleteShader(shader)
-    throw new Error(`Shader failed to compile: ${log}`)
+    throw new Error(`Shader failed to compile: ${log ?? 'the graphics context is unavailable'}`)
   }
   return shader
 }
@@ -109,11 +109,13 @@ export class GradientRenderer {
   readonly canvas: HTMLCanvasElement
   private readonly gl: WebGLRenderingContext
   private readonly program: WebGLProgram
+  private readonly buffer: WebGLBuffer | null
+  private disposed = false
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
     const gl = canvas.getContext('webgl', { preserveDrawingBuffer: true, antialias: false, premultipliedAlpha: false })
-    if (!gl) throw new Error('WebGL is not available in this browser.')
+    if (!gl || gl.isContextLost()) throw new Error('WebGL is not available in this browser.')
     this.gl = gl
     const program = gl.createProgram()
     if (!program) throw new Error('Could not create WebGL program')
@@ -124,6 +126,7 @@ export class GradientRenderer {
     this.program = program
     gl.useProgram(program)
     const buffer = gl.createBuffer()
+    this.buffer = buffer
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW)
     const position = gl.getAttribLocation(program, 'a_position')
@@ -133,6 +136,13 @@ export class GradientRenderer {
 
   private setUniforms(state: GradientStyle, frame: FrameSize) {
     const { gl, program } = this
+    if (this.disposed) throw new Error('The gradient renderer was closed. Reload the page and try again.')
+    // Another renderer may share this canvas's context, so select this program and its geometry every time.
+    gl.useProgram(program)
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer)
+    const position = gl.getAttribLocation(program, 'a_position')
+    gl.enableVertexAttribArray(position)
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
     const u = (name: string) => gl.getUniformLocation(program, name)
     const labs = gradientHexes(state).map(hexToOklab)
     const points = gradientPoints(state.seed, labs.length)
@@ -169,6 +179,7 @@ export class GradientRenderer {
 
   /** Draws the state as if the frame were `width` by `height`, filling this canvas. */
   renderPreview(state: GradientStyle, width: number, height: number) {
+    if (this.disposed) return
     this.setUniforms(state, { width, height })
     this.drawTile(0, 0, width, height)
   }
@@ -192,7 +203,13 @@ export class GradientRenderer {
     return output
   }
 
+  /**
+   * Frees GPU resources but keeps the context alive. A canvas has one WebGL context for its whole life,
+   * so losing it here would break a renderer created again on the same canvas (React remounts in development).
+   */
   dispose() {
-    this.gl.getExtension('WEBGL_lose_context')?.loseContext()
+    this.disposed = true
+    this.gl.deleteBuffer(this.buffer)
+    this.gl.deleteProgram(this.program)
   }
 }

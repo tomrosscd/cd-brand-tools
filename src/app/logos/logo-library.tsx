@@ -4,6 +4,7 @@ import { Badge, EmptyState, Grid, Icon, SegmentedControl, Select, Switch } from 
 import { logoAssets } from '@/brand/assets.generated'
 import type { BrandAsset } from '@/brand/asset-types'
 import styles from '@/components/guide.module.css'
+import { withBase } from '@/lib/base-path'
 import { formatBytes } from '@/lib/export'
 import { useState } from 'react'
 
@@ -82,7 +83,7 @@ export function LogoLibrary() {
               <article key={asset.id} className={styles.assetCard}>
                 <div className={styles.preview} style={{ background: previewBackground(asset) }}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- originals must be shown unaltered */}
-                  <img src={asset.href} alt="" loading="lazy" />
+                  <img src={withBase(asset.href)} alt="" loading="lazy" />
                 </div>
                 <div>
                   <strong style={{ fontSize: 'var(--cui-type-compact)' }}>
@@ -93,7 +94,7 @@ export function LogoLibrary() {
                       <Badge>{asset.format.toUpperCase()}</Badge> {formatBytes(asset.bytes)}
                     </span>
                     <a
-                      href={asset.href}
+                      href={withBase(asset.href)}
                       download={name}
                       aria-label={`Download ${name}`}
                       style={{

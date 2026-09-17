@@ -98,7 +98,7 @@ Verify: identical seed gives identical output, preview matches export, export di
 ### Phase 1D: tools together
 
 - [x] Gradient as a stack creator background, built ahead of a formal decision and easy to remove. SVG exports embed the gradient as a PNG
-- [ ] Deploy a private preview (Vercel) behind the platform's own protection until phase 2 access exists
+- [x] Host on GitHub Pages as a static export, public, by Tom's decision on 17 September 2026. Phase 2 sign-in and gated downloads cannot run on Pages and will need a server host (for example Vercel)
 
 ### Phase 2: access and saved work
 
@@ -128,7 +128,7 @@ Export limit: 8192 px per side and 40 megapixels in total, to be confirmed by te
 
 ## Open decisions
 
-1. **Repository visibility.** `cd-brand-tools` is currently public. The stack artwork and logos are already public in `cd-product-ui`, so phase 1 is not blocked, but fonts and anything gated in phase 2 must not be committed while public. Recommend making it private before phase 2.
+1. **Repository visibility.** Resolved 17 September: public, hosted on GitHub Pages. `cd-brand-tools` is public. The stack artwork and logos are already public in `cd-product-ui`, so phase 1 is not blocked, but fonts and anything gated in phase 2 must not be committed while public. Recommend making it private before phase 2.
 2. **Rotation and flipping** in the stack creator. The desktop wallpaper references show stacks at varied angles, which the source geometry already carries. Recommend leaving rotation out of phase 1.
 3. **Logo overlay scope.** Proposed: one overlay, from Logo, Straight or Icon, in official colour variants only.
 4. **Gradient backgrounds in the stack creator.** Built on 17 September. Confirm it stays in scope.
@@ -136,7 +136,7 @@ Export limit: 8192 px per side and 40 megapixels in total, to be confirmed by te
 6. **Print values.** CMYK and Pantone were read from a page-resolution image. Confirm against the original brand book before showing them as approved.
 7. **Black icon colour.** `Convert_Icon_Black.svg` and its clear-space version use `#231f20`, not the brand Black `#171717`. Leave the downloads untouched, confirm with the brand owner.
 8. **Illustrator source.** Whether `Convert_Brand Logos_All (for export use).ai` is offered as a download. Currently kept in sources only.
-9. **Hosting.** Vercel is assumed for phase 1D.
+9. **Hosting.** GitHub Pages for phase 1. Phase 2 needs a host with a server.
 
 ## Git and releases
 

@@ -94,3 +94,7 @@
   margin: 0;
   color: var(--cui-text-secondary);
 }
+
+.checkerboard {
+  background: repeating-conic-gradient(var(--cui-colour-line) 0% 25%, var(--cui-surface-card) 0% 50%) 50% / 16px 16px;
+}

@@ -1,6 +1,7 @@
 import { ActionCard, Grid, PageHeader, Stack, TextLink } from '@convert/product-ui'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { withBase } from '@/lib/base-path'
 
 export const metadata: Metadata = { title: { absolute: 'Convert Brand Tools' } }
 
@@ -8,37 +9,37 @@ const sections = [
   {
     heading: 'Colours',
     description: 'The brand palette with HEX, RGB, CMYK and Pantone values to copy.',
-    href: '/colours',
+    href: '/colours/',
     action: 'View colours',
   },
   {
     heading: 'Typography',
     description: 'Which typefaces to use for brand work and which for product interfaces.',
-    href: '/typography',
+    href: '/typography/',
     action: 'View typography',
   },
   {
     heading: 'Logos',
     description: 'Every approved logo, straight logo, icon and profile icon, ready to download.',
-    href: '/logos',
+    href: '/logos/',
     action: 'Browse logos',
   },
   {
     heading: 'Stacks',
     description: 'The 36 stack motifs, in their original form.',
-    href: '/stacks',
+    href: '/stacks/',
     action: 'Browse stacks',
   },
   {
     heading: 'Stack creator',
     description: 'Place a stack in a frame, pick brand colours, add a logo and export SVG, PNG or JPEG.',
-    href: '/create/stack',
+    href: '/create/stack/',
     action: 'Create an image',
   },
   {
     heading: 'Gradient generator',
     description: 'Make grainy mesh gradients from brand colours for backgrounds and slides.',
-    href: '/create/gradient',
+    href: '/create/gradient/',
     action: 'Make a gradient',
   },
 ]
@@ -57,7 +58,7 @@ export default function OverviewPage() {
             heading={section.heading}
             description={section.description}
             primaryAction={
-              <TextLink href={section.href} variant="standalone">
+              <TextLink href={withBase(section.href)} variant="standalone">
                 {section.action}
               </TextLink>
             }

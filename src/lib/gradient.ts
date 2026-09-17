@@ -23,6 +23,8 @@ export interface GradientPalette {
 }
 
 export const gradientPalettes: readonly GradientPalette[] = [
+  { id: 'dark-glow', label: 'Dark glow', colours: ['dark-green', 'light-green'] },
+  { id: 'dark-forest-glow', label: 'Dark forest glow', colours: ['dark-green', 'forest-green', 'light-green'] },
   { id: 'greens', label: 'Greens', colours: ['dark-green', 'forest-green', 'light-green'] },
   { id: 'deep', label: 'Deep forest', colours: ['dark-green', 'black', 'forest-green'] },
   { id: 'soft', label: 'Soft light', colours: ['white', 'light-green', 'forest-green'] },
@@ -33,8 +35,8 @@ export const gradientPalettes: readonly GradientPalette[] = [
 
 export const defaultGradient: GradientState = {
   colours: gradientPalettes[0].colours,
-  chaos: 0.35,
-  grain: 0.12,
+  chaos: 0.1,
+  grain: 0.18,
   seed: 20260917,
   width: 1920,
   height: 1080,
@@ -60,7 +62,8 @@ export function gradientPoints(seed: number, count: number): GradientPoint[] {
       candidate = { x: -0.1 + random() * 1.2, y: -0.1 + random() * 1.2 }
       if (points.every((p) => Math.hypot(p.x - candidate.x, p.y - candidate.y) >= minSpacing)) break
     }
-    points.push({ ...candidate, weight: 0.75 + random() * 0.5 + (i === 0 ? 0.25 : 0) })
+    // The first colour leads: it gets roughly three times the pull of the others, so it fills most of the frame.
+    points.push({ ...candidate, weight: i === 0 ? 2.6 + random() * 0.4 : 0.7 + random() * 0.4 })
   }
   return points
 }

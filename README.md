@@ -13,6 +13,18 @@ pnpm dev
 
 `pnpm dev` and `pnpm build` first run `pnpm assets`, which publishes the supplied originals from `assets/source` into `public/brand` and regenerates the manifests in `src/brand`.
 
+Open http://localhost:3000.
+
+## Hosting
+
+`main` deploys to GitHub Pages at https://tomrosscd.github.io/cd-brand-tools/ through `.github/workflows/pages.yml`. The site is a static export (`output: 'export'`), so it has no server. To preview the Pages build locally:
+
+```sh
+NEXT_PUBLIC_BASE_PATH=/cd-brand-tools pnpm build
+```
+
+The output is in `out/`. GitHub Pages sites are public. Do not add fonts or gated assets until access control exists on a different host.
+
 ## Checks
 
 ```sh
@@ -30,4 +42,4 @@ Runs the asset manifest check, type-check, lint, unit tests and a production bui
 
 ## Status
 
-Phase 0 complete. Phase 1 in progress. No authentication: run locally only, and do not deploy publicly until phase 2 access control exists.
+Phase 1 built and hosted publicly on GitHub Pages. No authentication: only already-public brand assets are included.

@@ -65,7 +65,7 @@ export const defaultComposition: StackComposition = {
   stackId: 'stack-01',
   stackColour: 'light-green',
   background: 'dark-green',
-  gradient: { ...gradientStyleOf(defaultGradient), colours: ['dark-green', 'black', 'forest-green'], chaos: 0.4 },
+  gradient: gradientStyleOf(defaultGradient),
   x: 0.72,
   y: 0.55,
   scale: 0.75,

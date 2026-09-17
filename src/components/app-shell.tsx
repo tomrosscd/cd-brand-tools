@@ -3,19 +3,22 @@
 import { DashboardShell, Icon, type SidebarEntry } from '@convert/product-ui'
 import { usePathname, useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
+import { basePath, withBase } from '@/lib/base-path'
+
+const link = (id: string, label: string, path: string) => ({ id, label, href: withBase(path) })
 
 const items: readonly SidebarEntry[] = [
-  { id: 'overview', label: 'Overview', href: '/', icon: <Icon name="overview" /> },
+  { ...link('overview', 'Overview', '/'), icon: <Icon name="overview" /> },
   {
     id: 'guide',
     label: 'Brand guide',
     icon: <Icon name="visibility" />,
     defaultOpen: true,
     items: [
-      { id: 'colours', label: 'Colours', href: '/colours' },
-      { id: 'typography', label: 'Typography', href: '/typography' },
-      { id: 'logos', label: 'Logos', href: '/logos' },
-      { id: 'stacks', label: 'Stacks', href: '/stacks' },
+      link('colours', 'Colours', '/colours/'),
+      link('typography', 'Typography', '/typography/'),
+      link('logos', 'Logos', '/logos/'),
+      link('stacks', 'Stacks', '/stacks/'),
     ],
   },
   {
@@ -24,8 +27,8 @@ const items: readonly SidebarEntry[] = [
     icon: <Icon name="edit" />,
     defaultOpen: true,
     items: [
-      { id: 'stack-creator', label: 'Stack creator', href: '/create/stack' },
-      { id: 'gradient-generator', label: 'Gradient generator', href: '/create/gradient' },
+      link('stack-creator', 'Stack creator', '/create/stack/'),
+      link('gradient-generator', 'Gradient generator', '/create/gradient/'),
     ],
   },
 ]
@@ -45,7 +48,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <DashboardShell
       items={items}
-      activeId={routes[pathname] ?? 'overview'}
+      activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
       workspace="Brand Tools"
       workspaceDescription="Internal"
       density="comfortable"
@@ -53,7 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       onNavigate={(item, event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
         event.preventDefault()
-        router.push(item.href)
+        router.push(item.href.slice(basePath.length) || '/')
       }}
     >
       {children}
