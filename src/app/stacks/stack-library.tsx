@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Grid, Icon, Select, Switch, TextLink } from '@convert/product-ui'
+import { Button, Icon, Select, Switch, TextLink } from '@convert/product-ui'
 import { brandColours, getBrandColour, type BrandColourId } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import type { StackArtwork } from '@/brand/stack-types'
@@ -9,6 +9,7 @@ import { StackThumbnail } from '@/components/stack-thumbnail'
 import { useToast } from '@/components/toast-provider'
 import { canvasToBlob, downloadBlob, svgBlob, svgToCanvas } from '@/lib/export'
 import { withBase } from '@/lib/base-path'
+import { copySvg } from '@/lib/clipboard'
 import { stackDownloadName, stackDownloadSize, stackToSvg } from '@/lib/stack-download'
 import { useState } from 'react'
 
@@ -40,6 +41,15 @@ export function StackLibrary() {
     }
   }
 
+  const copy = async (stack: StackArtwork) => {
+    try {
+      await copySvg(stackToSvg(stack, { fill, background }))
+      notify('Copied as SVG', 'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.')
+    } catch (caught) {
+      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the SVG instead.')
+    }
+  }
+
   return (
     <div style={{ display: 'grid', gap: 'var(--cui-space-24)' }}>
       <div className={styles.filters}>
@@ -64,10 +74,11 @@ export function StackLibrary() {
         ) : null}
       </div>
       <p className={styles.prose}>
-        Downloads are cropped tightly to the stack. PNGs are {PNG_WIDTH}px wide
+        Copies and downloads are cropped tightly to the stack. Copy pastes straight into Figma as vectors. PNGs are{' '}
+        {PNG_WIDTH}px wide
         {withBackground ? '.' : ' with a transparent background.'}
       </p>
-      <Grid columns={4} minItemWidth={200}>
+      <div className={styles.cardGrid}>
         {stacks.map((stack) => (
           <article key={stack.id} className={styles.assetCard}>
             <div
@@ -82,14 +93,29 @@ export function StackLibrary() {
                 Use
               </TextLink>
             </div>
-            <div className={styles.assetMeta}>
-              <Button size="sm" leadingIcon={<Icon name="download" />} onClick={() => download(stack, 'png')}>
+            <div className={styles.actions}>
+              <Button
+                size="sm"
+                leadingIcon={<Icon name="copy" />}
+                aria-label={`Copy ${stack.label} as SVG`}
+                onClick={() => copy(stack)}
+              >
+                Copy
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                leadingIcon={<Icon name="download" />}
+                aria-label={`Download ${stack.label} as PNG`}
+                onClick={() => download(stack, 'png')}
+              >
                 PNG
               </Button>
               <Button
                 size="sm"
                 variant="secondary"
                 leadingIcon={<Icon name="download" />}
+                aria-label={`Download ${stack.label} as SVG`}
                 onClick={() => download(stack, 'svg')}
               >
                 SVG
@@ -97,7 +123,7 @@ export function StackLibrary() {
             </div>
           </article>
         ))}
-      </Grid>
+      </div>
     </div>
   )
 }

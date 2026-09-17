@@ -12,6 +12,13 @@ Phase 1 is built. `main` deploys to GitHub Pages at https://tomrosscd.github.io/
 - **Gradient generator** (`/create/gradient/`): WebGL shader, OKLab blending, chaos, grain, seeds, 2 to 5 colours. Default is "Dark glow" (Dark Green leading, Light Green glow, chaos 10, grain 18), matched to Tom's reference images. The first colour gets about three times the pull of the others, and the falloff is soft.
 - **Hosting:** `.github/workflows/pages.yml` builds with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools` and deploys `out/`. `.github/workflows/ci.yml` runs `format:check` and `pnpm check`. Plain links and files use `withBase()` from `src/lib/base-path.ts`; `next/link` and the router add the base path themselves. Tool pages read their state with `useSearchParams` inside `Suspense`, because a static export has no server.
 
+### Copy to Figma (branch `feature/copy-to-figma`)
+
+- Logos and Stacks cards have a Copy button. SVG assets copy as clean SVG text (`geometryToSvg` in `src/lib/svg-markup.ts`: supplied geometry and colour, no Illustrator prolog, ids, classes or style blocks), which Figma pastes as editable vectors. PNG logos copy as PNG images. Clipboard writes use `ClipboardItem` with a promise so Safari keeps the click permission (`src/lib/clipboard.ts`).
+- Both pages have a Background toggle applying to copies and downloads. Logos default to automatic contrast (Dark Green behind White and Light Green, White behind the others) or any brand colour; a colour matching the logo falls back to contrast. With the background off, logo downloads are the untouched originals. Profile icons and JPEGs already carry a background, so the toggle is hidden for them.
+- Cards use a fixed-width auto-fill grid, so a single result no longer stretches across the page.
+- Verified against `pnpm dev` with clipboard permissions: logo SVG copy has no background rect when off and a full-viewBox Dark Green rect when on; Light Green PNG logo copies 3843×576, corner alpha 0 when off and Dark Green when on; stack SVG copy with and without background; untouched original downloads with background off; 25 tests, type-check and lint pass. **Pasting into Figma itself has not been tested** (no Figma access from the session).
+
 ### Fixed after Tom's first local test
 
 - Gradient preview failed in `pnpm dev` with "Shader failed to compile: null". React mounts twice in development and `dispose()` called `loseContext()`, killing the canvas's only WebGL context. `dispose()` now frees resources only, and each render re-selects its own program. Headless checks had used the production build, which mounts once, so they missed it. **Check tool pages in `pnpm dev` as well as the build.**

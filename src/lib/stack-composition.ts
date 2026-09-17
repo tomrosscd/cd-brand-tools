@@ -1,5 +1,5 @@
 import { logoAssets } from '@/brand/assets.generated'
-import type { BrandAsset, SvgShape } from '@/brand/asset-types'
+import type { BrandAsset } from '@/brand/asset-types'
 import { getBrandColour, isBrandColourId, type BrandColourId } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import type { StackArtwork } from '@/brand/stack-types'
@@ -11,6 +11,7 @@ import {
   writeGradientStyle,
   type GradientStyle,
 } from './gradient'
+import { shapeMarkup } from './svg-markup'
 
 export const overlayKinds = ['none', 'Logo', 'Straight', 'Icon'] as const
 export type OverlayKind = (typeof overlayKinds)[number]
@@ -119,12 +120,6 @@ export function overlayBox(state: StackComposition, asset: BrandAsset): Box {
 }
 
 const num = (value: number) => String(round(value, 3))
-
-function shapeMarkup(shape: SvgShape): string {
-  if (shape.tag === 'path') return `<path d="${shape.d}"/>`
-  if (shape.tag === 'polygon') return `<polygon points="${shape.points}"/>`
-  return `<rect x="${shape.x}" y="${shape.y}" width="${shape.width}" height="${shape.height}"/>`
-}
 
 /**
  * The composition as a standalone SVG document. Uses no element IDs or classes, so several exports
