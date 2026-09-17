@@ -1,0 +1,5 @@
+assets/source
+public/brand
+src/brand/*.generated.ts
+pnpm-lock.yaml
+.next

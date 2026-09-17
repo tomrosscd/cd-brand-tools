@@ -1,0 +1,41 @@
+{
+  "name": "cd-brand-tools",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "assets": "node scripts/build-assets.mjs && node scripts/build-stacks.mjs",
+    "predev": "pnpm assets",
+    "dev": "next dev",
+    "prebuild": "pnpm assets",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "assets:check": "node scripts/build-assets.mjs --check && node scripts/build-stacks.mjs --check",
+    "check": "pnpm assets:check && pnpm type-check && pnpm lint && pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "@convert/product-ui": "https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "prettier": "3.9.7",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "description": "Convert brand guide, asset library, stack creator and gradient generator",
+  "engines": {
+    "node": ">=22.22.2"
+  }
+}
