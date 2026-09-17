@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "assets": "node scripts/build-assets.mjs && node scripts/build-stacks.mjs",
+    "assets": "node scripts/build-assets.mjs && node scripts/build-stacks.mjs && node scripts/build-partners.mjs",
     "predev": "pnpm assets",
     "dev": "next dev",
     "prebuild": "pnpm assets",
@@ -14,7 +14,7 @@
     "test": "vitest run",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "assets:check": "node scripts/build-assets.mjs --check && node scripts/build-stacks.mjs --check",
+    "assets:check": "node scripts/build-assets.mjs --check && node scripts/build-stacks.mjs --check && node scripts/build-partners.mjs --check",
     "check": "pnpm assets:check && pnpm type-check && pnpm lint && pnpm test && pnpm build"
   },
   "dependencies": {
@@ -24,11 +24,13 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@types/jsdom": "30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "jsdom": "30.1.0",
     "prettier": "3.9.7",
     "typescript": "^5",
     "vitest": "^3.2.7"

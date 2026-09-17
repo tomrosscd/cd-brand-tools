@@ -42,6 +42,12 @@ const sections = [
     href: '/create/gradient/',
     action: 'Make a gradient',
   },
+  {
+    heading: 'Partners',
+    description: 'Partner logos in their own colours, white, black or a brand colour, ready for Figma.',
+    href: '/partners/',
+    action: 'Browse partners',
+  },
 ]
 
 export default function OverviewPage() {
