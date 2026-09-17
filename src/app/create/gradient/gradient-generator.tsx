@@ -1,61 +1,29 @@
 'use client'
 
-import { Alert, Button, Icon, PageHeader, SegmentedControl, Select, Stack } from '@convert/product-ui'
-import { getBrandColour, type BrandColourId } from '@/brand/colours'
+import { Alert, Button, Icon, PageHeader, SegmentedControl, Stack } from '@convert/product-ui'
+import { getBrandColour } from '@/brand/colours'
 import { FrameSizeField } from '@/components/frame-size-field'
+import { GradientColourEditor } from '@/components/gradient-colour-editor'
 import { RangeField } from '@/components/range-field'
-import { SwatchPicker } from '@/components/swatch-picker'
 import { useToast } from '@/components/toast-provider'
 import styles from '@/components/tool-layout.module.css'
+import { useGradientCanvas } from '@/components/use-gradient-canvas'
 import { canvasToBlob, downloadBlob, formatBytes, type RasterFormat } from '@/lib/export'
-import {
-  availableColours,
-  gradientColourLimits,
-  gradientFileName,
-  gradientPalettes,
-  serialiseGradient,
-  type GradientState,
-} from '@/lib/gradient'
-import { GradientRenderer } from '@/lib/gradient-renderer'
+import { gradientFileName, gradientStyleOf, serialiseGradient, type GradientState } from '@/lib/gradient'
 import { newSeed } from '@/lib/random'
 import { useUrlState } from '@/lib/use-url-state'
-import { useCallback, useEffect, useRef, useState } from 'react'
-
-const PREVIEW_LONG_SIDE = 1200
+import { useEffect, useMemo, useState } from 'react'
 
 export function GradientGenerator({ initialState }: { initialState: GradientState }) {
   const [state, setState] = useState(initialState)
   const [format, setFormat] = useState<RasterFormat>('png')
   const [exporting, setExporting] = useState(false)
-  const [error, setError] = useState<string>()
-  const [addColour, setAddColour] = useState<BrandColourId | ''>('')
-  const rendererRef = useRef<GradientRenderer | null>(null)
   const notify = useToast()
+  const style = useMemo(() => gradientStyleOf(state), [state])
+  const frame = useMemo(() => ({ width: state.width, height: state.height }), [state.width, state.height])
+  const { canvasRef, error, renderFull } = useGradientCanvas(style, frame)
 
   useUrlState(serialiseGradient(state))
-
-  const [renderer, setRenderer] = useState<GradientRenderer | null>(null)
-
-  const canvasRef = useCallback((canvas: HTMLCanvasElement | null) => {
-    if (!canvas) return
-    try {
-      const created = new GradientRenderer(canvas)
-      rendererRef.current = created
-      setRenderer(created)
-      return () => created.dispose()
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'The preview could not start.')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!renderer) return
-    const ratio = Math.min(1, PREVIEW_LONG_SIDE / Math.max(state.width, state.height))
-    const frame = requestAnimationFrame(() =>
-      renderer.renderPreview(state, Math.round(state.width * ratio), Math.round(state.height * ratio)),
-    )
-    return () => cancelAnimationFrame(frame)
-  }, [state, renderer])
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -70,33 +38,19 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
 
   const update = (patch: Partial<GradientState>) => setState((current) => ({ ...current, ...patch }))
 
-  const move = (index: number, direction: -1 | 1) => {
-    const colours = [...state.colours]
-    const [item] = colours.splice(index, 1)
-    colours.splice(index + direction, 0, item)
-    update({ colours })
-  }
-
   const exportImage = async () => {
-    const renderer = rendererRef.current
-    if (!renderer) return
     setExporting(true)
     try {
-      await new Promise((resolve) => requestAnimationFrame(resolve))
-      const canvas = renderer.renderFull(state)
+      const canvas = await renderFull()
       const blob = await canvasToBlob(canvas, format)
       downloadBlob(blob, gradientFileName(state, format))
       notify('Gradient exported', `${state.width} × ${state.height} ${format.toUpperCase()}, ${formatBytes(blob.size)}`)
     } catch (caught) {
       notify('Export failed', caught instanceof Error ? caught.message : 'Try a smaller size.')
     } finally {
-      const ratio = Math.min(1, PREVIEW_LONG_SIDE / Math.max(state.width, state.height))
-      renderer.renderPreview(state, Math.round(state.width * ratio), Math.round(state.height * ratio))
       setExporting(false)
     }
   }
-
-  const unused = availableColours(state)
 
   return (
     <Stack gap={32}>
@@ -136,73 +90,7 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
             <h2 id="gradient-colours" className={styles.heading}>
               Colours
             </h2>
-            <Select
-              label="Starting palette"
-              value={gradientPalettes.find((p) => p.colours.join() === state.colours.join())?.id ?? 'custom'}
-              options={[
-                ...gradientPalettes.map((p) => ({ value: p.id, label: p.label })),
-                { value: 'custom', label: 'Custom', disabled: true },
-              ]}
-              onChange={(event) => {
-                const palette = gradientPalettes.find((p) => p.id === event.target.value)
-                if (palette) update({ colours: palette.colours })
-              }}
-            />
-            <ol className={styles.orderList} aria-label="Colours in this gradient, strongest first">
-              {state.colours.map((id, index) => {
-                const colour = getBrandColour(id)
-                return (
-                  <li key={id} className={styles.orderItem}>
-                    <span className={styles.dot} style={{ background: colour.hex }} aria-hidden="true" />
-                    <span>{colour.name}</span>
-                    <span className={styles.row}>
-                      <Button
-                        variant="quiet"
-                        size="icon"
-                        aria-label={`Move ${colour.name} up`}
-                        disabled={index === 0}
-                        onClick={() => move(index, -1)}
-                      >
-                        <Icon name="chevron-up" />
-                      </Button>
-                      <Button
-                        variant="quiet"
-                        size="icon"
-                        aria-label={`Move ${colour.name} down`}
-                        disabled={index === state.colours.length - 1}
-                        onClick={() => move(index, 1)}
-                      >
-                        <Icon name="chevron" />
-                      </Button>
-                      <Button
-                        variant="quiet"
-                        size="icon"
-                        aria-label={`Remove ${colour.name}`}
-                        disabled={state.colours.length <= gradientColourLimits.min}
-                        onClick={() => update({ colours: state.colours.filter((c) => c !== id) })}
-                      >
-                        <Icon name="close" />
-                      </Button>
-                    </span>
-                  </li>
-                )
-              })}
-            </ol>
-            {state.colours.length < gradientColourLimits.max && unused.length > 0 ? (
-              <div className={styles.section}>
-                <SwatchPicker
-                  label="Add a colour"
-                  value={addColour}
-                  colours={unused}
-                  onValueChange={(id) => {
-                    setAddColour('')
-                    update({ colours: [...state.colours, id as BrandColourId] })
-                  }}
-                />
-              </div>
-            ) : (
-              <p className={styles.caption}>A gradient uses up to five colours.</p>
-            )}
+            <GradientColourEditor colours={state.colours} onChange={(colours) => update({ colours })} />
           </section>
 
           <section className={styles.section} aria-labelledby="gradient-texture">

@@ -4,7 +4,7 @@ import { seededRandom } from './random'
 
 export const gradientColourLimits = { min: 2, max: 5 } as const
 
-export interface GradientState extends FrameSize {
+export interface GradientStyle {
   /** Brand colours in order. Earlier colours get slightly more weight. */
   colours: readonly BrandColourId[]
   /** 0 is smooth soft fields, 1 is heavily warped and swirled. */
@@ -13,6 +13,8 @@ export interface GradientState extends FrameSize {
   grain: number
   seed: number
 }
+
+export interface GradientState extends GradientStyle, FrameSize {}
 
 export interface GradientPalette {
   id: string
@@ -63,34 +65,55 @@ export function gradientPoints(seed: number, count: number): GradientPoint[] {
   return points
 }
 
-export function gradientHexes(state: GradientState): string[] {
+export function gradientHexes(state: Pick<GradientStyle, 'colours'>): string[] {
   return state.colours.map((id) => getBrandColour(id).hex)
 }
 
-export function parseGradient(params: URLSearchParams): GradientState {
-  const colours = (params.get('colours') ?? '').split(',').filter(isBrandColourId).slice(0, gradientColourLimits.max)
+const paramKey = (prefix: string, name: string) => (prefix ? `${prefix}${name[0].toUpperCase()}${name.slice(1)}` : name)
+
+/** Reads a gradient style. A prefix namespaces the keys, e.g. `g` reads `gColours`, `gChaos`. */
+export function parseGradientStyle(params: URLSearchParams, prefix = ''): GradientStyle {
+  const key = (name: string) => paramKey(prefix, name)
+  const colours = (params.get(key('colours')) ?? '')
+    .split(',')
+    .filter(isBrandColourId)
+    .filter((id, index, all) => all.indexOf(id) === index)
+    .slice(0, gradientColourLimits.max)
   return {
     colours: colours.length >= gradientColourLimits.min ? colours : defaultGradient.colours,
-    chaos: readNumber(params.get('chaos'), defaultGradient.chaos, 0, 1),
-    grain: readNumber(params.get('grain'), defaultGradient.grain, 0, 1),
-    seed: Math.round(readNumber(params.get('seed'), defaultGradient.seed, 0, 999_999_999)),
-    ...readFrame(params, defaultGradient),
+    chaos: readNumber(params.get(key('chaos')), defaultGradient.chaos, 0, 1),
+    grain: readNumber(params.get(key('grain')), defaultGradient.grain, 0, 1),
+    seed: Math.round(readNumber(params.get(key('seed')), defaultGradient.seed, 0, 999_999_999)),
   }
 }
 
+export function writeGradientStyle(params: URLSearchParams, style: GradientStyle, prefix = '') {
+  const key = (name: string) => paramKey(prefix, name)
+  params.set(key('colours'), style.colours.join(','))
+  params.set(key('chaos'), String(round(style.chaos, 2)))
+  params.set(key('grain'), String(round(style.grain, 2)))
+  params.set(key('seed'), String(style.seed))
+}
+
+export function parseGradient(params: URLSearchParams): GradientState {
+  return { ...parseGradientStyle(params), ...readFrame(params, defaultGradient) }
+}
+
 export function serialiseGradient(state: GradientState): URLSearchParams {
-  return new URLSearchParams({
-    colours: state.colours.join(','),
-    chaos: String(round(state.chaos, 2)),
-    grain: String(round(state.grain, 2)),
-    seed: String(state.seed),
-    w: String(state.width),
-    h: String(state.height),
-  })
+  const params = new URLSearchParams()
+  writeGradientStyle(params, state)
+  params.set('w', String(state.width))
+  params.set('h', String(state.height))
+  return params
+}
+
+export function gradientStyleOf(state: GradientStyle): GradientStyle {
+  const { colours, chaos, grain, seed } = state
+  return { colours, chaos, grain, seed }
 }
 
 /** Colours not yet in the gradient, in brand order. */
-export function availableColours(state: GradientState): BrandColourId[] {
+export function availableColours(state: Pick<GradientStyle, 'colours'>): BrandColourId[] {
   return brandColours.map((c) => c.id).filter((id) => !state.colours.includes(id))
 }
 

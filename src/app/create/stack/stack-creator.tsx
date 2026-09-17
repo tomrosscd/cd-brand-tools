@@ -4,11 +4,13 @@ import { Alert, Button, Icon, PageHeader, SegmentedControl, Select, Stack } from
 import { getBrandColour } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import { FrameSizeField } from '@/components/frame-size-field'
+import { GradientColourEditor } from '@/components/gradient-colour-editor'
 import { RangeField } from '@/components/range-field'
 import { StackThumbnail } from '@/components/stack-thumbnail'
 import { SwatchPicker } from '@/components/swatch-picker'
 import { useToast } from '@/components/toast-provider'
 import styles from '@/components/tool-layout.module.css'
+import { useGradientCanvas } from '@/components/use-gradient-canvas'
 import { canvasToBlob, downloadBlob, formatBytes, svgBlob, svgToCanvas } from '@/lib/export'
 import {
   compositionFileName,
@@ -23,6 +25,7 @@ import {
   serialiseComposition,
   type StackComposition,
 } from '@/lib/stack-composition'
+import { newSeed } from '@/lib/random'
 import { useUrlState } from '@/lib/use-url-state'
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 
@@ -51,6 +54,11 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
 
   useUrlState(serialiseComposition(state))
   const svg = useMemo(() => compositionToSvg(state), [state])
+  const frameSize = useMemo(() => ({ width: state.width, height: state.height }), [state.width, state.height])
+  const gradient = state.background === 'gradient' ? state.gradient : undefined
+  const { canvasRef, error: gradientError, renderFull } = useGradientCanvas(gradient, frameSize)
+  const setGradient = (patch: Partial<StackComposition['gradient']>) =>
+    commit((current) => ({ ...current, gradient: { ...current.gradient, ...patch } }))
 
   /** Records the current state for undo, then applies a change. */
   const commit = (patch: Partial<StackComposition> | ((current: StackComposition) => StackComposition)) => {
@@ -125,7 +133,16 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
     try {
       const fileName = compositionFileName(state, format)
       let blob: Blob
-      if (format === 'svg') {
+      if (state.background === 'gradient') {
+        const background = await renderFull()
+        if (format === 'svg') {
+          blob = svgBlob(compositionToSvg(state, { gradientHref: background.toDataURL('image/png') }))
+        } else {
+          const artwork = await svgToCanvas(svg, state.width, state.height)
+          background.getContext('2d')!.drawImage(artwork, 0, 0)
+          blob = await canvasToBlob(background, format)
+        }
+      } else if (format === 'svg') {
         blob = svgBlob(svg)
       } else {
         const exportState =
@@ -141,6 +158,8 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
       setExporting(false)
     }
   }
+
+  const backgroundKind = state.background === 'gradient' || state.background === 'none' ? state.background : 'colour'
 
   const stack = getStack(state.stackId)
   const stackColour = getBrandColour(state.stackColour)
@@ -170,7 +189,10 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
             <div
               ref={frameRef}
               className={`${styles.frame} ${styles.draggable} ${state.background === 'none' ? styles.transparent : ''}`}
-              style={{ aspectRatio: `${state.width} / ${state.height}` }}
+              style={{
+                aspectRatio: `${state.width} / ${state.height}`,
+                width: `min(100%, calc((70vh - 2 * var(--cui-space-24)) * ${state.width / state.height}))`,
+              }}
               tabIndex={0}
               role="img"
               aria-label={`${stack.label} in ${stackColour.name}, centred at ${Math.round(state.x * 100)}% across and ${Math.round(state.y * 100)}% down. Use arrow keys to move, plus and minus to resize.`}
@@ -179,8 +201,15 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
               onPointerUp={() => (drag.current = null)}
               onPointerCancel={() => (drag.current = null)}
               onKeyDown={onFrameKey}
-              dangerouslySetInnerHTML={{ __html: svg }}
-            />
+            >
+              <canvas
+                ref={canvasRef}
+                aria-hidden="true"
+                className={styles.layer}
+                style={{ visibility: gradient ? 'visible' : 'hidden' }}
+              />
+              <div className={styles.layer} dangerouslySetInnerHTML={{ __html: svg }} />
+            </div>
           </div>
           <p className={styles.caption}>
             Drag the stack, or focus the preview and use the arrow keys (Shift for bigger steps) and plus or minus.
@@ -257,16 +286,64 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
             <h2 id="stack-background" className={styles.heading}>
               Background
             </h2>
-            <SwatchPicker
-              label="Background colour"
-              value={state.background}
-              noneLabel="Transparent"
-              onValueChange={(background) => commit({ background })}
+            <SegmentedControl
+              label="Background"
+              value={backgroundKind}
+              options={[
+                { value: 'colour', label: 'Colour' },
+                { value: 'gradient', label: 'Gradient' },
+                { value: 'none', label: 'Transparent' },
+              ]}
+              onValueChange={(kind) =>
+                commit({ background: kind === 'colour' ? 'dark-green' : (kind as 'gradient' | 'none') })
+              }
             />
+            {backgroundKind === 'colour' ? (
+              <SwatchPicker
+                label="Background colour"
+                value={state.background}
+                onValueChange={(background) => commit({ background })}
+              />
+            ) : null}
             {state.background === state.stackColour ? (
               <Alert heading="The stack matches the background" tone="warning">
                 Choose a different stack or background colour so the stack is visible.
               </Alert>
+            ) : null}
+            {gradient ? (
+              <>
+                <GradientColourEditor colours={gradient.colours} onChange={(colours) => setGradient({ colours })} />
+                <RangeField
+                  label="Chaos"
+                  value={gradient.chaos}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  displayScale={100}
+                  unit="%"
+                  onValueChange={(chaos) => setGradient({ chaos })}
+                />
+                <RangeField
+                  label="Grain"
+                  value={gradient.grain}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  displayScale={100}
+                  unit="%"
+                  onValueChange={(grain) => setGradient({ grain })}
+                />
+                <div>
+                  <Button variant="secondary" onClick={() => setGradient({ seed: newSeed() })}>
+                    New arrangement
+                  </Button>
+                </div>
+                {gradientError ? (
+                  <Alert heading="Gradients are unavailable in this browser" tone="error">
+                    {gradientError}
+                  </Alert>
+                ) : null}
+              </>
             ) : null}
           </section>
 
@@ -346,6 +423,12 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
               ]}
               onValueChange={(value) => setFormat(value as ExportFormat)}
             />
+            {format === 'svg' && state.background === 'gradient' ? (
+              <p className={styles.caption} role="status">
+                The gradient is embedded in the SVG as an image, so the file is large. The stack and logo stay as
+                vectors.
+              </p>
+            ) : null}
             {format === 'jpg' && state.background === 'none' ? (
               <p className={styles.caption} role="status">
                 JPEG cannot be transparent, so this export uses a White background.

@@ -4,6 +4,13 @@ import { getBrandColour, isBrandColourId, type BrandColourId } from '@/brand/col
 import { stacks } from '@/brand/stacks.generated'
 import type { StackArtwork } from '@/brand/stack-types'
 import { readFrame, readNumber, round, type FrameSize } from './frame'
+import {
+  defaultGradient,
+  gradientStyleOf,
+  parseGradientStyle,
+  writeGradientStyle,
+  type GradientStyle,
+} from './gradient'
 
 export const overlayKinds = ['none', 'Logo', 'Straight', 'Icon'] as const
 export type OverlayKind = (typeof overlayKinds)[number]
@@ -27,7 +34,10 @@ export type OverlayPosition = (typeof overlayPositions)[number]
 export interface StackComposition extends FrameSize {
   stackId: string
   stackColour: BrandColourId
-  background: BrandColourId | 'none'
+  /** A brand colour, transparent, or the gradient described by `gradient`. */
+  background: BrandColourId | 'none' | 'gradient'
+  /** Used when `background` is `gradient`. Kept when switching away so it can be switched back. */
+  gradient: GradientStyle
   /** Stack centre as a fraction of frame width. May be outside 0 to 1 to crop. */
   x: number
   /** Stack centre as a fraction of frame height. */
@@ -55,6 +65,7 @@ export const defaultComposition: StackComposition = {
   stackId: 'stack-01',
   stackColour: 'light-green',
   background: 'dark-green',
+  gradient: { ...gradientStyleOf(defaultGradient), colours: ['dark-green', 'black', 'forest-green'], chaos: 0.4 },
   x: 0.72,
   y: 0.55,
   scale: 0.75,
@@ -119,13 +130,25 @@ function shapeMarkup(shape: SvgShape): string {
  * The composition as a standalone SVG document. Uses no element IDs or classes, so several exports
  * can be inlined into one page without collisions. Geometry is emitted exactly as supplied.
  */
-export function compositionToSvg(state: StackComposition): string {
+export function compositionToSvg(
+  state: StackComposition,
+  options: {
+    /** Raster image of the gradient background. Without it a gradient background is left out, for layering over a canvas. */
+    gradientHref?: string
+  } = {},
+): string {
   const stack = getStack(state.stackId)
   const box = stackBox(state)
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${state.width}" height="${state.height}" viewBox="0 0 ${state.width} ${state.height}">`,
   ]
-  if (state.background !== 'none') {
+  if (state.background === 'gradient') {
+    if (options.gradientHref) {
+      parts.push(
+        `<image href="${options.gradientHref}" width="${state.width}" height="${state.height}" preserveAspectRatio="none"/>`,
+      )
+    }
+  } else if (state.background !== 'none') {
     parts.push(`<rect width="${state.width}" height="${state.height}" fill="${getBrandColour(state.background).hex}"/>`)
   }
   parts.push(
@@ -164,7 +187,11 @@ export function parseComposition(params: URLSearchParams): StackComposition {
     ...readFrame(params, d),
     stackId: stacks.some((s) => s.id === `stack-${stackParam}`) ? `stack-${stackParam}` : d.stackId,
     stackColour: stackColour && isBrandColourId(stackColour) ? stackColour : d.stackColour,
-    background: background === 'none' || (background && isBrandColourId(background)) ? background : d.background,
+    background:
+      background === 'none' || background === 'gradient' || (background && isBrandColourId(background))
+        ? background
+        : d.background,
+    gradient: params.has('gColours') ? parseGradientStyle(params, 'g') : d.gradient,
     x: readNumber(params.get('x'), d.x, pos.min, pos.max),
     y: readNumber(params.get('y'), d.y, pos.min, pos.max),
     scale: readNumber(params.get('scale'), d.scale, scale.min, scale.max),
@@ -189,6 +216,7 @@ export function serialiseComposition(state: StackComposition): URLSearchParams {
     h: String(state.height),
     logo: state.overlay.kind,
   })
+  if (state.background === 'gradient') writeGradientStyle(params, state.gradient, 'g')
   if (state.overlay.kind !== 'none') {
     params.set('logoColour', state.overlay.colour)
     params.set('logoPos', state.overlay.position)

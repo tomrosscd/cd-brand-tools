@@ -39,6 +39,17 @@
   height: 100%;
 }
 
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+.layer > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .transparent {
   background: repeating-conic-gradient(var(--cui-colour-line) 0% 25%, var(--cui-surface-card) 0% 50%) 50% / 20px 20px;
 }

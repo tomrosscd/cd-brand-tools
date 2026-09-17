@@ -1,5 +1,6 @@
 import { hexToOklab } from './colour-space'
-import { gradientHexes, gradientPoints, type GradientState } from './gradient'
+import type { FrameSize } from './frame'
+import { gradientHexes, gradientPoints, type GradientState, type GradientStyle } from './gradient'
 
 const MAX_COLOURS = 5
 const TILE = 2048
@@ -130,7 +131,7 @@ export class GradientRenderer {
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
   }
 
-  private setUniforms(state: GradientState, frame: { width: number; height: number }) {
+  private setUniforms(state: GradientStyle, frame: FrameSize) {
     const { gl, program } = this
     const u = (name: string) => gl.getUniformLocation(program, name)
     const labs = gradientHexes(state).map(hexToOklab)
@@ -167,7 +168,7 @@ export class GradientRenderer {
   }
 
   /** Draws the state as if the frame were `width` by `height`, filling this canvas. */
-  renderPreview(state: GradientState, width: number, height: number) {
+  renderPreview(state: GradientStyle, width: number, height: number) {
     this.setUniforms(state, { width, height })
     this.drawTile(0, 0, width, height)
   }

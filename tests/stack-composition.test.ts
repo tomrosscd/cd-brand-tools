@@ -90,3 +90,26 @@ describe('frame limits', () => {
     expect(frameSizeError({ width: 10, height: 100 })).toMatch(/at least/)
   })
 })
+
+describe('gradient backgrounds', () => {
+  const gradientState = {
+    ...defaultComposition,
+    background: 'gradient' as const,
+    gradient: { colours: ['orange', 'dark-green'] as const, chaos: 0.9, grain: 0.2, seed: 99 },
+  }
+
+  it('round-trips the gradient through the URL', () => {
+    expect(parseComposition(serialiseComposition(gradientState))).toEqual(gradientState)
+  })
+
+  it('leaves gradient settings out of the URL for other backgrounds', () => {
+    expect(serialiseComposition(defaultComposition).has('gColours')).toBe(false)
+  })
+
+  it('embeds the gradient image only when one is supplied', () => {
+    expect(compositionToSvg(gradientState)).not.toContain('<image')
+    const svg = compositionToSvg(gradientState, { gradientHref: 'data:image/png;base64,AAAA' })
+    expect(svg).toContain('<image href="data:image/png;base64,AAAA" width="1920" height="1080"')
+    expect(svg.indexOf('<image')).toBeLessThan(svg.indexOf('<path'))
+  })
+})
