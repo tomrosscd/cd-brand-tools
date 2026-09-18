@@ -31,7 +31,7 @@ export default function ColoursPage() {
               <dl className={styles.values}>
                 <dt>HEX</dt>
                 <dd>
-                  <CopyButton value={colour.hex} label={`${colour.name} HEX`} />
+                  <CopyButton value={colour.hex.replace(/^#/, '')} label={`${colour.name} HEX`} />
                 </dd>
                 <dt>RGB</dt>
                 <dd>
