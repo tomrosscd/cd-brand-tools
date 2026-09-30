@@ -1,5 +1,13 @@
 # Handoff
 
+## Gradient controls (30 September 2026)
+
+- Branch `feature/gradient-controls`: added Glow size, Colour balance, Softness, gentle Flow, and optional canvas positioning with horizontal/vertical numeric sliders. Chaos remains under Advanced distortion; old URLs retain their original rendering settings.
+- Make a variation (also Space outside controls) nudges position and size without changing the seed, palette, grain or other styling. Variation amount defaults to 20%; zero disables variation. New arrangement resets position and reseeds while retaining styling.
+- Undo keeps up to 50 edits and groups a canvas/slider drag into one step. Shared state includes every new control, also with stack gradient URL prefixes. Copy link serialises the current state immediately.
+- Existing unrelated edit in `src/app/colours/page.tsx` was present before this work and left intact. Changes are local, not deployed.
+- Validation: 37 tests passed, assets check, TypeScript, lint and production build passed. Headless Chrome against `pnpm dev`: variation changes the image, Undo exactly restores it, composition controls render, a whole canvas drag undoes in one step, reloading a shared URL gives identical canvas pixels, PNG downloads, and 390px layout has no horizontal overflow. Also verified 3840 × 2160 tiled PNG export against the preview with grain disabled (mean channel difference 0.011 on a 0–255 scale), JPEG download, zero-variation disabling, and Space shortcut. Desktop and mobile screenshots inspected. Local preview: http://127.0.0.1:3107/create/gradient/. Safari and Firefox have not been tested.
+
 ## Current state (17 September 2026)
 
 Phase 1 is built. `main` deploys to GitHub Pages at https://tomrosscd.github.io/cd-brand-tools/ (public, by Tom's decision). Plan and open decisions: [docs/PLAN.md](docs/PLAN.md).

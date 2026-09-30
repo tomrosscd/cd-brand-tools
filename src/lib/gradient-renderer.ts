@@ -20,6 +20,10 @@ uniform vec3 u_lab[${MAX_COLOURS}];
 uniform vec2 u_point[${MAX_COLOURS}];
 uniform float u_weight[${MAX_COLOURS}];
 uniform float u_chaos;
+uniform float u_flow;
+uniform float u_size;
+uniform float u_balance;
+uniform float u_softness;
 uniform float u_grain;
 uniform float u_seed;
 
@@ -72,7 +76,9 @@ void main() {
   vec2 s = vec2(mod(u_seed, 997.0) * 0.731, mod(u_seed, 991.0) * 0.419);
   vec2 q = vec2(fbm(p * 1.4 + s), fbm(p * 1.4 + s + vec2(5.2, 1.3)));
   vec2 r = vec2(fbm(p * 1.4 + 3.5 * q + s + vec2(1.7, 9.2)), fbm(p * 1.4 + 3.5 * q + s + vec2(8.3, 2.8)));
-  vec2 warped = p + u_chaos * 0.9 * (r - 0.5) * 2.0;
+  // Low-frequency noise adds broad bends without the recursive folds of chaos.
+  vec2 gentle = vec2(noise(p * 1.1 + s), noise(p * 1.1 + s + vec2(7.1, 3.8))) - 0.5;
+  vec2 warped = p + gentle * u_flow * 0.32 + u_chaos * 0.9 * (r - 0.5) * 2.0;
 
   vec3 lab = vec3(0.0);
   float total = 0.0;
@@ -80,7 +86,10 @@ void main() {
     if (i >= u_count) break;
     vec2 centre = vec2(u_point[i].x * aspect, u_point[i].y);
     vec2 delta = warped - centre;
-    float influence = u_weight[i] / pow(dot(delta, delta) + 0.02, 1.25);
+    float radius = i == 0 ? 1.0 : exp2((u_size - 0.5) * 3.0);
+    delta /= radius;
+    float weight = u_weight[i] * (i == 0 ? exp2((u_balance - 0.5) * 4.0) : 1.0);
+    float influence = weight / pow(dot(delta, delta) + 0.02, mix(2.0, 0.5, u_softness));
     lab += u_lab[i] * influence;
     total += influence;
   }
@@ -145,7 +154,15 @@ export class GradientRenderer {
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
     const u = (name: string) => gl.getUniformLocation(program, name)
     const labs = gradientHexes(state).map(hexToOklab)
-    const points = gradientPoints(state.seed, labs.length)
+    const points = gradientPoints(state.seed, labs.length).map((point, i) =>
+      i === 0
+        ? point
+        : {
+            ...point,
+            x: point.x + state.offsetX,
+            y: point.y + state.offsetY,
+          },
+    )
     gl.uniform2f(u('u_frame'), frame.width, frame.height)
     gl.uniform1i(u('u_count'), labs.length)
     gl.uniform3fv(
@@ -161,6 +178,10 @@ export class GradientRenderer {
       new Float32Array(Array.from({ length: MAX_COLOURS }, (_, i) => points[i]?.weight ?? 0)),
     )
     gl.uniform1f(u('u_chaos'), state.chaos)
+    gl.uniform1f(u('u_flow'), state.flow)
+    gl.uniform1f(u('u_size'), state.glowSize)
+    gl.uniform1f(u('u_balance'), state.balance)
+    gl.uniform1f(u('u_softness'), state.softness)
     gl.uniform1f(u('u_grain'), state.grain)
     gl.uniform1f(u('u_seed'), state.seed)
   }
