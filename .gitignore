@@ -42,3 +42,6 @@ next-env.d.ts
 
 # generated brand files (pnpm assets)
 /public/brand
+
+# Product UI archive fetched by scripts/fetch-product-ui.mjs (private repo, never commit)
+/vendor

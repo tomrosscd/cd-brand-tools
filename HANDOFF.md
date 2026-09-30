@@ -1,5 +1,15 @@
 # Handoff
 
+## Product UI 1.3.1 upgrade (30 September 2026)
+
+- Branch `chore/product-ui-1.3.1` includes the gradient controls commit plus the completed local Product UI upgrade, based on the latest `origin/main` (`b853335`).
+- `scripts/fetch-product-ui.mjs` downloads and checksum-verifies the pinned 1.3.1 archive with `gh` into ignored `/vendor`; package and lockfile use that archive. `WorkspaceShell` supplies the sidebar with no search or app switcher, and the host supplies page gutters.
+- Both CI and Pages fetch Product UI before `pnpm install`, using `GH_TOKEN: ${{ secrets.PRODUCT_UI_TOKEN }}`. README and PLAN document local installation and the secret.
+- Verified in this session: `pnpm format:check`; `pnpm check` (asset manifests, TypeScript, lint, all 37 tests, production build); `pnpm install --frozen-lockfile`; production build with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools`; fresh authenticated archive download and checksum verification in a temporary directory. The pinned checksum also matches the GitHub release asset digest. `git diff --check` passed.
+- Prior session visually checked the sidebar, collapsed rail, mobile drawer, gradient, overview and colours. This session reviewed the source layouts and Product UI component styles for logos, stacks, partners, stack creator and typography, but **did not visually verify them**: the browser tool refused access because its admin-enforced security-policy check was unavailable. No alternate browser mechanism was used.
+- Remaining before merge/deployment: configure `PRODUCT_UI_TOKEN` as a read-only token for private `tomrosscd/cd-product-ui` (Contents: read), obtain passing GitHub CI, and finish desktop/mobile visual and interaction review on the remaining pages. The secret was absent when checked in this session. A draft PR is being prepared to supersede gradient-only PR #6; nothing has been merged or deployed.
+- Local `src/app/colours/page.tsx` change is already on `main` via PR #5.
+
 ## Gradient controls (30 September 2026)
 
 - Branch `feature/gradient-controls`: added Glow size, Colour balance, Softness, gentle Flow, and optional canvas positioning with horizontal/vertical numeric sliders. Chaos remains under Advanced distortion; old URLs retain their original rendering settings.

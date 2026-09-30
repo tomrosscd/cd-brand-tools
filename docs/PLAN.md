@@ -17,7 +17,7 @@ This plan supersedes the Brand Hub planning documents of 8 September 2026. They 
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript strict. Chosen because phase 2 needs server-side Google sign-in and protected downloads, which a static site cannot enforce.
-- `@convert/product-ui` 0.13.0, installed from the GitHub release tarball with an exact version. Upgrade in a dedicated change.
+- `@convert/product-ui` 1.3.1, pinned to a checksum-verified GitHub release archive. Run `pnpm product-ui` before `pnpm install`; the GitHub CLI needs read access to the private `cd-product-ui` repository. CI and Pages use the `PRODUCT_UI_TOKEN` Actions secret. Upgrade in a dedicated change.
 - Plain CSS modules on Product UI tokens (`--cui-*`). No Tailwind, matching Product UI.
 - Vitest for pure logic (composition state, SVG serialisation, gradient maths, URL state). Browser checks for rendering and export.
 - pnpm, Node 22.
@@ -57,7 +57,7 @@ Rules that keep the tools honest:
 
 ### Phase 1A: application shell and brand guide
 
-- [x] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
+- [x] Application shell with `WorkspaceShell` (upgraded 30 September 2026): Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
 - [x] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
 - [x] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
 - [x] Stacks library: preview and download each original

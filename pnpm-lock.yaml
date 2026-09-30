@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@convert/product-ui':
-        specifier: https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz
-        version: https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        specifier: file:vendor/convert-product-ui-1.3.1.tgz
+        version: file:vendor/convert-product-ui-1.3.1.tgz(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       next:
         specifier: 16.3.5
         version: 16.3.5(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -133,9 +133,9 @@ packages:
     resolution: {integrity: sha512-ctxtJ/eA+t+6q2++vj5j7FYX3nRu311q1wfYH3xjlLOsczhlhxAg2FWNUXhpGvAw3BWo1xBcvOV6/YLc2r5FJw==}
     hasBin: true
 
-  '@convert/product-ui@https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz':
-    resolution: {tarball: https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz}
-    version: 0.13.0
+  '@convert/product-ui@file:vendor/convert-product-ui-1.3.1.tgz':
+    resolution: {integrity: sha512-iiPnOClyMF1/4CpTNmqnlT+kAwie7hSqYXS1AYQtn7SxYboFpX2roL7yQScSDhTifeLXQHShRnbwUNpQMKj98g==, tarball: file:vendor/convert-product-ui-1.3.1.tgz}
+    version: 1.3.1
     engines: {node: '>=22.22.2'}
     peerDependencies:
       react: ^19.2.0
@@ -3155,7 +3155,7 @@ snapshots:
     dependencies:
       css-tree: 3.2.1
 
-  '@convert/product-ui@https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@convert/product-ui@file:vendor/convert-product-ui-1.3.1.tgz(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:
       '@radix-ui/react-alert-dialog': 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@radix-ui/react-dialog': 1.1.23(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

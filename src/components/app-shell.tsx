@@ -1,9 +1,10 @@
 'use client'
 
-import { DashboardShell, Icon, type SidebarEntry } from '@convert/product-ui'
+import { Icon, WorkspaceShell, type SidebarEntry } from '@convert/product-ui'
 import { usePathname, useRouter } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { basePath, withBase } from '@/lib/base-path'
+import styles from './app-shell.module.css'
 
 const link = (id: string, label: string, path: string) => ({ id, label, href: withBase(path) })
 
@@ -48,12 +49,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   return (
-    <DashboardShell
+    <WorkspaceShell
       items={items}
       activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
-      workspace="Brand Tools"
-      workspaceDescription="Internal"
-      density="comfortable"
+      productName="Brand Tools"
+      context="Internal"
       collapsible
       onNavigate={(item, event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
@@ -61,7 +61,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         router.push(item.href.slice(basePath.length) || '/')
       }}
     >
-      {children}
-    </DashboardShell>
+      <div className={styles.page}>{children}</div>
+    </WorkspaceShell>
   )
 }

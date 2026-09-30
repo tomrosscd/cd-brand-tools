@@ -15,10 +15,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "assets:check": "node scripts/build-assets.mjs --check && node scripts/build-stacks.mjs --check && node scripts/build-partners.mjs --check",
-    "check": "pnpm assets:check && pnpm type-check && pnpm lint && pnpm test && pnpm build"
+    "check": "pnpm assets:check && pnpm type-check && pnpm lint && pnpm test && pnpm build",
+    "product-ui": "node scripts/fetch-product-ui.mjs"
   },
   "dependencies": {
-    "@convert/product-ui": "https://github.com/tomrosscd/cd-product-ui/releases/download/v0.13.0/convert-product-ui-0.13.0.tgz",
+    "@convert/product-ui": "file:vendor/convert-product-ui-1.3.1.tgz",
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8"
