@@ -21,7 +21,7 @@ export default function ColoursPage() {
       </Alert>
       <Grid columns={3} minItemWidth={240}>
         {brandColours.map((colour) => (
-          <article key={colour.id} className={styles.swatchCard}>
+          <article id={colour.id} key={colour.id} className={styles.swatchCard}>
             <div className={styles.swatch} style={{ background: colour.hex }} />
             <div className={styles.swatchBody}>
               <h2 className={styles.name}>{colour.name}</h2>

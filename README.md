@@ -14,11 +14,15 @@ pnpm install
 pnpm dev
 ```
 
-`pnpm product-ui` downloads the pinned Product UI 1.3.1 archive into the ignored `vendor/` directory and verifies its SHA-256 checksum. Run it before installing dependencies on a fresh checkout. The private package archive is never committed.
+`pnpm product-ui` downloads the pinned Product UI 1.3.2 archive into the ignored `vendor/` directory and verifies its SHA-256 checksum. Run it before installing dependencies on a fresh checkout. The private package archive is never committed.
 
 `pnpm dev` and `pnpm build` first run `pnpm assets`, which publishes the supplied originals from `assets/source` into `public/brand` and regenerates the manifests in `src/brand`.
 
 Open http://localhost:3000.
+
+## Search
+
+Use the sidebar search button or Cmd/Ctrl+K to find pages, tools, partners, logo variants, stacks and brand colours. Choose a result with the mouse or arrow keys and Enter; Escape closes search. Partner results filter the partner library, and logo results select the matching family, colour, format and clear-space variant.
 
 ## Hosting
 

@@ -1,5 +1,12 @@
 # Handoff
 
+## Product UI 1.3.2 and brand-kit search (30 September 2026)
+
+- Continued the existing upgrade PR #7 with Product UI 1.3.2, checksum pinned to the GitHub release asset digest. WorkspaceShell was already in use and now opens Product UI's CommandPalette from its search button; Cmd/Ctrl+K, arrows, Enter and Escape use the library's keyboard handling.
+- Search covers pages and tools (including gradient builder), all partners, individual logo variants, all stacks and brand colours. Metadata is built on the server, without passing artwork geometry to the shell. Partner results initialise the library filter; logo results initialise matching controls and highlight/scroll to the selected card. URL selections update when navigating between results on the same page.
+- The old port 3100 preview server had stopped. Restart it after the checks so the preview serves the current release. Browser visual verification is still subject to the existing security-policy limitation.
+- Validation: formatting, asset checks, TypeScript, lint, all 42 tests (including search destination coverage), production build and GitHub Pages base-path build passed. The running dev preview is on port 3100. Browser interaction review is unverified: a fresh attempt was rejected by the browser URL policy; no alternate browser mechanism was used. Product UI ThemeProvider is now installed with workspace appearance, including the shared tooltip provider required by the search control. No merge or deployment performed.
+
 ## Product UI 1.3.1 upgrade (30 September 2026)
 
 - Branch `chore/product-ui-1.3.1` includes the gradient controls commit plus the completed local Product UI upgrade, based on the latest `origin/main` (`b853335`).

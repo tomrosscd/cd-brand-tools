@@ -70,13 +70,13 @@ function WebsiteLink({ partner }: { partner: Partner }) {
   ) : null
 }
 
-export function PartnerLibrary() {
+export function PartnerLibrary({ initialQuery = '' }: { initialQuery?: string }) {
   const [sources, setSources] = useState<Record<string, string>>({})
   const [loadError, setLoadError] = useState<string>()
   const [logoColour, setLogoColour] = useState<LogoColour>('original')
   const [withBackground, setWithBackground] = useState(false)
   const [backgroundChoice, setBackgroundChoice] = useState<BackgroundChoice>('auto')
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(initialQuery)
   const notify = useToast()
 
   useEffect(() => {
