@@ -13,3 +13,15 @@
     padding: var(--cui-space-24) var(--cui-space-32);
   }
 }
+
+/* Without a workspace context row, rail controls need their own space in the brand area. */
+.shell :global(.cui-workspace-sidebar[data-cui-nav='collapsed'] .cui-workspace-identity-rail) {
+  height: auto;
+  flex-direction: column;
+  gap: var(--cui-space-16);
+}
+
+.shell :global(.cui-workspace-sidebar[data-cui-nav='collapsed'] .cui-workspace-rail-controls) {
+  position: static;
+  gap: var(--cui-space-8);
+}

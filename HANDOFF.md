@@ -1,10 +1,16 @@
 # Handoff
 
+## Collapsed rail fix (30 September 2026)
+
+- Tom reported overlapping search/expand buttons and navigation icons after the context row was removed. Product UI positions the collapsed controls absolutely over the reserved context area; hiding that area removed their space.
+- The app now places collapsed desktop rail controls in normal flow within a vertical identity area. Brand identity, search, expand and navigation each reserve their own height. Expanded navigation and the mobile bar retain their existing layout.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Hotfix CI and deployment are in progress. Browser visual verification is unavailable under the existing browser policy; the diagnosis is grounded in Tom’s screenshot and the library CSS.
+
 ## Release approval (30 September 2026)
 
 - Tom reviewed the local UI and approved pushing, merging PR #7 and deploying to GitHub Pages, after removing the sidebar’s Internal / Workspace context.
 - The shell now supplies empty context values; the app hides that empty context block in desktop navigation and the mobile drawer. Brand Tools identity and search remain visible.
-- Final local formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. The final sidebar change is being pushed for CI, followed by the approved PR merge and Pages deployment.
+- Final local checks and GitHub CI passed, including all 42 tests and production build. PR #7 merged at `e212de3` and GitHub Pages deployment run 36720765495 succeeded. Live site: https://tomrosscd.github.io/cd-brand-tools/. Local checkout is synced to merged main; this release-completion note is local only to avoid pushing directly to main.
 
 ## Product UI 1.3.2 and brand-kit search (30 September 2026)
 
