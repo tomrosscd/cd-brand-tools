@@ -1,10 +1,16 @@
 # Handoff
 
+## Overview card fix (1 October 2026)
+
+- Replaced overview ActionCards with Product UI’s native Card elevation="flat", removing shadows and footer dividers. Actions are underlined inline TextLinks placed in the card body and aligned at the bottom. No Product UI component fork or new dependency.
+- Tom approved the flat cards and declined the proposed additions. The proposal document has been removed; this change contains the card fix only.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. PR #9 passed CI. Tom authorised merging and publishing the card fix.
+
 ## Collapsed rail fix (30 September 2026)
 
 - Tom reported overlapping search/expand buttons and navigation icons after the context row was removed. Product UI positions the collapsed controls absolutely over the reserved context area; hiding that area removed their space.
 - The app now places collapsed desktop rail controls in normal flow within a vertical identity area. Brand identity, search, expand and navigation each reserve their own height. Expanded navigation and the mobile bar retain their existing layout.
-- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Hotfix CI and deployment are in progress. Browser visual verification is unavailable under the existing browser policy; the diagnosis is grounded in Tom’s screenshot and the library CSS.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Final hotfix CI passed; PR #8 merged at `b5b8e4c` and GitHub Pages deployment run 36722040969 succeeded. Local checkout is synced to main; this completion note is local only. Browser visual verification is unavailable under the existing browser policy; the diagnosis is grounded in Tom’s screenshot and the library CSS.
 
 ## Release approval (30 September 2026)
 

@@ -1,4 +1,4 @@
-import { ActionCard, Grid, PageHeader, Stack, TextLink } from '@convert/product-ui'
+import { Card, Grid, PageHeader, Stack, TextLink } from '@convert/product-ui'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { withBase } from '@/lib/base-path'
@@ -59,16 +59,11 @@ export default function OverviewPage() {
       />
       <Grid columns={3} minItemWidth={260} align="stretch">
         {sections.map((section) => (
-          <ActionCard
-            key={section.href}
-            heading={section.heading}
-            description={section.description}
-            primaryAction={
-              <TextLink href={withBase(section.href)} variant="standalone">
-                {section.action}
-              </TextLink>
-            }
-          />
+          <Card key={section.href} heading={section.heading} description={section.description} elevation="flat">
+            <TextLink href={withBase(section.href)} variant="inline" style={{ marginTop: 'auto', alignSelf: 'start' }}>
+              {section.action}
+            </TextLink>
+          </Card>
         ))}
       </Grid>
       <p style={{ margin: 0, color: 'var(--cui-text-secondary)', fontSize: 'var(--cui-type-compact)' }}>
