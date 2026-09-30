@@ -17,7 +17,7 @@ This plan supersedes the Brand Hub planning documents of 8 September 2026. They 
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript strict. Chosen because phase 2 needs server-side Google sign-in and protected downloads, which a static site cannot enforce.
-- `@convert/product-ui` 0.13.0, installed from the GitHub release tarball with an exact version. Upgrade in a dedicated change.
+- `@convert/product-ui` 1.3.2, pinned to a checksum-verified GitHub release archive. Run `pnpm product-ui` before `pnpm install`; the GitHub CLI needs read access to the private `cd-product-ui` repository. CI and Pages use the `PRODUCT_UI_TOKEN` Actions secret. Upgrade in a dedicated change.
 - Plain CSS modules on Product UI tokens (`--cui-*`). No Tailwind, matching Product UI.
 - Vitest for pure logic (composition state, SVG serialisation, gradient maths, URL state). Browser checks for rendering and export.
 - pnpm, Node 22.
@@ -57,13 +57,18 @@ Rules that keep the tools honest:
 
 ### Phase 1A: application shell and brand guide
 
-- [x] Application shell with `DashboardShell`: Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
+- [x] Application shell with `WorkspaceShell` (upgraded 30 September 2026): Overview, Colours, Logos, Stacks, Stack creator, Gradient generator
 - [x] Colours: swatches with copyable HEX, RGB, CMYK and Pantone, with copy feedback
 - [x] Logos: filter by family, colour, format and clear space. Preview on a suitable background, download the original
 - [x] Stacks library: preview and download each original
 - [x] Typography guidance: Roobert, Denton x Condensed, and the Google alternatives. No font downloads until phase 2
 
 Verify: responsive layout at 1440 and 390, keyboard navigation, copy feedback, downloaded file checksums match the manifest.
+
+### Brand-kit search (authorised 30 September 2026)
+
+- [x] Workspace search and Cmd/Ctrl+K command palette for pages, tools, partners, individual logo variants, stacks and colours
+- [x] Results open the matching library filters or highlight the selected asset
 
 ### Phase 1B: stack creator
 
@@ -94,6 +99,14 @@ Recreates the Noise & Gradient idea (`noiseandgradient.com`) inside the brand: s
 Technique: a WebGL fragment shader. Each colour is a soft field centred on a seeded random point. Domain-warped noise, scaled by chaos, bends the coordinates before blending. Grain is hashed per-pixel noise. The same shader renders the preview and, on an offscreen canvas, the export, so results match. A Canvas 2D fallback where WebGL is unavailable is not built yet; the page shows an error instead.
 
 Verify: identical seed gives identical output, preview matches export, export dimensions, grain visible at export size, no colours outside the selected palette before grain.
+
+### Gradient controls extension (authorised 30 September 2026)
+
+- [x] Glow size, first-colour balance, blending softness and gentle Flow
+- [x] Optional canvas positioning with horizontal and vertical sliders as a keyboard alternative
+- [x] Subtle variations with an amount control, separate new arrangements, and Undo
+- [x] Preserve grain and palette during variations; retain Chaos under advanced controls
+- [x] Serialise all controls for shared links and stack backgrounds, preserving legacy links
 
 ### Phase 1D: tools together
 

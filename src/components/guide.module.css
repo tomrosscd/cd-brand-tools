@@ -168,3 +168,14 @@
 .checkerboardBlack {
   background: repeating-conic-gradient(#262626 0% 25%, #111111 0% 50%) 50% / 16px 16px;
 }
+
+.assetCard,
+.swatchCard {
+  scroll-margin-top: var(--cui-space-24);
+}
+
+.assetCard:target,
+.swatchCard:target {
+  outline: 2px solid var(--cui-focus-colour);
+  outline-offset: 2px;
+}

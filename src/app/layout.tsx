@@ -1,9 +1,11 @@
+import { ThemeProvider } from '@convert/product-ui'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import '@convert/product-ui/styles.css'
 import './globals.css'
 import { AppShell } from '@/components/app-shell'
 import { withBase } from '@/lib/base-path'
+import { brandSearchEntries } from '@/lib/brand-search'
 import { ToastProvider } from '@/components/toast-provider'
 
 export const metadata: Metadata = {
@@ -18,9 +20,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     // Browser extensions such as Tag Assistant add attributes to <html> before React loads.
     <html lang="en-AU" suppressHydrationWarning>
       <body>
-        <ToastProvider>
-          <AppShell>{children}</AppShell>
-        </ToastProvider>
+        <ThemeProvider theme="light" appearance="workspace">
+          <ToastProvider>
+            <AppShell searchEntries={brandSearchEntries}>{children}</AppShell>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

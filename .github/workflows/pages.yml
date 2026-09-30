@@ -24,6 +24,10 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+      - name: Fetch Product UI
+        run: node scripts/fetch-product-ui.mjs
+        env:
+          GH_TOKEN: ${{ secrets.PRODUCT_UI_TOKEN }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - name: Build static site

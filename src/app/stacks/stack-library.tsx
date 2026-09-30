@@ -80,7 +80,7 @@ export function StackLibrary() {
       </p>
       <div className={styles.cardGrid}>
         {stacks.map((stack) => (
-          <article key={stack.id} className={styles.assetCard}>
+          <article id={stack.id} key={stack.id} className={styles.assetCard}>
             <div
               className={`${styles.preview} ${withBackground ? '' : styles.checkerboard}`}
               style={withBackground ? { background } : undefined}

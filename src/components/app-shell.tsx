@@ -1,9 +1,11 @@
 'use client'
 
-import { DashboardShell, Icon, type SidebarEntry } from '@convert/product-ui'
+import { CommandPalette, Icon, WorkspaceShell, type SidebarEntry } from '@convert/product-ui'
 import { usePathname, useRouter } from 'next/navigation'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
+import type { BrandSearchEntry } from '@/lib/brand-search'
 import { basePath, withBase } from '@/lib/base-path'
+import styles from './app-shell.module.css'
 
 const link = (id: string, label: string, path: string) => ({ id, label, href: withBase(path) })
 
@@ -44,24 +46,47 @@ const routes: Record<string, string> = {
   '/partners': 'partners',
 }
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({
+  children,
+  searchEntries,
+}: {
+  children: ReactNode
+  searchEntries: readonly BrandSearchEntry[]
+}) {
+  const [searchOpen, setSearchOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   return (
-    <DashboardShell
-      items={items}
-      activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
-      workspace="Brand Tools"
-      workspaceDescription="Internal"
-      density="comfortable"
-      collapsible
-      onNavigate={(item, event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
-        event.preventDefault()
-        router.push(item.href.slice(basePath.length) || '/')
-      }}
-    >
-      {children}
-    </DashboardShell>
+    <>
+      <WorkspaceShell
+        className={styles.shell}
+        items={items}
+        activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
+        productName="Brand Tools"
+        context=""
+        contextDescription=""
+        onSearch={() => setSearchOpen(true)}
+        collapsible
+        onNavigate={(item, event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
+          event.preventDefault()
+          router.push(item.href.slice(basePath.length) || '/')
+        }}
+      >
+        <div className={styles.page}>{children}</div>
+      </WorkspaceShell>
+      <CommandPalette
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+        label="Search the brand kit"
+        placeholder="Search pages, partners and assets…"
+        emptyLabel="No matching pages, partners or assets"
+        groupOrder={['Pages and tools', 'Partners', 'Logo assets', 'Stack assets', 'Brand colours']}
+        items={searchEntries.map((entry) => ({
+          ...entry,
+          onSelect: () => router.push(entry.href),
+        }))}
+      />
+    </>
   )
 }

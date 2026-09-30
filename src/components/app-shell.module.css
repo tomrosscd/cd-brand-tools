@@ -1,0 +1,15 @@
+/* Clip the inset canvas without creating a scroll container that traps sticky tool previews. */
+.shell :global(.cui-workspace-canvas) {
+  overflow: clip;
+}
+
+/* WorkspaceShell draws the inset canvas but leaves page gutters to the host. */
+.page {
+  padding: var(--cui-space-16);
+}
+
+@media (min-width: 900px) {
+  .page {
+    padding: var(--cui-space-24) var(--cui-space-32);
+  }
+}

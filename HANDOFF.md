@@ -1,5 +1,44 @@
 # Handoff
 
+## Release approval (30 September 2026)
+
+- Tom reviewed the local UI and approved pushing, merging PR #7 and deploying to GitHub Pages, after removing the sidebar’s Internal / Workspace context.
+- The shell now supplies empty context values; the app hides that empty context block in desktop navigation and the mobile drawer. Brand Tools identity and search remain visible.
+- Final local formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. The final sidebar change is being pushed for CI, followed by the approved PR merge and Pages deployment.
+
+## Product UI 1.3.2 and brand-kit search (30 September 2026)
+
+- Continued the existing upgrade PR #7 with Product UI 1.3.2, checksum pinned to the GitHub release asset digest. WorkspaceShell was already in use and now opens Product UI's CommandPalette from its search button; Cmd/Ctrl+K, arrows, Enter and Escape use the library's keyboard handling.
+- Search covers pages and tools (including gradient builder), all partners, individual logo variants, all stacks and brand colours. Metadata is built on the server, without passing artwork geometry to the shell. Partner results initialise the library filter; logo results initialise matching controls and highlight/scroll to the selected card. URL selections update when navigating between results on the same page.
+- The old port 3100 preview server had stopped. Restart it after the checks so the preview serves the current release. Browser visual verification is still subject to the existing security-policy limitation.
+- Validation: formatting, asset checks, TypeScript, lint, all 42 tests (including search destination coverage), production build and GitHub Pages base-path build passed. The running dev preview is on port 3100. Browser interaction review is unverified: a fresh attempt was rejected by the browser URL policy; no alternate browser mechanism was used. Product UI ThemeProvider is now installed with workspace appearance, including the shared tooltip provider required by the search control. No merge or deployment performed.
+
+## Product UI 1.3.1 upgrade (30 September 2026)
+
+- Branch `chore/product-ui-1.3.1` includes the gradient controls commit plus the completed local Product UI upgrade, based on the latest `origin/main` (`b853335`).
+- `scripts/fetch-product-ui.mjs` downloads and checksum-verifies the pinned 1.3.1 archive with `gh` into ignored `/vendor`; package and lockfile use that archive. `WorkspaceShell` supplies the sidebar with no search or app switcher, and the host supplies page gutters.
+- Both CI and Pages fetch Product UI before `pnpm install`, using `GH_TOKEN: ${{ secrets.PRODUCT_UI_TOKEN }}`. README and PLAN document local installation and the secret.
+- Verified in this session: `pnpm format:check`; `pnpm check` (asset manifests, TypeScript, lint, all 37 tests, production build); `pnpm install --frozen-lockfile`; production build with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools`; fresh authenticated archive download and checksum verification in a temporary directory. The pinned checksum also matches the GitHub release asset digest. `git diff --check` passed.
+- Prior session visually checked the sidebar, collapsed rail, mobile drawer, gradient, overview and colours. This session reviewed the source layouts and Product UI component styles for logos, stacks, partners, stack creator and typography, but **did not visually verify them**: the browser tool refused access because its admin-enforced security-policy check was unavailable. No alternate browser mechanism was used.
+- Tom configured `PRODUCT_UI_TOKEN` on 30 September. Reran CI on commit `c538cc1`: the private archive fetch, frozen-lockfile install, formatting and full check all passed ([Actions run](https://github.com/tomrosscd/cd-brand-tools/actions/runs/36710277799)). Product UI remains private.
+- [PR #7](https://github.com/tomrosscd/cd-brand-tools/pull/7) contains the upgrade and gradient controls; gradient-only PR #6 is closed as superseded. PR #7 is being finalised for review. Nothing has been merged or deployed.
+- Remaining review limitation: desktop/mobile visual and interaction review of logos, stacks, partners, stack creator and typography could not be completed. Retrying the browser tool after the secret setup still failed because the admin-enforced security-policy check was unavailable. The prior visual checks and source review are recorded above; a reviewer must finish the remaining visual checks before merge.
+- Local `src/app/colours/page.tsx` change is already on `main` via PR #5.
+
+## Sticky tool previews (30 September 2026)
+
+- Tom's local-review recording showed the gradient preview scrolling away while editing lower controls. The existing sticky stage was trapped by WorkspaceShell's `overflow: hidden` canvas, which creates a scroll container.
+- Added an app-scoped shell class and changed the canvas to `overflow: clip`. Rounded canvas clipping remains, while the existing desktop sticky stage now uses the page scroll. This also restores the stack creator's existing sticky preview. The existing single-column mobile layout is unchanged.
+- Formatting, asset checks, TypeScript, lint, all 37 tests and production build passed. Browser verification remains limited by the unavailable browser security-policy check; Tom can verify scrolling in the running local preview.
+
+## Gradient controls (30 September 2026)
+
+- Branch `feature/gradient-controls`: added Glow size, Colour balance, Softness, gentle Flow, and optional canvas positioning with horizontal/vertical numeric sliders. Chaos remains under Advanced distortion; old URLs retain their original rendering settings.
+- Make a variation (also Space outside controls) nudges position and size without changing the seed, palette, grain or other styling. Variation amount defaults to 20%; zero disables variation. New arrangement resets position and reseeds while retaining styling.
+- Undo keeps up to 50 edits and groups a canvas/slider drag into one step. Shared state includes every new control, also with stack gradient URL prefixes. Copy link serialises the current state immediately.
+- Existing unrelated edit in `src/app/colours/page.tsx` was present before this work and left intact. Changes are local, not deployed.
+- Validation: 37 tests passed, assets check, TypeScript, lint and production build passed. Headless Chrome against `pnpm dev`: variation changes the image, Undo exactly restores it, composition controls render, a whole canvas drag undoes in one step, reloading a shared URL gives identical canvas pixels, PNG downloads, and 390px layout has no horizontal overflow. Also verified 3840 × 2160 tiled PNG export against the preview with grain disabled (mean channel difference 0.011 on a 0–255 scale), JPEG download, zero-variation disabling, and Space shortcut. Desktop and mobile screenshots inspected. Local preview: http://127.0.0.1:3107/create/gradient/. Safari and Firefox have not been tested.
+
 ## Current state (17 September 2026)
 
 Phase 1 is built. `main` deploys to GitHub Pages at https://tomrosscd.github.io/cd-brand-tools/ (public, by Tom's decision). Plan and open decisions: [docs/PLAN.md](docs/PLAN.md).

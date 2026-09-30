@@ -38,11 +38,12 @@ async function rasterWithBackground(asset: BrandAsset, background: string): Prom
   return canvas
 }
 
-export function LogoLibrary() {
-  const [family, setFamily] = useState<string>('Logo')
-  const [colour, setColour] = useState('all')
-  const [format, setFormat] = useState('svg')
-  const [clearSpace, setClearSpace] = useState(false)
+export function LogoLibrary({ initialAssetId }: { initialAssetId?: string }) {
+  const initialAsset = logoAssets.find((asset) => asset.id === initialAssetId)
+  const [family, setFamily] = useState<string>(initialAsset?.family ?? 'Logo')
+  const [colour, setColour] = useState(initialAsset?.colour ?? 'all')
+  const [format, setFormat] = useState<string>(initialAsset?.format ?? 'svg')
+  const [clearSpace, setClearSpace] = useState(initialAsset?.clearSpace ?? false)
   const [withBackground, setWithBackground] = useState(false)
   const [backgroundChoice, setBackgroundChoice] = useState<BrandColourId | 'auto'>('auto')
   const notify = useToast()
@@ -179,7 +180,7 @@ export function LogoLibrary() {
             const background = activeBackground(asset)
             const checker = isLight(asset) ? styles.checkerboardDark : styles.checkerboard
             return (
-              <article key={asset.id} className={styles.assetCard}>
+              <article id={asset.id} key={asset.id} className={styles.assetCard}>
                 <div
                   className={`${styles.preview} ${background || !backgroundApplies ? '' : checker}`}
                   style={

@@ -6,14 +6,23 @@ The interface is built on [Convert Product UI](https://github.com/tomrosscd/cd-p
 
 ## Run locally
 
+Requires Node 22.22.2 or later, pnpm, and the GitHub CLI authenticated with an account that can read `tomrosscd/cd-product-ui`.
+
 ```sh
+pnpm product-ui
 pnpm install
 pnpm dev
 ```
 
+`pnpm product-ui` downloads the pinned Product UI 1.3.2 archive into the ignored `vendor/` directory and verifies its SHA-256 checksum. Run it before installing dependencies on a fresh checkout. The private package archive is never committed.
+
 `pnpm dev` and `pnpm build` first run `pnpm assets`, which publishes the supplied originals from `assets/source` into `public/brand` and regenerates the manifests in `src/brand`.
 
 Open http://localhost:3000.
+
+## Search
+
+Use the sidebar search button or Cmd/Ctrl+K to find pages, tools, partners, logo variants, stacks and brand colours. Choose a result with the mouse or arrow keys and Enter; Escape closes search. Partner results filter the partner library, and logo results select the matching family, colour, format and clear-space variant.
 
 ## Hosting
 
@@ -22,6 +31,8 @@ Open http://localhost:3000.
 ```sh
 NEXT_PUBLIC_BASE_PATH=/cd-brand-tools pnpm build
 ```
+
+Both GitHub workflows fetch Product UI before installing dependencies. Set the repository Actions secret `PRODUCT_UI_TOKEN` to a read-only token with access to `tomrosscd/cd-product-ui` (Contents: read). The default `GITHUB_TOKEN` cannot read that separate private repository.
 
 The output is in `out/`. GitHub Pages sites are public. Do not add fonts or gated assets until access control exists on a different host.
 
