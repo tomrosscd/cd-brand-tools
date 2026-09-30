@@ -1,10 +1,10 @@
 # Handoff
 
-## Overview cards and agency usefulness review (1 October 2026)
+## Overview card fix (1 October 2026)
 
 - Replaced overview ActionCards with Product UI’s native Card elevation="flat", removing shadows and footer dividers. Actions are underlined inline TextLinks placed in the card body and aligned at the bottom. No Product UI component fork or new dependency.
-- Wrote docs/AGENCY-TOOLS-REVIEW.md with prioritised proposals for designers and marketing: deck starters, an AI brand pack, task-based asset collections, shared composition presets, accessibility checks and campaign export sets. These are proposals, not newly built tools.
-- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. A review PR is being prepared; the new feature proposals are not being implemented in this change.
+- Tom approved the flat cards and declined the proposed additions. The proposal document has been removed; this change contains the card fix only.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. PR #9 passed CI. Tom authorised merging and publishing the card fix.
 
 ## Collapsed rail fix (30 September 2026)
 
