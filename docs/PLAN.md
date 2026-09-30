@@ -95,6 +95,14 @@ Technique: a WebGL fragment shader. Each colour is a soft field centred on a see
 
 Verify: identical seed gives identical output, preview matches export, export dimensions, grain visible at export size, no colours outside the selected palette before grain.
 
+### Gradient controls extension (authorised 30 September 2026)
+
+- [x] Glow size, first-colour balance, blending softness and gentle Flow
+- [x] Optional canvas positioning with horizontal and vertical sliders as a keyboard alternative
+- [x] Subtle variations with an amount control, separate new arrangements, and Undo
+- [x] Preserve grain and palette during variations; retain Chaos under advanced controls
+- [x] Serialise all controls for shared links and stack backgrounds, preserving legacy links
+
 ### Phase 1D: tools together
 
 - [x] Gradient as a stack creator background, built ahead of a formal decision and easy to remove. SVG exports embed the gradient as a PNG
