@@ -9,3 +9,8 @@ body {
 * {
   box-sizing: border-box;
 }
+
+/* Omit the unused workspace context in desktop navigation and the mobile drawer. */
+.cui-workspace:has(> strong:empty):has(> span:empty) {
+  display: none;
+}

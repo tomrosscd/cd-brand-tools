@@ -63,7 +63,8 @@ export function AppShell({
         items={items}
         activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
         productName="Brand Tools"
-        context="Internal"
+        context=""
+        contextDescription=""
         onSearch={() => setSearchOpen(true)}
         collapsible
         onNavigate={(item, event) => {

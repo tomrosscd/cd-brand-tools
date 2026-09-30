@@ -1,5 +1,11 @@
 # Handoff
 
+## Release approval (30 September 2026)
+
+- Tom reviewed the local UI and approved pushing, merging PR #7 and deploying to GitHub Pages, after removing the sidebar’s Internal / Workspace context.
+- The shell now supplies empty context values; the app hides that empty context block in desktop navigation and the mobile drawer. Brand Tools identity and search remain visible.
+- Final local formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. The final sidebar change is being pushed for CI, followed by the approved PR merge and Pages deployment.
+
 ## Product UI 1.3.2 and brand-kit search (30 September 2026)
 
 - Continued the existing upgrade PR #7 with Product UI 1.3.2, checksum pinned to the GitHub release asset digest. WorkspaceShell was already in use and now opens Product UI's CommandPalette from its search button; Cmd/Ctrl+K, arrows, Enter and Escape use the library's keyboard handling.
