@@ -1,10 +1,16 @@
 # Handoff
 
+## Overview cards and agency usefulness review (1 October 2026)
+
+- Replaced overview ActionCards with Product UI’s native Card elevation="flat", removing shadows and footer dividers. Actions are underlined inline TextLinks placed in the card body and aligned at the bottom. No Product UI component fork or new dependency.
+- Wrote docs/AGENCY-TOOLS-REVIEW.md with prioritised proposals for designers and marketing: deck starters, an AI brand pack, task-based asset collections, shared composition presets, accessibility checks and campaign export sets. These are proposals, not newly built tools.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. A review PR is being prepared; the new feature proposals are not being implemented in this change.
+
 ## Collapsed rail fix (30 September 2026)
 
 - Tom reported overlapping search/expand buttons and navigation icons after the context row was removed. Product UI positions the collapsed controls absolutely over the reserved context area; hiding that area removed their space.
 - The app now places collapsed desktop rail controls in normal flow within a vertical identity area. Brand identity, search, expand and navigation each reserve their own height. Expanded navigation and the mobile bar retain their existing layout.
-- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Hotfix CI and deployment are in progress. Browser visual verification is unavailable under the existing browser policy; the diagnosis is grounded in Tom’s screenshot and the library CSS.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Final hotfix CI passed; PR #8 merged at `b5b8e4c` and GitHub Pages deployment run 36722040969 succeeded. Local checkout is synced to main; this completion note is local only. Browser visual verification is unavailable under the existing browser policy; the diagnosis is grounded in Tom’s screenshot and the library CSS.
 
 ## Release approval (30 September 2026)
 
