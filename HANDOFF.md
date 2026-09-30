@@ -12,6 +12,12 @@
 - Remaining review limitation: desktop/mobile visual and interaction review of logos, stacks, partners, stack creator and typography could not be completed. Retrying the browser tool after the secret setup still failed because the admin-enforced security-policy check was unavailable. The prior visual checks and source review are recorded above; a reviewer must finish the remaining visual checks before merge.
 - Local `src/app/colours/page.tsx` change is already on `main` via PR #5.
 
+## Sticky tool previews (30 September 2026)
+
+- Tom's local-review recording showed the gradient preview scrolling away while editing lower controls. The existing sticky stage was trapped by WorkspaceShell's `overflow: hidden` canvas, which creates a scroll container.
+- Added an app-scoped shell class and changed the canvas to `overflow: clip`. Rounded canvas clipping remains, while the existing desktop sticky stage now uses the page scroll. This also restores the stack creator's existing sticky preview. The existing single-column mobile layout is unchanged.
+- Formatting, asset checks, TypeScript, lint, all 37 tests and production build passed. Browser verification remains limited by the unavailable browser security-policy check; Tom can verify scrolling in the running local preview.
+
 ## Gradient controls (30 September 2026)
 
 - Branch `feature/gradient-controls`: added Glow size, Colour balance, Softness, gentle Flow, and optional canvas positioning with horizontal/vertical numeric sliders. Chaos remains under Advanced distortion; old URLs retain their original rendering settings.

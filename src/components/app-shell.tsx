@@ -50,6 +50,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter()
   return (
     <WorkspaceShell
+      className={styles.shell}
       items={items}
       activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
       productName="Brand Tools"
