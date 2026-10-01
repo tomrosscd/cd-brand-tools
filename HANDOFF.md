@@ -1,10 +1,18 @@
 # Handoff
 
+## Grain size and grouped paper presets (1 October 2026)
+
+- Added Grain amount and Grain size to the gradient generator and stack gradient background. New grain is a continuous artwork-relative texture, sampled over each render pixel’s footprint. Preview uses the original artwork dimensions for its texture grid; exports use the same grid across tiles. Grain size 0 retains original per-pixel rendering for old links. New gradients default to size 2.
+- Grain size is serialised in regular and prefixed stack URLs and retained by variations and Undo.
+- Canvas presets now have Screen, Social, Paper and Custom headings in the native Product UI Select. The headings are disabled options, since the pinned Select does not expose optgroups. A3/A4/A5 portrait and landscape use rounded 300 ppi pixel dimensions, without bleed; UI explains placement at the intended paper size.
+- Paper resolution offers 150/300 PPI and custom integer values from 72–600, within export limits. Paper identity and PPI are preserved in gradient and stack shared links; PPI controls pixels rather than embedded print metadata. The gradient export panel estimates compressed PNG/JPEG size from a debounced preview encoding, clearly labelled approximate.
+- Formatting, asset checks, TypeScript, lint, 51 tests and production build passed. Browser/WebGL visual comparison remains unverified under the existing browser policy. Local preview is available on port 3100; changes await local review before publishing.
+
 ## Overview card fix (1 October 2026)
 
 - Replaced overview ActionCards with Product UI’s native Card elevation="flat", removing shadows and footer dividers. Actions are underlined inline TextLinks placed in the card body and aligned at the bottom. No Product UI component fork or new dependency.
 - Tom approved the flat cards and declined the proposed additions. The proposal document has been removed; this change contains the card fix only.
-- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. PR #9 passed CI. Tom authorised merging and publishing the card fix.
+- Formatting, asset checks, TypeScript, lint, all 42 tests and production build passed. Browser visual verification remains unavailable under the existing policy. PR #9 passed final CI and merged at `6d2c3e7` after Tom’s approval. GitHub Pages deployment run 36791932120 succeeded. Local checkout is synced to main; this completion note is local only.
 
 ## Collapsed rail fix (30 September 2026)
 

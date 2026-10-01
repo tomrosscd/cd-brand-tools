@@ -331,7 +331,7 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
                   onValueChange={(chaos) => setGradient({ chaos })}
                 />
                 <RangeField
-                  label="Grain"
+                  label="Grain amount"
                   value={gradient.grain}
                   min={0}
                   max={1}
@@ -339,6 +339,15 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
                   displayScale={100}
                   unit="%"
                   onValueChange={(grain) => setGradient({ grain })}
+                />
+                <RangeField
+                  label="Grain size"
+                  value={gradient.grainSize}
+                  min={0}
+                  max={12}
+                  step={0.5}
+                  hint="Fine to coarse. 0 keeps the original per-pixel texture."
+                  onValueChange={(grainSize) => setGradient({ grainSize })}
                 />
                 <div>
                   <Button variant="secondary" onClick={() => setGradient({ seed: newSeed() })}>

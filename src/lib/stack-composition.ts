@@ -3,7 +3,7 @@ import type { BrandAsset } from '@/brand/asset-types'
 import { getBrandColour, isBrandColourId, type BrandColourId } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import type { StackArtwork } from '@/brand/stack-types'
-import { readFrame, readNumber, round, type FrameSize } from './frame'
+import { writePaper, readFrame, readNumber, round, type FrameSize } from './frame'
 import {
   defaultGradient,
   gradientStyleOf,
@@ -211,6 +211,7 @@ export function serialiseComposition(state: StackComposition): URLSearchParams {
     h: String(state.height),
     logo: state.overlay.kind,
   })
+  writePaper(params, state)
   if (state.background === 'gradient') writeGradientStyle(params, state.gradient, 'g')
   if (state.overlay.kind !== 'none') {
     params.set('logoColour', state.overlay.colour)
