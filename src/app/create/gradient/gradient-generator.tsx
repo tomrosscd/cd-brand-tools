@@ -44,7 +44,7 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
   const notify = useToast()
   const style = useMemo(() => gradientStyleOf(state), [state])
   const frame = useMemo(() => ({ width: state.width, height: state.height }), [state.width, state.height])
-  const { canvasRef, error, renderFull } = useGradientCanvas(style, frame)
+  const { canvasRef, error, renderFull, estimatedBytes } = useGradientCanvas(style, frame, format)
 
   useUrlState(serialiseGradient(state))
 
@@ -168,8 +168,10 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
               </div>
             </div>
             <p className={styles.caption}>
-              Preview scaled from {state.width} × {state.height}. Seed {state.seed}. Grain is drawn per pixel, so it
-              looks finer in the full-size export.
+              Preview scaled from {state.width} × {state.height}. Seed {state.seed}.{' '}
+              {state.grainSize === 0
+                ? 'Original per-pixel grain looks finer when the export is scaled down.'
+                : 'Grain size is relative to the artwork; very fine texture can soften when scaled down.'}
             </p>
             {error ? (
               <Alert heading="The gradient preview is unavailable" tone="error">
@@ -249,7 +251,20 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
               <h2 id="gradient-texture" className={styles.heading}>
                 Texture
               </h2>
-              {control('grain', 'Grain', 'Film grain strength.')}
+              {control('grain', 'Grain amount', 'How strongly the texture appears.')}
+              <RangeField
+                label="Grain size"
+                value={state.grainSize}
+                min={0}
+                max={12}
+                step={0.5}
+                hint={
+                  state.grainSize === 0
+                    ? 'Original per-pixel grain. Choose a size above 0 for consistent preview and export scale.'
+                    : 'Fine to coarse. Size stays relative to the artwork when exporting.'
+                }
+                onValueChange={(grainSize) => update({ grainSize }, 'grainSize')}
+              />
               <details className={styles.section}>
                 <summary>Advanced distortion</summary>
                 <div style={{ marginTop: 16 }}>
@@ -272,6 +287,11 @@ export function GradientGenerator({ initialState }: { initialState: GradientStat
                 ]}
                 onValueChange={(value) => setFormat(value as RasterFormat)}
               />
+              <p className={styles.hint}>
+                Estimated {format.toUpperCase()} size:{' '}
+                {estimatedBytes === undefined ? 'calculating…' : `about ${formatBytes(estimatedBytes)}`}. Based on the
+                preview; grain and compression can change the final size. JPEG usually makes a smaller file.
+              </p>
               <div className={styles.row}>
                 <Button
                   leadingIcon={<Icon name="download" />}

@@ -1,5 +1,6 @@
 import { hexToOklab } from './colour-space'
 import type { FrameSize } from './frame'
+import { grainGrid } from './grain'
 import { gradientHexes, gradientPoints, type GradientState, type GradientStyle } from './gradient'
 
 const MAX_COLOURS = 5
@@ -25,6 +26,7 @@ uniform float u_size;
 uniform float u_balance;
 uniform float u_softness;
 uniform float u_grain;
+uniform vec2 u_grainGrid;
 uniform float u_seed;
 
 float hash(vec2 p) {
@@ -95,7 +97,17 @@ void main() {
   }
   vec3 colour = oklabToSrgb(lab / total);
 
-  float grain = hash(pixel + mod(u_seed, 1000.0)) - 0.5;
+  float grain;
+  if (u_grainGrid.x == 0.0) {
+    grain = hash(pixel + mod(u_seed, 1000.0)) - 0.5;
+  } else {
+    // The same continuous texture spans the artwork at every resolution. Sample its pixel footprint.
+    vec2 g = uv * u_grainGrid + mod(u_seed, 1000.0);
+    vec2 footprint = u_grainGrid / u_frame * 0.25;
+    grain = (noise(g + footprint) + noise(g - footprint)
+      + noise(g + vec2(footprint.x, -footprint.y))
+      + noise(g + vec2(-footprint.x, footprint.y))) * 0.25 - 0.5;
+  }
   colour += grain * u_grain * 0.3;
   gl_FragColor = vec4(clamp(colour, 0.0, 1.0), 1.0);
 }
@@ -143,7 +155,7 @@ export class GradientRenderer {
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
   }
 
-  private setUniforms(state: GradientStyle, frame: FrameSize) {
+  private setUniforms(state: GradientStyle, frame: FrameSize, artworkFrame: FrameSize = frame) {
     const { gl, program } = this
     if (this.disposed) throw new Error('The gradient renderer was closed. Reload the page and try again.')
     // Another renderer may share this canvas's context, so select this program and its geometry every time.
@@ -183,6 +195,8 @@ export class GradientRenderer {
     gl.uniform1f(u('u_balance'), state.balance)
     gl.uniform1f(u('u_softness'), state.softness)
     gl.uniform1f(u('u_grain'), state.grain)
+    const grid = grainGrid(artworkFrame, state.grainSize)
+    gl.uniform2f(u('u_grainGrid'), grid[0], grid[1])
     gl.uniform1f(u('u_seed'), state.seed)
   }
 
@@ -199,9 +213,9 @@ export class GradientRenderer {
   }
 
   /** Draws the state as if the frame were `width` by `height`, filling this canvas. */
-  renderPreview(state: GradientStyle, width: number, height: number) {
+  renderPreview(state: GradientStyle, width: number, height: number, artworkFrame?: FrameSize) {
     if (this.disposed) return
-    this.setUniforms(state, { width, height })
+    this.setUniforms(state, { width, height }, artworkFrame)
     this.drawTile(0, 0, width, height)
   }
 

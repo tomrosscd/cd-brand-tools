@@ -1,5 +1,5 @@
 import { brandColours, getBrandColour, isBrandColourId, type BrandColourId } from '@/brand/colours'
-import { clamp, readFrame, readNumber, round, type FrameSize } from './frame'
+import { clamp, writePaper, readFrame, readNumber, round, type FrameSize } from './frame'
 import { seededRandom } from './random'
 
 export const gradientColourLimits = { min: 2, max: 5 } as const
@@ -11,6 +11,8 @@ export interface GradientStyle {
   chaos: number
   /** Film grain strength, 0 to 1. */
   grain: number
+  /** Grain spacing per 1000 units on the shorter side; 0 preserves legacy pixel grain. */
+  grainSize: number
   /** Broad, gentle bending, independent of legacy chaos. */
   flow: number
   glowSize: number
@@ -53,6 +55,7 @@ export const defaultGradient: GradientState = {
   offsetY: 0,
   variation: 0.2,
   grain: 0.18,
+  grainSize: 2,
   seed: 20260917,
   width: 1920,
   height: 1080,
@@ -123,6 +126,12 @@ export function parseGradientStyle(params: URLSearchParams, prefix = ''): Gradie
       ]),
     ) as Pick<GradientStyle, (typeof gradientControlKeys)[number]>),
     grain: readNumber(params.get(key('grain')), defaultGradient.grain, 0, 1),
+    grainSize: readNumber(
+      params.get(key('grainSize')),
+      params.has(key('grain')) || params.has(key('seed')) ? 0 : defaultGradient.grainSize,
+      0,
+      12,
+    ),
     seed: Math.round(readNumber(params.get(key('seed')), defaultGradient.seed, 0, 999_999_999)),
   }
 }
@@ -132,6 +141,7 @@ export function writeGradientStyle(params: URLSearchParams, style: GradientStyle
   params.set(key('colours'), style.colours.join(','))
   params.set(key('chaos'), String(round(style.chaos, 2)))
   params.set(key('grain'), String(round(style.grain, 2)))
+  params.set(key('grainSize'), String(round(style.grainSize, 2)))
   params.set(key('seed'), String(style.seed))
   for (const name of gradientControlKeys) params.set(key(name), String(style[name]))
 }
@@ -145,12 +155,14 @@ export function serialiseGradient(state: GradientState): URLSearchParams {
   writeGradientStyle(params, state)
   params.set('w', String(state.width))
   params.set('h', String(state.height))
+  writePaper(params, state)
   return params
 }
 
 export function gradientStyleOf(state: GradientStyle): GradientStyle {
-  const { colours, chaos, grain, seed, flow, glowSize, balance, softness, offsetX, offsetY, variation } = state
-  return { colours, chaos, grain, seed, flow, glowSize, balance, softness, offsetX, offsetY, variation }
+  const { colours, chaos, grain, grainSize, seed, flow, glowSize, balance, softness, offsetX, offsetY, variation } =
+    state
+  return { colours, chaos, grain, grainSize, seed, flow, glowSize, balance, softness, offsetX, offsetY, variation }
 }
 
 /** Colours not yet in the gradient, in brand order. */
