@@ -14,7 +14,7 @@ pnpm install
 pnpm dev
 ```
 
-`pnpm product-ui` downloads the pinned Product UI 1.3.2 archive into the ignored `vendor/` directory and verifies its SHA-256 checksum. Run it before installing dependencies on a fresh checkout. The private package archive is never committed.
+`pnpm product-ui` downloads the pinned Product UI 1.4.1 archive into the ignored `vendor/` directory and verifies its SHA-256 checksum. Run it before installing dependencies on a fresh checkout. The private package archive is never committed.
 
 `pnpm dev` and `pnpm build` first run `pnpm assets`, which publishes the supplied originals from `assets/source` into `public/brand` and regenerates the manifests in `src/brand`.
 

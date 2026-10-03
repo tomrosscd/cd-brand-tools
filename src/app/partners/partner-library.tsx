@@ -3,11 +3,13 @@
 import {
   Badge,
   Button,
+  Card,
   ContentList,
   ContentListItem,
   EmptyState,
   Icon,
-  Input,
+  FilterToolbar,
+  PageLayout,
   Select,
   Skeleton,
   Switch,
@@ -22,6 +24,7 @@ import { copySvg } from '@/lib/clipboard'
 import { canvasToBlob, downloadBlob, formatBytes, svgBlob, svgToCanvas } from '@/lib/export'
 import { addBackground, recolourSvg, trimSvg } from '@/lib/partner-svg'
 import { useEffect, useMemo, useState } from 'react'
+import { partnersIntro } from './intro'
 
 /**
  * Partner logos are never shown in Convert brand colours: only their own colours, white or black.
@@ -120,9 +123,10 @@ export function PartnerLibrary({ initialQuery = '' }: { initialQuery?: string })
       notify(
         `Copied ${partner.name}`,
         'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.',
+        'success',
       )
     } catch (caught) {
-      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the SVG instead.')
+      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the SVG instead.', 'error')
     }
   }
 
@@ -140,7 +144,7 @@ export function PartnerLibrary({ initialQuery = '' }: { initialQuery?: string })
         downloadBlob(await canvasToBlob(canvas, 'png'), name)
       }
     } catch (caught) {
-      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.')
+      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.', 'error')
     }
   }
 
@@ -161,214 +165,222 @@ export function PartnerLibrary({ initialQuery = '' }: { initialQuery?: string })
   const imageOnlyShown = imageOnly.filter(matches)
   const noLogoShown = noLogo.filter(matches)
 
-  return (
-    <div style={{ display: 'grid', gap: 'var(--cui-space-40)' }}>
-      <div className={styles.filters}>
-        <Input
-          label="Search partners or categories"
-          type="search"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-        />
-      </div>
+  const shown = ready.length + imageOnlyShown.length + noLogoShown.length
 
-      <section aria-labelledby="partner-ready" style={{ display: 'grid', gap: 'var(--cui-space-24)' }}>
-        <div>
-          <h2 id="partner-ready" className={styles.name}>
-            Ready to use <Badge tone="positive">{vectorPartners.length}</Badge>
-          </h2>
-          <p className={styles.prose}>
-            Vector logos in every format. Show them in their own colours, white or black, add a background, copy into
-            Figma, or download SVG or {PNG_WIDTH}px PNG. Copies and downloads are cropped to the logo.
-          </p>
-        </div>
-        <div className={styles.filters}>
-          <Select
-            label="Logo colour"
-            value={logoColour}
-            options={[
-              { value: 'original', label: 'Original brand colours' },
-              { value: 'white', label: 'White' },
-              { value: 'black', label: 'Black' },
-            ]}
-            onChange={(event) => setLogoColour(event.target.value as LogoColour)}
-          />
-          <Switch
-            label="Background"
-            checked={withBackground}
-            onChange={(event) => setWithBackground(event.target.checked)}
-          />
-          {withBackground ? (
+  return (
+    <PageLayout
+      headingOwner="page"
+      {...partnersIntro}
+      toolbar={
+        <FilterToolbar
+          searchLabel="Search partners or categories"
+          searchValue={query}
+          onSearchChange={setQuery}
+          resultCount={shown}
+          resultLabel={(count) => `${count} ${count === 1 ? 'partner' : 'partners'}`}
+        />
+      }
+    >
+      <div style={{ display: 'grid', gap: 'var(--cui-space-40)' }}>
+        <section aria-labelledby="partner-ready" style={{ display: 'grid', gap: 'var(--cui-space-24)' }}>
+          <div>
+            <h2 id="partner-ready" className={styles.name}>
+              Ready to use <Badge tone="positive">{vectorPartners.length}</Badge>
+            </h2>
+            <p className={styles.prose}>
+              Vector logos in every format. Show them in their own colours, white or black, add a background, copy into
+              Figma, or download SVG or {PNG_WIDTH}px PNG. Copies and downloads are cropped to the logo.
+            </p>
+          </div>
+          <div className={styles.filters}>
             <Select
-              label="Background colour"
-              value={backgroundChoice}
+              label="Logo colour"
+              value={logoColour}
               options={[
-                { value: 'auto', label: 'Automatic contrast' },
+                { value: 'original', label: 'Original brand colours' },
                 { value: 'white', label: 'White' },
                 { value: 'black', label: 'Black' },
               ]}
-              onChange={(event) => setBackgroundChoice(event.target.value as BackgroundChoice)}
+              onChange={(event) => setLogoColour(event.target.value as LogoColour)}
             />
-          ) : null}
-        </div>
-        <p className={styles.prose} role="status">
-          Showing {ready.length} in {colourName}
-          {withBackground ? ' with a background' : ', transparent'}.
-        </p>
-        {loadError ? (
-          <EmptyState heading="Partner logos could not load" description={loadError} />
-        ) : ready.length === 0 ? (
-          <EmptyState heading="No ready logos match" description="Try another name or category." live />
-        ) : (
-          <div className={styles.cardGrid}>
-            {ready.map((partner) => {
-              const file = vectorFile(partner)
-              const { svg, background } = finalSvg(partner)
-              const previewOn = background ?? backgroundFor(file, logoColour, 'auto')
+            <Switch
+              label="Background"
+              checked={withBackground}
+              onChange={(event) => setWithBackground(event.target.checked)}
+            />
+            {withBackground ? (
+              <Select
+                label="Background colour"
+                value={backgroundChoice}
+                options={[
+                  { value: 'auto', label: 'Automatic contrast' },
+                  { value: 'white', label: 'White' },
+                  { value: 'black', label: 'Black' },
+                ]}
+                onChange={(event) => setBackgroundChoice(event.target.value as BackgroundChoice)}
+              />
+            ) : null}
+          </div>
+          <p className={styles.prose} role="status">
+            Showing {ready.length} in {colourName}
+            {withBackground ? ' with a background' : ', transparent'}.
+          </p>
+          {loadError ? (
+            <EmptyState heading="Partner logos could not load" description={loadError} />
+          ) : ready.length === 0 ? (
+            <EmptyState heading="No ready logos match" description="Try another name or category." live />
+          ) : (
+            <div className={styles.cardGrid}>
+              {ready.map((partner) => {
+                const file = vectorFile(partner)
+                const { svg, background } = finalSvg(partner)
+                const previewOn = background ?? backgroundFor(file, logoColour, 'auto')
+                return (
+                  <Card key={partner.id} heading={partner.name} elevation="flat" className={styles.assetCard}>
+                    <div className={styles.assetBody}>
+                      <div
+                        className={`${styles.preview} ${styles.logoPreview} ${background ? '' : previewOn === 'white' ? styles.checkerboard : styles.checkerboardBlack}`}
+                        style={background ? { background: neutrals[background].hex } : undefined}
+                      >
+                        {svg ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- generated SVG, shown as an image so its ids cannot clash
+                          <img src={dataUrl(svg)} alt={`${partner.name} logo in ${colourName}`} />
+                        ) : (
+                          <Skeleton label={`Loading the ${partner.name} logo`} lines={1} />
+                        )}
+                      </div>
+                      <div className={styles.cardText}>
+                        <PartnerTags partner={partner} />
+                        <span>{partner.aka ?? `Supplied in ${file.note.toLowerCase()}`}</span>
+                      </div>
+                      <div className={styles.actions}>
+                        <Button
+                          size="sm"
+                          leadingIcon={<Icon name="copy" />}
+                          disabled={!svg}
+                          aria-label={`Copy ${partner.name} logo as SVG`}
+                          onClick={() => copy(partner)}
+                        >
+                          Copy
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          leadingIcon={<Icon name="download" />}
+                          disabled={!svg}
+                          aria-label={`Download ${partner.name} logo as SVG`}
+                          onClick={() => downloadVector(partner, 'svg')}
+                        >
+                          SVG
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          leadingIcon={<Icon name="download" />}
+                          disabled={!svg}
+                          aria-label={`Download ${partner.name} logo as PNG`}
+                          onClick={() => downloadVector(partner, 'png')}
+                        >
+                          PNG
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                )
+              })}
+            </div>
+          )}
+        </section>
+
+        <section aria-labelledby="partner-todo" style={{ display: 'grid', gap: 'var(--cui-space-16)' }}>
+          <div>
+            <h2 id="partner-todo" className={styles.name}>
+              To do: logos to request <Badge tone="warning">{imageOnly.length + noLogo.length}</Badge>
+            </h2>
+            <p className={styles.prose}>
+              Ask each partner for an SVG, EPS or PDF logo. Add it to <code>assets/source/CD_Partner_Logos</code> and{' '}
+              <code>src/brand/partners.json</code>, and the partner moves up to Ready to use.
+            </p>
+          </div>
+
+          <h3 id="todo-image-only" className={styles.subheading}>
+            Have an image, need a vector <Badge>{imageOnlyShown.length}</Badge>
+          </h3>
+          <p className={styles.prose}>
+            Download the image we have in the meantime. It can&apos;t be recoloured or copied into Figma as vectors.
+          </p>
+          <ContentList aria-labelledby="todo-image-only" density="compact">
+            {imageOnlyShown.map((partner) => {
+              const file = imageFile(partner)
+              const image = file.image!
+              const noteId = `${partner.id}-availability`
               return (
-                <article key={partner.id} className={styles.assetCard}>
-                  <div
-                    className={`${styles.preview} ${styles.logoPreview} ${background ? '' : previewOn === 'white' ? styles.checkerboard : styles.checkerboardBlack}`}
-                    style={background ? { background: neutrals[background].hex } : undefined}
-                  >
-                    {svg ? (
-                      // eslint-disable-next-line @next/next/no-img-element -- generated SVG, shown as an image so its ids cannot clash
-                      <img src={dataUrl(svg)} alt={`${partner.name} logo in ${colourName}`} />
-                    ) : (
-                      <Skeleton label={`Loading the ${partner.name} logo`} lines={1} />
-                    )}
-                  </div>
-                  <div className={styles.cardText}>
-                    <strong>{partner.name}</strong>
-                    <PartnerTags partner={partner} />
-                    <span>{partner.aka ?? `Supplied in ${file.note.toLowerCase()}`}</span>
-                  </div>
-                  <div className={styles.actions}>
-                    <Button
-                      size="sm"
-                      leadingIcon={<Icon name="copy" />}
-                      disabled={!svg}
-                      aria-label={`Copy ${partner.name} logo as SVG`}
-                      onClick={() => copy(partner)}
+                <ContentListItem
+                  key={partner.id}
+                  leading={
+                    <span
+                      className={`${styles.thumb} ${isLightNote(file) ? styles.checkerboardBlack : styles.checkerboard}`}
                     >
-                      Copy
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      leadingIcon={<Icon name="download" />}
-                      disabled={!svg}
-                      aria-label={`Download ${partner.name} logo as SVG`}
-                      onClick={() => downloadVector(partner, 'svg')}
-                    >
-                      SVG
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      leadingIcon={<Icon name="download" />}
-                      disabled={!svg}
-                      aria-label={`Download ${partner.name} logo as PNG`}
-                      onClick={() => downloadVector(partner, 'png')}
-                    >
-                      PNG
-                    </Button>
-                  </div>
-                </article>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- supplied image */}
+                      <img src={withBase(image.href)} alt="" loading="lazy" />
+                    </span>
+                  }
+                  title={partner.name}
+                  description={
+                    <span className={styles.tags}>
+                      <PartnerTags partner={partner} />
+                      <span id={noteId}>
+                        {image.format.toUpperCase()} only, {image.width} × {image.height}, {formatBytes(image.bytes)}.
+                        No vector yet.
+                      </span>
+                      <WebsiteLink partner={partner} />
+                    </span>
+                  }
+                  actions={
+                    <span className={styles.actions}>
+                      <Button size="sm" leadingIcon={<Icon name="copy" />} disabled aria-describedby={noteId}>
+                        Copy
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        leadingIcon={<Icon name="download" />}
+                        disabled
+                        aria-describedby={noteId}
+                      >
+                        SVG
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        leadingIcon={<Icon name="download" />}
+                        aria-label={`Download ${partner.name} logo as supplied, ${image.format.toUpperCase()}`}
+                        onClick={() => downloadImage(partner)}
+                      >
+                        {image.format.toUpperCase()}
+                      </Button>
+                    </span>
+                  }
+                />
               )
             })}
-          </div>
-        )}
-      </section>
+          </ContentList>
 
-      <section aria-labelledby="partner-todo" style={{ display: 'grid', gap: 'var(--cui-space-16)' }}>
-        <div>
-          <h2 id="partner-todo" className={styles.name}>
-            To do: logos to request <Badge tone="warning">{imageOnly.length + noLogo.length}</Badge>
-          </h2>
-          <p className={styles.prose}>
-            Ask each partner for an SVG, EPS or PDF logo. Add it to <code>assets/source/CD_Partner_Logos</code> and{' '}
-            <code>src/brand/partners.json</code>, and the partner moves up to Ready to use.
-          </p>
-        </div>
-
-        <h3 id="todo-image-only" className={styles.subheading}>
-          Have an image, need a vector <Badge>{imageOnlyShown.length}</Badge>
-        </h3>
-        <p className={styles.prose}>
-          Download the image we have in the meantime. It can&apos;t be recoloured or copied into Figma as vectors.
-        </p>
-        <ContentList aria-labelledby="todo-image-only" density="compact">
-          {imageOnlyShown.map((partner) => {
-            const file = imageFile(partner)
-            const image = file.image!
-            const noteId = `${partner.id}-availability`
-            return (
+          <h3 id="todo-no-logo" className={styles.subheading}>
+            No logo yet <Badge>{noLogoShown.length}</Badge>
+          </h3>
+          <ContentList aria-labelledby="todo-no-logo" density="compact">
+            {noLogoShown.map((partner) => (
               <ContentListItem
                 key={partner.id}
-                leading={
-                  <span
-                    className={`${styles.thumb} ${isLightNote(file) ? styles.checkerboardBlack : styles.checkerboard}`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element -- supplied image */}
-                    <img src={withBase(image.href)} alt="" loading="lazy" />
-                  </span>
-                }
                 title={partner.name}
-                description={
-                  <span className={styles.tags}>
-                    <PartnerTags partner={partner} />
-                    <span id={noteId}>
-                      {image.format.toUpperCase()} only, {image.width} × {image.height}, {formatBytes(image.bytes)}. No
-                      vector yet.
-                    </span>
-                    <WebsiteLink partner={partner} />
-                  </span>
-                }
-                actions={
-                  <span className={styles.actions}>
-                    <Button size="sm" leadingIcon={<Icon name="copy" />} disabled aria-describedby={noteId}>
-                      Copy
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      leadingIcon={<Icon name="download" />}
-                      disabled
-                      aria-describedby={noteId}
-                    >
-                      SVG
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      leadingIcon={<Icon name="download" />}
-                      aria-label={`Download ${partner.name} logo as supplied, ${image.format.toUpperCase()}`}
-                      onClick={() => downloadImage(partner)}
-                    >
-                      {image.format.toUpperCase()}
-                    </Button>
-                  </span>
-                }
+                description={<PartnerTags partner={partner} />}
+                actions={<WebsiteLink partner={partner} />}
               />
-            )
-          })}
-        </ContentList>
-
-        <h3 id="todo-no-logo" className={styles.subheading}>
-          No logo yet <Badge>{noLogoShown.length}</Badge>
-        </h3>
-        <ContentList aria-labelledby="todo-no-logo" density="compact">
-          {noLogoShown.map((partner) => (
-            <ContentListItem
-              key={partner.id}
-              title={partner.name}
-              description={<PartnerTags partner={partner} />}
-              actions={<WebsiteLink partner={partner} />}
-            />
-          ))}
-        </ContentList>
-      </section>
-    </div>
+            ))}
+          </ContentList>
+        </section>
+      </div>
+    </PageLayout>
   )
 }

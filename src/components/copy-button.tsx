@@ -14,9 +14,13 @@ export function CopyButton({ value, label }: { value: string; label: string }) {
       onClick={async () => {
         try {
           await navigator.clipboard.writeText(value)
-          notify('Copied', `${label} ${value}`)
+          notify('Copied', `${label} ${value}`, 'success')
         } catch {
-          notify('Could not copy', 'Your browser blocked clipboard access. Select the value and copy it manually.')
+          notify(
+            'Could not copy',
+            'Your browser blocked clipboard access. Select the value and copy it manually.',
+            'error',
+          )
         }
       }}
     >

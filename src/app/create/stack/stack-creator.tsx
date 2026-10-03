@@ -1,6 +1,6 @@
 'use client'
 
-import { Alert, Button, Icon, PageHeader, SegmentedControl, Select, Stack } from '@convert/product-ui'
+import { Alert, Button, Icon, PageLayout, SegmentedControl, Select } from '@convert/product-ui'
 import { getBrandColour } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import { FrameSizeField } from '@/components/frame-size-field'
@@ -151,9 +151,13 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
         blob = await canvasToBlob(canvas, format)
       }
       downloadBlob(blob, fileName)
-      notify('Image exported', `${state.width} × ${state.height} ${format.toUpperCase()}, ${formatBytes(blob.size)}`)
+      notify(
+        'Image exported',
+        `${state.width} × ${state.height} ${format.toUpperCase()}, ${formatBytes(blob.size)}`,
+        'success',
+      )
     } catch (caught) {
-      notify('Export failed', caught instanceof Error ? caught.message : 'Try a smaller size.')
+      notify('Export failed', caught instanceof Error ? caught.message : 'Try a smaller size.', 'error')
     } finally {
       setExporting(false)
     }
@@ -165,24 +169,25 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
   const stackColour = getBrandColour(state.stackColour)
 
   return (
-    <Stack gap={32}>
-      <PageHeader
-        heading="Stack creator"
-        description="Place one stack in a frame, choose brand colours, add a logo, and export."
-        actions={
-          <div className={styles.row}>
-            <Button variant="quiet" disabled={history.length === 0} onClick={undo}>
-              Undo
-            </Button>
-            <Button variant="quiet" onClick={() => commit(defaultComposition)}>
-              Reset
-            </Button>
-            <Button variant="secondary" onClick={() => commit((current) => randomiseStack(current))}>
-              Randomise stack
-            </Button>
-          </div>
-        }
-      />
+    <PageLayout
+      className={styles.toolPage}
+      headingOwner="page"
+      heading="Stack creator"
+      description="Place one stack in a frame, choose brand colours, add a logo, and export."
+      actions={
+        <div className={styles.row}>
+          <Button variant="quiet" disabled={history.length === 0} onClick={undo}>
+            Undo
+          </Button>
+          <Button variant="quiet" onClick={() => commit(defaultComposition)}>
+            Reset
+          </Button>
+          <Button variant="secondary" onClick={() => commit((current) => randomiseStack(current))}>
+            Randomise stack
+          </Button>
+        </div>
+      }
+    >
       <div className={styles.layout}>
         <div className={styles.stage}>
           <div className={styles.canvasArea}>
@@ -216,7 +221,6 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
             Anything outside the frame is cropped.
           </p>
         </div>
-
         <div className={styles.panel}>
           <section className={styles.section} aria-labelledby="stack-canvas">
             <h2 id="stack-canvas" className={styles.heading}>
@@ -458,7 +462,7 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
                 leadingIcon={<Icon name="copy" />}
                 onClick={async () => {
                   await navigator.clipboard.writeText(window.location.href)
-                  notify('Link copied', 'Anyone with the link sees this composition.')
+                  notify('Link copied', 'Anyone with the link sees this composition.', 'success')
                 }}
               >
                 Copy link
@@ -467,6 +471,6 @@ export function StackCreator({ initialState }: { initialState: StackComposition 
           </section>
         </div>
       </div>
-    </Stack>
+    </PageLayout>
   )
 }

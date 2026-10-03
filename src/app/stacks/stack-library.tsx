@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Icon, Select, Switch, TextLink } from '@convert/product-ui'
+import { Button, Card, Icon, PageLayout, Select, Switch, TextLink } from '@convert/product-ui'
 import { brandColours, getBrandColour, type BrandColourId } from '@/brand/colours'
 import { stacks } from '@/brand/stacks.generated'
 import type { StackArtwork } from '@/brand/stack-types'
@@ -35,44 +35,59 @@ export function StackLibrary() {
         const size = stackDownloadSize(stack, PNG_WIDTH)
         downloadBlob(await canvasToBlob(await svgToCanvas(svg, size.width, size.height), 'png'), name)
       }
-      notify('Stack downloaded', name)
+      notify('Stack downloaded', name, 'success')
     } catch (caught) {
-      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.')
+      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.', 'error')
     }
   }
 
   const copy = async (stack: StackArtwork) => {
     try {
       await copySvg(stackToSvg(stack, { fill, background }))
-      notify('Copied as SVG', 'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.')
+      notify(
+        'Copied as SVG',
+        'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.',
+        'success',
+      )
     } catch (caught) {
-      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the SVG instead.')
+      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the SVG instead.', 'error')
     }
   }
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--cui-space-24)' }}>
-      <div className={styles.filters}>
-        <Select
-          label="Stack colour"
-          value={colour}
-          options={colourOptions}
-          onChange={(event) => setColour(event.target.value as BrandColourId)}
-        />
-        <Switch
-          label="Background"
-          checked={withBackground}
-          onChange={(event) => setWithBackground(event.target.checked)}
-        />
-        {withBackground ? (
+    <PageLayout
+      headingOwner="page"
+      heading="Stacks"
+      description="The stack motifs, in any brand colour. Use a stack whole: don't move, reshape or recolour its bars separately."
+      actions={
+        <TextLink href={withBase('/create/stack/')} variant="standalone">
+          Open the stack creator
+        </TextLink>
+      }
+      toolbar={
+        <div className={styles.filters}>
           <Select
-            label="Background colour"
-            value={backgroundColour}
-            options={colourOptions.filter((option) => option.value !== colour)}
-            onChange={(event) => setBackgroundColour(event.target.value as BrandColourId)}
+            label="Stack colour"
+            value={colour}
+            options={colourOptions}
+            onChange={(event) => setColour(event.target.value as BrandColourId)}
           />
-        ) : null}
-      </div>
+          <Switch
+            label="Background"
+            checked={withBackground}
+            onChange={(event) => setWithBackground(event.target.checked)}
+          />
+          {withBackground ? (
+            <Select
+              label="Background colour"
+              value={backgroundColour}
+              options={colourOptions.filter((option) => option.value !== colour)}
+              onChange={(event) => setBackgroundColour(event.target.value as BrandColourId)}
+            />
+          ) : null}
+        </div>
+      }
+    >
       <p className={styles.prose}>
         Copies and downloads are cropped tightly to the stack. Copy pastes straight into Figma as vectors. PNGs are{' '}
         {PNG_WIDTH}px wide
@@ -80,50 +95,58 @@ export function StackLibrary() {
       </p>
       <div className={styles.cardGrid}>
         {stacks.map((stack) => (
-          <article id={stack.id} key={stack.id} className={styles.assetCard}>
-            <div
-              className={`${styles.preview} ${withBackground ? '' : styles.checkerboard}`}
-              style={withBackground ? { background } : undefined}
-            >
-              <StackThumbnail stack={stack} fill={fill} />
-            </div>
-            <div className={styles.assetMeta}>
-              <strong>{stack.label}</strong>
+          <Card
+            id={stack.id}
+            key={stack.id}
+            heading={stack.label}
+            headingLevel={2}
+            elevation="flat"
+            className={styles.assetCard}
+            action={
               <TextLink href={`${withBase('/create/stack/')}?stack=${stack.id.replace('stack-', '')}&colour=${colour}`}>
                 Use
               </TextLink>
+            }
+          >
+            <div className={styles.assetBody}>
+              <div
+                className={`${styles.preview} ${withBackground ? '' : styles.checkerboard}`}
+                style={withBackground ? { background } : undefined}
+              >
+                <StackThumbnail stack={stack} fill={fill} />
+              </div>
+              <div className={styles.actions}>
+                <Button
+                  size="sm"
+                  leadingIcon={<Icon name="copy" />}
+                  aria-label={`Copy ${stack.label} as SVG`}
+                  onClick={() => copy(stack)}
+                >
+                  Copy
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  leadingIcon={<Icon name="download" />}
+                  aria-label={`Download ${stack.label} as PNG`}
+                  onClick={() => download(stack, 'png')}
+                >
+                  PNG
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  leadingIcon={<Icon name="download" />}
+                  aria-label={`Download ${stack.label} as SVG`}
+                  onClick={() => download(stack, 'svg')}
+                >
+                  SVG
+                </Button>
+              </div>
             </div>
-            <div className={styles.actions}>
-              <Button
-                size="sm"
-                leadingIcon={<Icon name="copy" />}
-                aria-label={`Copy ${stack.label} as SVG`}
-                onClick={() => copy(stack)}
-              >
-                Copy
-              </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                leadingIcon={<Icon name="download" />}
-                aria-label={`Download ${stack.label} as PNG`}
-                onClick={() => download(stack, 'png')}
-              >
-                PNG
-              </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                leadingIcon={<Icon name="download" />}
-                aria-label={`Download ${stack.label} as SVG`}
-                onClick={() => download(stack, 'svg')}
-              >
-                SVG
-              </Button>
-            </div>
-          </article>
+          </Card>
         ))}
       </div>
-    </div>
+    </PageLayout>
   )
 }

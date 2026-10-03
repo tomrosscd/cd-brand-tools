@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useState, type ReactNode } from 'react'
 import type { BrandSearchEntry } from '@/lib/brand-search'
 import { basePath, withBase } from '@/lib/base-path'
-import styles from './app-shell.module.css'
 
 const link = (id: string, label: string, path: string) => ({ id, label, href: withBase(path) })
 
@@ -36,6 +35,12 @@ const items: readonly SidebarEntry[] = [
   { ...link('partners', 'Partners', '/partners/'), icon: <Icon name="team" /> },
 ]
 
+// The Convert icon, contained by the shell at 24px.
+const productMark = (
+  // eslint-disable-next-line @next/next/no-img-element -- a small published brand file, shown unaltered
+  <img src={withBase('/brand/logos/icon-svg-convert-icon-dark-green.svg')} alt="" />
+)
+
 const routes: Record<string, string> = {
   '/colours': 'colours',
   '/typography': 'typography',
@@ -59,12 +64,10 @@ export function AppShell({
   return (
     <>
       <WorkspaceShell
-        className={styles.shell}
         items={items}
         activeId={routes[pathname.replace(/\/$/, '')] ?? 'overview'}
         productName="Brand Tools"
-        context=""
-        contextDescription=""
+        productMark={productMark}
         onSearch={() => setSearchOpen(true)}
         collapsible
         onNavigate={(item, event) => {
@@ -73,7 +76,7 @@ export function AppShell({
           router.push(item.href.slice(basePath.length) || '/')
         }}
       >
-        <div className={styles.page}>{children}</div>
+        {children}
       </WorkspaceShell>
       <CommandPalette
         open={searchOpen}
