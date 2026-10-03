@@ -1,20 +1,12 @@
-.swatchCard {
-  display: grid;
-  overflow: hidden;
-  background: var(--cui-surface-card);
-  border: var(--cui-border-width) solid var(--cui-border-subtle);
-  border-radius: var(--cui-radius-card);
-}
-
 .swatch {
   height: 8rem;
-  border-bottom: var(--cui-border-width) solid var(--cui-border-subtle);
+  border: var(--cui-border-width) solid var(--cui-border-subtle);
+  border-radius: var(--cui-radius-control);
 }
 
 .swatchBody {
   display: grid;
   gap: var(--cui-space-8);
-  padding: var(--cui-space-16);
 }
 
 .name {
@@ -58,13 +50,9 @@
   max-height: 100%;
 }
 
-.assetCard {
+.assetBody {
   display: grid;
   gap: var(--cui-space-12);
-  padding: var(--cui-space-12);
-  background: var(--cui-surface-card);
-  border: var(--cui-border-width) solid var(--cui-border-subtle);
-  border-radius: var(--cui-radius-card);
 }
 
 .assetMeta {

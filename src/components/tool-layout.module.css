@@ -5,6 +5,14 @@
   align-items: start;
 }
 
+/* Temporary private override. Product UI 1.4.1 gives PageLayout's body `overflow-x: auto`, which makes it a
+   scroll container and stops the sticky preview below from sticking. Clip does not. Remove this rule once the
+   library changes `.cui-page-body` (see docs/product-ui-upgrade.md). */
+.toolPage :global(.cui-page-body) {
+  overflow-x: clip;
+}
+
+/* Keeps the preview in view beside long controls. */
 .stage {
   position: sticky;
   top: var(--cui-space-24);
@@ -184,7 +192,8 @@
   height: 100%;
 }
 
-@media (max-width: 900px) {
+/* In a narrow page the controls move below the preview, which stops sticking. */
+@container (max-width: 680px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
   }

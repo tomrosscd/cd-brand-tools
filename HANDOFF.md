@@ -1,12 +1,20 @@
 # Handoff
 
+## Product UI 1.4.1 upgrade (4 October 2026)
+
+- Branch `chore/product-ui-1.4.1` (from `main` at `195ded5`), uncommitted, not pushed. Full audit, per-page migration and remaining differences are in [docs/product-ui-upgrade.md](docs/product-ui-upgrade.md).
+- Archive `convert-product-ui-1.4.1.tgz` downloaded from the GitHub release and verified with `shasum -a 256 -c SHA256SUMS`; packed version is 1.4.1; identical to `vendor/`. `fetch-product-ui.mjs`, `package.json` and the lockfile pin it.
+- All pages moved to `PageLayout headingOwner="page"`; cards are flat `Card`s; the local rail, canvas and context CSS is removed; toasts use stable ids and a status.
+- **Private override (temporary):** 1.4.1 sets `overflow-x: auto` on `.cui-page-body`, which broke the sticky tool preview. Tom approved a scoped override: `.toolPage :global(.cui-page-body) { overflow-x: clip }` in `tool-layout.module.css`. Remove it once Product UI changes that rule.
+- Verified: `pnpm format:check`, `pnpm check` (asset manifests, TypeScript, lint, 51 tests, production build) and a build with `NEXT_PUBLIC_BASE_PATH=/cd-brand-tools`. In the dev server at 1440, 1024 and 390: one `main` and one `h1` per route, no horizontal overflow at 390, collapsed rail without overlaps, toast with corner X, command search Escape returning focus, `?q=` deep link. Not verified: screen reader, real device, deployed Pages site, dark theme (the app is light only), clipboard success path (blocked in the preview browser), WebGL gradient preview (renders blank in the preview browser).
+
 ## Grain size and grouped paper presets (1 October 2026)
 
 - Added Grain amount and Grain size to the gradient generator and stack gradient background. New grain is a continuous artwork-relative texture, sampled over each render pixel’s footprint. Preview uses the original artwork dimensions for its texture grid; exports use the same grid across tiles. Grain size 0 retains original per-pixel rendering for old links. New gradients default to size 2.
 - Grain size is serialised in regular and prefixed stack URLs and retained by variations and Undo.
 - Canvas presets now have Screen, Social, Paper and Custom headings in the native Product UI Select. The headings are disabled options, since the pinned Select does not expose optgroups. A3/A4/A5 portrait and landscape use rounded 300 ppi pixel dimensions, without bleed; UI explains placement at the intended paper size.
 - Paper resolution offers 150/300 PPI and custom integer values from 72–600, within export limits. Paper identity and PPI are preserved in gradient and stack shared links; PPI controls pixels rather than embedded print metadata. The gradient export panel estimates compressed PNG/JPEG size from a debounced preview encoding, clearly labelled approximate.
-- Formatting, asset checks, TypeScript, lint, 51 tests and production build passed. Browser/WebGL visual comparison remains unverified under the existing browser policy. Local preview is available on port 3100; changes await local review before publishing.
+- Formatting, asset checks, TypeScript, lint, 51 tests and production build passed. Browser/WebGL visual comparison remains unverified under the existing browser policy. Tom approved publishing. PR #10 passed GitHub CI and merged at `195ded5`; main CI and GitHub Pages deployment run 36803024612 succeeded. Local checkout is synced to main; this completion note is local only. Local preview is available on port 3100.
 
 ## Overview card fix (1 October 2026)
 

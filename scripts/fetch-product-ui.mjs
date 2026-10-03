@@ -8,8 +8,8 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 
-const VERSION = '1.3.2'
-const SHA256 = 'b5f018c451937c0d7335920be14fda54448f585f22c3b70293f4ba046bdca700'
+const VERSION = '1.4.1'
+const SHA256 = '90dda605985a2cc85b59cd32856c73c7ddbd9f5c28db126feb4d27ada2aa748a'
 const REPO = 'tomrosscd/cd-product-ui'
 
 const dir = join(import.meta.dirname, '..', 'vendor')

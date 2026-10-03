@@ -1,6 +1,16 @@
 'use client'
 
-import { Badge, Button, EmptyState, Icon, SegmentedControl, Select, Switch } from '@convert/product-ui'
+import {
+  Badge,
+  Button,
+  Card,
+  EmptyState,
+  Icon,
+  PageLayout,
+  SegmentedControl,
+  Select,
+  Switch,
+} from '@convert/product-ui'
 import { logoAssets } from '@/brand/assets.generated'
 import type { BrandAsset } from '@/brand/asset-types'
 import { brandColours, getBrandColour, type BrandColourId } from '@/brand/colours'
@@ -11,6 +21,7 @@ import { copyPng, copySvg, imageUrlToPng } from '@/lib/clipboard'
 import { canvasToBlob, downloadBlob, formatBytes, svgBlob } from '@/lib/export'
 import { geometryToSvg } from '@/lib/svg-markup'
 import { useState } from 'react'
+import { logosIntro } from './intro'
 
 const families = ['Logo', 'Straight', 'Icon', 'Profile icon'] as const
 
@@ -66,16 +77,20 @@ export function LogoLibrary({ initialAssetId }: { initialAssetId?: string }) {
     try {
       if (asset.geometry) {
         await copySvg(geometryToSvg(asset.geometry, { background: background?.hex }))
-        notify('Copied as SVG', 'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.')
+        notify(
+          'Copied as SVG',
+          'Paste into Figma with Cmd+V (Ctrl+V on Windows). It arrives as editable vectors.',
+          'success',
+        )
       } else {
         const png = background
           ? rasterWithBackground(asset, background.hex).then((canvas) => canvasToBlob(canvas, 'png'))
           : imageUrlToPng(withBase(asset.href))
         await copyPng(png)
-        notify('Copied as an image', 'Paste into Figma with Cmd+V (Ctrl+V on Windows).')
+        notify('Copied as an image', 'Paste into Figma with Cmd+V (Ctrl+V on Windows).', 'success')
       }
     } catch (caught) {
-      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the file instead.')
+      notify('Could not copy', caught instanceof Error ? caught.message : 'Download the file instead.', 'error')
     }
   }
 
@@ -97,71 +112,76 @@ export function LogoLibrary({ initialAssetId }: { initialAssetId?: string }) {
         downloadBlob(await canvasToBlob(await rasterWithBackground(asset, background.hex), 'png'), withSuffix)
       }
     } catch (caught) {
-      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.')
+      notify('Download failed', caught instanceof Error ? caught.message : 'Try again.', 'error')
     }
   }
 
   return (
-    <div style={{ display: 'grid', gap: 'var(--cui-space-24)' }}>
-      <div className={styles.filters}>
-        <SegmentedControl
-          label="Type"
-          value={family}
-          options={families.map((f) => ({
-            value: f,
-            label: f === 'Straight' ? 'Straight logo' : f === 'Profile icon' ? 'Profile icons' : f,
-          }))}
-          onValueChange={setFamily}
-        />
-        {!isProfile ? (
-          <>
-            <Select
-              label="Colour"
-              value={colour}
-              options={[
-                { value: 'all', label: 'All colours' },
-                ...['Dark Green', 'Light Green', 'White', 'Black'].map((c) => ({ value: c, label: c })),
-              ]}
-              onChange={(event) => setColour(event.target.value)}
-            />
-            <SegmentedControl
-              label="Format"
-              value={format}
-              options={[
-                { value: 'svg', label: 'SVG' },
-                { value: 'png', label: 'PNG' },
-                { value: 'jpg', label: 'JPEG' },
-              ]}
-              onValueChange={setFormat}
-            />
-            <Switch
-              label="Clear space"
-              checked={clearSpace}
-              onChange={(event) => setClearSpace(event.target.checked)}
-            />
-          </>
-        ) : null}
-        {backgroundApplies ? (
-          <>
-            <Switch
-              label="Background"
-              checked={withBackground}
-              onChange={(event) => setWithBackground(event.target.checked)}
-            />
-            {withBackground ? (
+    <PageLayout
+      headingOwner="page"
+      {...logosIntro}
+      toolbar={
+        <div className={styles.filters}>
+          <SegmentedControl
+            label="Type"
+            value={family}
+            options={families.map((f) => ({
+              value: f,
+              label: f === 'Straight' ? 'Straight logo' : f === 'Profile icon' ? 'Profile icons' : f,
+            }))}
+            onValueChange={setFamily}
+          />
+          {!isProfile ? (
+            <>
               <Select
-                label="Background colour"
-                value={backgroundChoice}
+                label="Colour"
+                value={colour}
                 options={[
-                  { value: 'auto', label: 'Automatic contrast' },
-                  ...brandColours.map((c) => ({ value: c.id, label: c.name })),
+                  { value: 'all', label: 'All colours' },
+                  ...['Dark Green', 'Light Green', 'White', 'Black'].map((c) => ({ value: c, label: c })),
                 ]}
-                onChange={(event) => setBackgroundChoice(event.target.value as BrandColourId | 'auto')}
+                onChange={(event) => setColour(event.target.value)}
               />
-            ) : null}
-          </>
-        ) : null}
-      </div>
+              <SegmentedControl
+                label="Format"
+                value={format}
+                options={[
+                  { value: 'svg', label: 'SVG' },
+                  { value: 'png', label: 'PNG' },
+                  { value: 'jpg', label: 'JPEG' },
+                ]}
+                onValueChange={setFormat}
+              />
+              <Switch
+                label="Clear space"
+                checked={clearSpace}
+                onChange={(event) => setClearSpace(event.target.checked)}
+              />
+            </>
+          ) : null}
+          {backgroundApplies ? (
+            <>
+              <Switch
+                label="Background"
+                checked={withBackground}
+                onChange={(event) => setWithBackground(event.target.checked)}
+              />
+              {withBackground ? (
+                <Select
+                  label="Background colour"
+                  value={backgroundChoice}
+                  options={[
+                    { value: 'auto', label: 'Automatic contrast' },
+                    ...brandColours.map((c) => ({ value: c.id, label: c.name })),
+                  ]}
+                  onChange={(event) => setBackgroundChoice(event.target.value as BrandColourId | 'auto')}
+                />
+              ) : null}
+            </>
+          ) : null}
+        </div>
+      }
+    >
       <p className={styles.prose} role="status">
         {assets.length} {assets.length === 1 ? 'file' : 'files'}.{' '}
         {isProfile || format === 'jpg'
@@ -180,55 +200,57 @@ export function LogoLibrary({ initialAssetId }: { initialAssetId?: string }) {
             const background = activeBackground(asset)
             const checker = isLight(asset) ? styles.checkerboardDark : styles.checkerboard
             return (
-              <article id={asset.id} key={asset.id} className={styles.assetCard}>
-                <div
-                  className={`${styles.preview} ${background || !backgroundApplies ? '' : checker}`}
-                  style={
-                    background
-                      ? { background: background.hex }
-                      : backgroundApplies
-                        ? undefined
-                        : { background: 'var(--cui-surface-band)' }
-                  }
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element -- originals must be shown unaltered */}
-                  <img src={withBase(asset.href)} alt="" loading="lazy" />
-                </div>
-                <div>
-                  <strong style={{ fontSize: 'var(--cui-type-compact)' }}>
-                    {asset.colour ?? name.replace(/\.[a-z]+$/, '').replace(/_/g, ' ')}
-                    {background ? ` on ${background.name}` : ''}
-                  </strong>
+              <Card
+                id={asset.id}
+                key={asset.id}
+                heading={`${asset.colour ?? name.replace(/\.[a-z]+$/, '').replace(/_/g, ' ')}${background ? ` on ${background.name}` : ''}`}
+                elevation="flat"
+                className={styles.assetCard}
+              >
+                <div className={styles.assetBody}>
+                  <div
+                    className={`${styles.preview} ${background || !backgroundApplies ? '' : checker}`}
+                    style={
+                      background
+                        ? { background: background.hex }
+                        : backgroundApplies
+                          ? undefined
+                          : { background: 'var(--cui-surface-band)' }
+                    }
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- originals must be shown unaltered */}
+                    <img src={withBase(asset.href)} alt="" loading="lazy" />
+                  </div>
                   <div className={styles.assetMeta}>
                     <span>
                       <Badge>{asset.format.toUpperCase()}</Badge> {formatBytes(asset.bytes)}
                     </span>
                   </div>
+                  <div className={styles.actions}>
+                    <Button
+                      size="sm"
+                      leadingIcon={<Icon name="copy" />}
+                      aria-label={`Copy ${name}${background ? ` on ${background.name}` : ''}`}
+                      onClick={() => copy(asset)}
+                    >
+                      Copy
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      leadingIcon={<Icon name="download" />}
+                      aria-label={`Download ${name}${background ? ` on ${background.name}` : ''}`}
+                      onClick={() => download(asset)}
+                    >
+                      Download
+                    </Button>
+                  </div>
                 </div>
-                <div className={styles.actions}>
-                  <Button
-                    size="sm"
-                    leadingIcon={<Icon name="copy" />}
-                    aria-label={`Copy ${name}${background ? ` on ${background.name}` : ''}`}
-                    onClick={() => copy(asset)}
-                  >
-                    Copy
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    leadingIcon={<Icon name="download" />}
-                    aria-label={`Download ${name}${background ? ` on ${background.name}` : ''}`}
-                    onClick={() => download(asset)}
-                  >
-                    Download
-                  </Button>
-                </div>
-              </article>
+              </Card>
             )
           })}
         </div>
       )}
-    </div>
+    </PageLayout>
   )
 }

@@ -17,7 +17,7 @@ This plan supersedes the Brand Hub planning documents of 8 September 2026. They 
 ## Stack
 
 - Next.js 16 App Router, React 19, TypeScript strict. Chosen because phase 2 needs server-side Google sign-in and protected downloads, which a static site cannot enforce.
-- `@convert/product-ui` 1.3.2, pinned to a checksum-verified GitHub release archive. Run `pnpm product-ui` before `pnpm install`; the GitHub CLI needs read access to the private `cd-product-ui` repository. CI and Pages use the `PRODUCT_UI_TOKEN` Actions secret. Upgrade in a dedicated change.
+- `@convert/product-ui` 1.4.1, pinned to a checksum-verified GitHub release archive. Run `pnpm product-ui` before `pnpm install`; the GitHub CLI needs read access to the private `cd-product-ui` repository. CI and Pages use the `PRODUCT_UI_TOKEN` Actions secret. Upgrade in a dedicated change.
 - Plain CSS modules on Product UI tokens (`--cui-*`). No Tailwind, matching Product UI.
 - Vitest for pure logic (composition state, SVG serialisation, gradient maths, URL state). Browser checks for rendering and export.
 - pnpm, Node 22.

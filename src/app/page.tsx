@@ -1,4 +1,4 @@
-import { Card, Grid, PageHeader, Stack, TextLink } from '@convert/product-ui'
+import { Card, Grid, PageLayout, TextLink } from '@convert/product-ui'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { withBase } from '@/lib/base-path'
@@ -52,11 +52,11 @@ const sections = [
 
 export default function OverviewPage() {
   return (
-    <Stack gap={32}>
-      <PageHeader
-        heading="Convert Brand Tools"
-        description="Everything you need to use the Convert brand: approved colours and assets, and tools that only offer on-brand choices."
-      />
+    <PageLayout
+      headingOwner="page"
+      heading="Convert Brand Tools"
+      description="Everything you need to use the Convert brand: approved colours and assets, and tools that only offer on-brand choices."
+    >
       <Grid columns={3} minItemWidth={260} align="stretch">
         {sections.map((section) => (
           <Card key={section.href} heading={section.heading} description={section.description} elevation="flat">
@@ -66,10 +66,16 @@ export default function OverviewPage() {
           </Card>
         ))}
       </Grid>
-      <p style={{ margin: 0, color: 'var(--cui-text-secondary)', fontSize: 'var(--cui-type-compact)' }}>
+      <p
+        style={{
+          margin: 'var(--cui-space-24) 0 0',
+          color: 'var(--cui-text-secondary)',
+          fontSize: 'var(--cui-type-compact)',
+        }}
+      >
         Something missing or wrong? Tell the design team. <Link href="/colours">Print values</Link> are awaiting
         verification against the original brand book.
       </p>
-    </Stack>
+    </PageLayout>
   )
 }
